@@ -1,26 +1,316 @@
 @import "tailwindcss";
 
+/* =========================================================
+   Variables de color — paleta estricta del proyecto
+   Acá centralizamos todo para que sea fácil de mantener
+   ========================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --fondo: #0a0a0a;
+  --superficie: #111111;
+  --acento: #ff6b00;
+  --acento-hover: #ff8c00;
+  --texto-primario: #f5f5f5;
+  --texto-suave: #888888;
+  --borde: #1f1f1f;
+
+  /* Componentes RGB de los acentos — para componer rgba()
+     con distintos niveles de opacidad sin repetir el literal */
+  --acento-rgb: 255 107 0;
 }
 
+/* Exponemos las variables a Tailwind v4 vía @theme
+   así podemos usar bg-fondo, text-acento, etc. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-acento: var(--acento);
+  --color-acento-hover: var(--acento-hover);
+  --color-texto: var(--texto-primario);
+  --color-texto-suave: var(--texto-suave);
+  --color-borde: var(--borde);
+
+  --font-display: var(--font-syne);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset y base */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--fondo);
+  color: var(--texto-primario);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Acá le damos un poco de aire arriba cuando ancla scrolls */
+  scroll-padding-top: 80px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Tipografía base responsive con clamp — escala fluida en cualquier viewport */
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+}
+
+/* Tipografía responsive con clamp para títulos y párrafos */
+h1 {
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  line-height: 1;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  line-height: 1.2;
+}
+
+p {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+/* Aseguramos que las imágenes y los contenedores nunca rompan el layout */
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Si el usuario prefiere menos movimiento, respetamos */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Selección de texto con acento */
+::selection {
+  background-color: var(--acento);
+  color: var(--fondo);
+}
+
+/* Scrollbar minimalista prolijo */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fondo);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--borde);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--texto-suave);
+}
+
+/* =========================================================
+   Utilidades globales
+   ========================================================= */
+
+/* Bounce suave para el indicador de scroll */
+@keyframes rebote-sutil {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+.rebote-sutil {
+  animation: rebote-sutil 1.8s ease-in-out infinite;
+}
+
+/* Línea divisoria sutil que se usa entre secciones */
+.linea-divisoria {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--borde) 50%,
+    transparent 100%
+  );
+}
+
+/* Borde acento sutil — para el navbar scrolleado.
+   Usa los componentes RGB del acento con 15% de opacidad */
+.borde-acento-suave {
+  border-color: rgb(var(--acento-rgb) / 0.15);
+}
+
+/* Halo/glow del enlace activo en el navbar — text-shadow
+   con el acento al 60% de opacidad. Antes era inline style */
+.texto-halo-acento {
+  text-shadow: 0 0 12px rgb(var(--acento-rgb) / 0.6);
+}
+
+/* =========================================================
+   Animaciones y keyframes nuevos
+   ========================================================= */
+
+/* Bloque parpadeante del hero — el cuadrado naranja al lado del nombre */
+@keyframes parpadeo-cursor {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.cursor-parpadeante {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  background-color: var(--acento);
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  animation: parpadeo-cursor 0.8s infinite;
+}
+
+/* Grain / noise overlay — efecto sutil de textura sobre el hero */
+.textura-grano {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* Brillo que recorre la card de proyecto en hover — un shine prolijo */
+@keyframes shine-recorrido {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+.shine-recorrido {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shine-recorrido::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 107, 0, 0.08) 50%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.group:hover .shine-recorrido::after {
+  animation: shine-recorrido 0.9s ease-out forwards;
+  opacity: 1;
+}
+
+/* Pulse continuo para dots de "disponible" — más visible que el ping default */
+@keyframes pulso-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.pulso-continuo {
+  animation: pulso-dot 2s ease-in-out infinite;
+}
+
+/* Barra de progreso de carga — apenas se nota, es decorativa */
+@keyframes progreso-carga {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.barra-progreso {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--acento);
+  transform-origin: left;
+  z-index: 200;
+  animation: progreso-carga 0.8s ease-out forwards;
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.6);
+}
+
+/* =========================================================
+   Detección de touch — el breakpoint por ancho no alcanza
+   =========================================================
+   `(pointer: coarse)` = el puntero primario es impreciso
+   (dedo en pantalla táctil). `(hover: none)` = no hay forma
+   de "hover" (mouse no se queda quieto arriba de un elemento).
+   Con la OR cubrimos: phones, tablets, iPads, foldables, etc.
+
+   Esto va DEBAJO de las reglas de Tailwind en el archivo, así
+   gana por orden de aparición cuando las dos media queries
+   (lg: min-width + tactil: pointer) se cumplen a la vez.
+
+   Las clases `.nav-movil` y `.nav-desktop` se aplican en
+   src/componentes/Navegacion.tsx.
+   ========================================================= */
+@media (pointer: coarse), (hover: none) {
+  .nav-movil {
+    display: flex !important;
+  }
+  .nav-desktop {
+    display: none !important;
+  }
 }
