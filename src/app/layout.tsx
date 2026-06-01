@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import BarraProgreso from "@/componentes/BarraProgreso";
 import ConfiguracionMovimiento from "@/componentes/ConfiguracionMovimiento";
@@ -129,6 +130,9 @@ export default function RootLayout({
         {/* MotionConfig hace que todas las animaciones de Framer Motion
             respeten prefers-reduced-motion del sistema operativo */}
         <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
+        {/* Vercel Analytics — page views automáticos, sin cookies,
+            no impacta performance. Se activa solo en producción. */}
+        <Analytics />
       </body>
     </html>
   );
