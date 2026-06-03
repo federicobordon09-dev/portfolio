@@ -12,7 +12,7 @@
 export const DATOS_PERSONALES = {
   nombreCompleto: "Federico Bordon",
   email: "federicobordon.dev@gmail.com",
-  github: "https://github.com/federicobordondev",
+  github: "https://github.com/federicobordon09-dev",
   ubicacion: "Mendoza, Argentina",
   rol: "Desarrollador Web",
 } as const;
