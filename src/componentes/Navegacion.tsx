@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconoCerrar, IconoMenu } from "./iconos/Iconos";
-import { EASE_OUT_EXPO, VIEWPORT_PRESET } from "@/lib/animaciones";
+import { EASE_OUT_EXPO } from "@/lib/animaciones";
 
 // Definimos los enlaces de navegación en un solo lugar
 // así es fácil agregar o reordenar secciones más adelante

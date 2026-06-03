@@ -337,7 +337,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                       id="contacto-email"
                       ref={primerInputRef}
                       name="campo-correo-portfolio"
-                      autoComplete="off"
+                      autoComplete="email"
                       spellCheck={false}
                       required
                       value={form.email}

@@ -16,3 +16,46 @@ export const DATOS_PERSONALES = {
   ubicacion: "Mendoza, Argentina",
   rol: "Desarrollador Web",
 } as const;
+
+export interface Proyecto {
+  id: number;
+  nombre: string;
+  categoria: string;
+  anio: string;
+  descripcion: string;
+  tecnologias: string[];
+  enlace: string | null;
+}
+
+export const proyectos: Proyecto[] = [
+  {
+    id: 1,
+    nombre: "Copa Chapa Chapa",
+    categoria: "Plataforma Simracing",
+    anio: "2026",
+    descripcion:
+      "Una plataforma web completa para gestionar y potenciar una comunidad de simracing — con datos de carreras, clasificaciones, automatización y diseño de experiencia de usuario.",
+    tecnologias: ["Next.js", "React", "TypeScript", "Tailwind"],
+    enlace: "https://copachapachapa.vercel.app/",
+  },
+  {
+    id: 2,
+    nombre: "Región Web",
+    categoria: "Negocios Locales",
+    anio: "2026",
+    descripcion:
+      "Desarrollo web y soluciones de presencia digital para bodegas, restaurantes y negocios locales de Mendoza.",
+    tecnologias: ["Next.js", "Tailwind", "SEO", "AI Tools"],
+    enlace: null,
+  },
+  {
+    id: 3,
+    nombre: "Next Project",
+    categoria: "Próximamente",
+    anio: "2026",
+    descripcion:
+      "Siempre construyendo algo nuevo. El próximo proyecto ya está tomando forma — enfocado en rendimiento, diseño e impacto real.",
+    tecnologias: ["TBD"],
+    enlace: null,
+  },
+];

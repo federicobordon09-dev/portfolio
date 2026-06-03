@@ -10,7 +10,7 @@
  * significado visual (Cerrar, Flecha, Check, etc.).
  */
 
-interface PropsIcono {
+export interface PropsIcono {
   tamano?: number;
   className?: string;
 }

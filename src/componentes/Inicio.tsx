@@ -145,6 +145,7 @@ export default function Inicio() {
         {/* Nombre principal con animación de entrada letra por letra
             + typewriter loop que mantiene la línea naranja siguiendo al texto. */}
         <h1 className="relative font-display font-extrabold leading-[0.95] tracking-tight text-[clamp(3rem,12vw,9.5rem)] min-h-[2.1em]">
+          <span className="sr-only">Federico Bordon</span>
           {/* Línea 1: "Federico" + espacio */}
           <span className="block text-texto whitespace-pre">
             {/* Cursor al inicio cuando todavía no hay ninguna letra */}
@@ -259,7 +260,7 @@ export default function Inicio() {
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-medium">
           Bajar
         </span>
-        <span className="rebote-sutile w-px h-10 sm:h-14 bg-gradient-to-b from-acento to-transparent" />
+        <span className="rebote-sutil w-px h-10 sm:h-14 bg-gradient-to-b from-acento to-transparent" aria-hidden="true" />
       </motion.button>
     </section>
   );

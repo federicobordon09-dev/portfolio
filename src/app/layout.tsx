@@ -62,6 +62,9 @@ export const metadata: Metadata = {
     description:
       "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
   },
+  alternates: {
+    canonical: metadataBase.toString(),
+  },
 };
 
 // En Next.js 14+ el themeColor va en un export separado "viewport"
@@ -93,6 +96,7 @@ function datosEstructurados() {
       addressCountry: "AR",
     },
     sameAs: [DATOS_PERSONALES.github],
+    image: "/logo.png",
     knowsAbout: [
       "Next.js",
       "React",

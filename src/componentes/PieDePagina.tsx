@@ -30,7 +30,7 @@ export default function PieDePagina() {
       transition={{ duration: 0.5 }}
       className="relative px-5 sm:px-10 lg:px-16 py-8 border-t border-borde"
     >
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-3 text-xs text-texto-suave font-mono uppercase tracking-[0.15em] text-center sm:text-left">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 text-xs text-texto-suave font-mono uppercase tracking-[0.15em] text-center sm:text-left">
         <span>© 2026 — Todos los derechos reservados</span>
         <span>
           Diseñado <span className="text-acento">&amp;</span> Desarrollado por{" "}
