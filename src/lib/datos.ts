@@ -50,12 +50,12 @@ export const proyectos: Proyecto[] = [
   },
   {
     id: 3,
-    nombre: "Next Project",
-    categoria: "Próximamente",
+    nombre: "Bodega Andeluna",
+    categoria: "Website Redesign",
     anio: "2026",
     descripcion:
-      "Siempre construyendo algo nuevo. El próximo proyecto ya está tomando forma — enfocado en rendimiento, diseño e impacto real.",
-    tecnologias: ["TBD"],
-    enlace: null,
+      "Re-diseño completo del sitio web de Bodega Andeluna con estética Luxury Editorial Oscura. Proyecto personal con fines educativos y de demostración — NO es la web oficial.",
+    tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
+    enlace: "https://bodega-andeluna.vercel.app/es",
   },
 ];
