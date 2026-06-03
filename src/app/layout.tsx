@@ -42,11 +42,10 @@ export const metadata: Metadata = {
     "mendoza",
   ],
   authors: [{ name: "Federico Bordon" }],
-  // Favicon e iconos — usamos el logo.png de public/
+  // Favicon e iconos
   icons: {
     icon: [{ url: "/logo.png", type: "image/png" }],
     apple: "/logo.png",
-    shortcut: "/logo.png",
   },
   openGraph: {
     title: "Federico Bordon — Desarrollador Web",
