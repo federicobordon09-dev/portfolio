@@ -40,13 +40,13 @@ export const proyectos: Proyecto[] = [
   },
   {
     id: 2,
-    nombre: "Región Web",
-    categoria: "Negocios Locales",
+    nombre: "MediComprende",
+    categoria: "IA + Salud",
     anio: "2026",
     descripcion:
-      "Desarrollo web y soluciones de presencia digital para bodegas, restaurantes y negocios locales de Mendoza.",
-    tecnologias: ["Next.js", "Tailwind", "SEO", "AI Tools"],
-    enlace: null,
+      "App web que traduce informes médicos a lenguaje simple usando inteligencia artificial. Subí tu PDF y recibí explicaciones claras de cada hallazgo, término y resultado sin tecnicismos.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS", "Gemini AI", "Vercel"],
+    enlace: "https://medicomprende.vercel.app/",
   },
   {
     id: 3,
@@ -57,15 +57,5 @@ export const proyectos: Proyecto[] = [
       "Re-diseño completo del sitio web de Bodega Andeluna con estética Luxury Editorial Oscura. Proyecto personal con fines educativos y de demostración — NO es la web oficial.",
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
-  },
-  {
-    id: 4,
-    nombre: "MediComprende",
-    categoria: "IA + Salud",
-    anio: "2026",
-    descripcion:
-      "App web que traduce informes médicos a lenguaje simple usando inteligencia artificial. Subí tu PDF y recibí explicaciones claras de cada hallazgo, término y resultado sin tecnicismos.",
-    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS", "Gemini AI", "Vercel"],
-    enlace: "https://medicomprende.vercel.app/",
   },
 ];
