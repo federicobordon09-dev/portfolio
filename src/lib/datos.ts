@@ -58,4 +58,14 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
   },
+  {
+    id: 4,
+    nombre: "MediComprende",
+    categoria: "IA + Salud",
+    anio: "2026",
+    descripcion:
+      "App web que traduce informes médicos a lenguaje simple usando inteligencia artificial. Subí tu PDF y recibí explicaciones claras de cada hallazgo, término y resultado sin tecnicismos.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS", "Gemini AI", "Vercel"],
+    enlace: "https://medicomprende.vercel.app/",
+  },
 ];
