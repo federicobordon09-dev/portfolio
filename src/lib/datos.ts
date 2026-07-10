@@ -58,4 +58,14 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
   },
+  {
+    id: 4,
+    nombre: "Mirasoles",
+    categoria: "Landing Page Restaurante",
+    anio: "2026",
+    descripcion:
+      "Landing page para Mirasoles, un restaurante familiar de La Consulta, Mendoza: carta digital que se lee perfecto desde el celular, reservas por WhatsApp y mejor presencia en Google. Proyecto conceptual con fines educativos y de demostración — NO es la web oficial.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Radix UI"],
+    enlace: "https://mirasoles.vercel.app",
+  },
 ];
