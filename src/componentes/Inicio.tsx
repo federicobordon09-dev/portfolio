@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useReducer, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import {
   TIMING,
   ESTADO_INICIAL,
@@ -67,6 +67,23 @@ function useTypewriterConEntrada() {
 export default function Inicio() {
   const { cantidadVisible, entradaTerminada } = useTypewriterConEntrada();
 
+  // Spotlight que sigue el cursor — un halo naranja sutil que ilumina
+  // el patrón de puntos del fondo. Arranca fuera de pantalla; en mobile
+  // (sin mouse) simplemente no se mueve y queda imperceptible.
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
+  const fondoSpotlight = useTransform(
+    [mouseX, mouseY],
+    ([x, y]) =>
+      `radial-gradient(500px circle at ${x}px ${y}px, rgb(255 107 0 / 0.07), transparent 65%)`,
+  );
+
+  const manejarMovimientoMouse = (evento: React.MouseEvent<HTMLElement>) => {
+    const rect = evento.currentTarget.getBoundingClientRect();
+    mouseX.set(evento.clientX - rect.left);
+    mouseY.set(evento.clientY - rect.top);
+  };
+
   // Helper para scrollear a la siguiente sección (Trabajo)
   const manejarClickScroll = () => {
     const seccionTrabajo = document.getElementById("trabajo");
@@ -108,7 +125,7 @@ export default function Inicio() {
           delay: entradaTerminada ? 0 : indiceGlobal * TIMING.STAGGER_ENTRADA_S,
           ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
         }}
-        className={`inline-block ${esParteNaranja ? "text-acento" : "text-texto"}`}
+        className={`inline-block ${esParteNaranja ? "texto-degradado-acento" : "text-texto"}`}
       >
         {letra === " " ? "\u00A0" : letra}
       </motion.span>
@@ -118,8 +135,26 @@ export default function Inicio() {
   return (
     <section
       id="inicio"
+      onMouseMove={manejarMovimientoMouse}
       className="relative min-h-screen flex flex-col justify-center px-5 sm:px-10 lg:px-16 pt-24 pb-12 overflow-hidden"
     >
+      {/* Patrón de puntos sutil — textura tech difuminada hacia los bordes */}
+      <div className="patron-puntos" aria-hidden="true" />
+
+      {/* Spotlight que sigue el cursor — ilumina el patrón de puntos */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ background: fondoSpotlight }}
+      />
+
+      {/* Resplandor ambiental — orbe naranja difuminado arriba a la
+          izquierda que le da profundidad y calidez al fondo del hero */}
+      <div
+        className="resplandor-acento glow-respira -top-32 -left-24 w-[420px] h-[420px] sm:w-[650px] sm:h-[650px]"
+        aria-hidden="true"
+      />
+
       {/* Overlay de grano sutil para darle textura al hero */}
       <div className="textura-grano" aria-hidden="true" />
 

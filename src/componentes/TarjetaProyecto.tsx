@@ -74,7 +74,7 @@ export default function TarjetaProyecto({
         rotateX: rotacionXSuave,
         rotateY: rotacionYSuave,
       }}
-      className="group relative bg-superficie border border-borde rounded-sm p-5 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[340px] hover:border-acento transition-colors duration-300 cursor-pointer"
+      className="group relative overflow-hidden bg-superficie border border-borde rounded-sm p-5 sm:p-8 flex flex-col justify-between min-h-[320px] sm:min-h-[360px] hover:border-acento transition-colors duration-300 cursor-pointer"
     >
       <motion.div
         aria-hidden="true"
@@ -82,14 +82,28 @@ export default function TarjetaProyecto({
         style={{ background: fondoBrillo }}
       />
 
+      {/* Barra de acento superior que crece desde la izquierda en hover */}
+      <span
+        aria-hidden="true"
+        className="absolute top-0 left-0 h-[3px] w-full bg-gradient-to-r from-acento to-transparent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
+      />
+
+      {/* Número índice como marca de agua — refuerza el tono editorial */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-4 -right-2 font-display font-extrabold text-[7rem] sm:text-[9rem] leading-none text-texto/[0.03] group-hover:text-acento/[0.06] transition-colors duration-500 select-none"
+      >
+        {String(indice + 1).padStart(2, "0")}
+      </span>
+
       <div className="shine-recorrido" aria-hidden="true" />
 
-      <div className="flex items-center justify-between text-xs uppercase tracking-[0.15em] text-texto-suave mb-8">
+      <div className="relative z-10 flex items-center justify-between text-xs uppercase tracking-[0.15em] text-texto-suave mb-8">
         <span>{proyecto.categoria}</span>
         <span className="font-mono">{proyecto.anio}</span>
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="relative z-10 flex-1 flex flex-col">
         <h3 className="font-display font-bold text-2xl sm:text-3xl text-texto mb-3 group-hover:text-acento transition-colors duration-300">
           {proyecto.nombre}
         </h3>
@@ -125,7 +139,7 @@ export default function TarjetaProyecto({
         </motion.ul>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-borde flex items-center justify-between">
+      <div className="relative z-10 mt-6 pt-6 border-t border-borde flex items-center justify-between">
         <span className="text-xs uppercase tracking-[0.2em] text-texto-suave">
           {proyecto.enlace ? "Ver Proyecto" : "Próximamente"}
         </span>

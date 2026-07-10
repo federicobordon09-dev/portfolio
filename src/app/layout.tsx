@@ -3,6 +3,8 @@ import { Syne, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import BarraProgreso from "@/componentes/BarraProgreso";
+import ProgresoScroll from "@/componentes/ProgresoScroll";
+import ScrollAlInicio from "@/componentes/ScrollAlInicio";
 import ConfiguracionMovimiento from "@/componentes/ConfiguracionMovimiento";
 import { DATOS_PERSONALES } from "@/lib/datos";
 
@@ -30,7 +32,7 @@ const metadataBase = new URL(
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Federico Bordon — Desarrollador Web",
+  title: "Federico Bordon",
   description:
     "Construyo experiencias web que ayudan a las marcas a crecer digitalmente. Disponible para proyectos freelance.",
   keywords: [
@@ -48,7 +50,7 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Federico Bordon — Desarrollador Web",
+    title: "Federico Bordon",
     description:
       "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
     type: "website",
@@ -57,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Federico Bordon — Desarrollador Web",
+    title: "Federico Bordon",
     description:
       "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
   },
@@ -94,7 +96,7 @@ function datosEstructurados() {
       addressLocality: DATOS_PERSONALES.ubicacion,
       addressCountry: "AR",
     },
-    sameAs: [DATOS_PERSONALES.github],
+    sameAs: [DATOS_PERSONALES.github, DATOS_PERSONALES.linkedin],
     image: "/logo.png",
     knowsAbout: [
       "Next.js",
@@ -130,6 +132,10 @@ export default function RootLayout({
         />
         {/* Barra de carga decorativa — se auto-remueve */}
         <BarraProgreso />
+        {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
+        <ProgresoScroll />
+        {/* Cada recarga vuelve al Inicio en vez de restaurar el scroll */}
+        <ScrollAlInicio />
         {/* MotionConfig hace que todas las animaciones de Framer Motion
             respeten prefers-reduced-motion del sistema operativo */}
         <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>

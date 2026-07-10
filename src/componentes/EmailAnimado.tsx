@@ -33,38 +33,38 @@ export default function EmailAnimado({
     <motion.button
       type="button"
       onClick={onClick}
-      className="group/email relative inline-block font-display font-bold text-[clamp(1.5rem,6vw,4rem)] sm:text-5xl lg:text-7xl text-texto hover:text-acento transition-colors duration-300 break-words text-left cursor-pointer"
+      aria-label={`Escribirme a ${texto}`}
+      className="group/email relative flex flex-wrap items-baseline max-w-full font-display font-bold text-[clamp(1.25rem,6vw,4rem)] sm:text-5xl lg:text-7xl leading-[1.1] text-texto hover:text-acento transition-colors duration-300 text-left cursor-pointer"
       initial="reposo"
       whileHover="hover"
     >
-      <span className="invisible" aria-hidden="true">
-        {texto}
-      </span>
-
-      <span className="absolute inset-0 flex" aria-label={texto}>
-        {texto.split("").map((letra, indice) => (
-          <motion.span
-            key={`${letra}-${indice}`}
-            variants={{
-              reposo: { y: 0 },
-              hover: {
-                y: offsetsPorLetra[indice],
-                transition: {
-                  duration: 0.3,
-                  delay: indice * 0.015,
-                  ease: EASE_OUT_EXPO,
-                },
+      {/* Renderizamos las letras en flujo normal con flex-wrap: en
+          pantallas chicas el email envuelve por letra en vez de cortarse
+          o desbordar. Cada letra conserva su micro-animación en hover. */}
+      {texto.split("").map((letra, indice) => (
+        <motion.span
+          key={`${letra}-${indice}`}
+          aria-hidden="true"
+          variants={{
+            reposo: { y: 0 },
+            hover: {
+              y: offsetsPorLetra[indice],
+              transition: {
+                duration: 0.3,
+                delay: indice * 0.015,
+                ease: EASE_OUT_EXPO,
               },
-            }}
-            className="inline-block"
-            style={{ width: letra === " " ? "0.3em" : "auto" }}
-          >
-            {letra === " " ? "\u00A0" : letra}
-          </motion.span>
-        ))}
-      </span>
+            },
+          }}
+          className="inline-block"
+          style={{ width: letra === " " ? "0.3em" : "auto" }}
+        >
+          {letra === " " ? "\u00A0" : letra}
+        </motion.span>
+      ))}
 
       <motion.span
+        aria-hidden="true"
         variants={{
           reposo: { rotate: 0, x: 0, y: 0 },
           hover: {

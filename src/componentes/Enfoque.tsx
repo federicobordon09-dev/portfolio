@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
+import Resplandor from "./Resplandor";
 
 // Principios profesionales de Federico Bordon — cortos, punzantes, sin biografía
 const principios = [
@@ -78,9 +79,20 @@ export default function Enfoque() {
   return (
     <section
       id="enfoque"
-      className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32"
+      className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Resplandor ambiental con micro-parallax — cohesión con el resto de las secciones */}
+      <Resplandor className="-left-40 top-1/3 w-[360px] h-[360px] sm:w-[520px] sm:h-[520px] opacity-50" />
+
+      {/* Número fantasma gigante — refuerza el tono editorial */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-8 right-0 sm:right-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-texto/[0.02] select-none"
+      >
+        02
+      </span>
+
+      <div className="relative max-w-7xl mx-auto">
         {/* Header de sección — entra desde la izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}

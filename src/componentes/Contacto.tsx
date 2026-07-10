@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 import FormularioContacto from "./FormularioContacto";
 import EmailAnimado from "./EmailAnimado";
 import { DATOS_PERSONALES } from "@/lib/datos";
-import { IconoGitHub } from "./iconos/Iconos";
+import { IconoGitHub, IconoLinkedIn } from "./iconos/Iconos";
+import BotonMagnetico from "./BotonMagnetico";
+import Resplandor from "./Resplandor";
 
 export default function Contacto() {
   const [formularioAbierto, setFormularioAbierto] = useState(false);
@@ -13,9 +15,20 @@ export default function Contacto() {
   return (
     <section
       id="contacto"
-      className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32"
+      className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Resplandor ambiental con micro-parallax — refuerza el CTA final con calidez */}
+      <Resplandor className="left-1/2 -bottom-40 w-[500px] h-[400px] sm:w-[800px] sm:h-[500px] opacity-70" desplazamiento={40} centrado />
+
+      {/* Número fantasma gigante — cierra la serie editorial 01·02·03 */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-8 left-0 sm:left-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-texto/[0.02] select-none"
+      >
+        03
+      </span>
+
+      <div className="relative max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,18 +93,34 @@ export default function Contacto() {
             <span className="text-xs uppercase tracking-[0.2em] text-texto-suave font-mono mr-2">
               Encontrame en
             </span>
-            <a
-              href={DATOS_PERSONALES.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="group w-11 h-11 flex items-center justify-center border border-borde rounded-full hover:border-acento hover:bg-acento transition-all duration-300"
-            >
-              <IconoGitHub
-                tamano={18}
-                className="text-texto-suave group-hover:text-fondo transition-colors duration-300"
-              />
-            </a>
+            <BotonMagnetico intensidad={0.4}>
+              <a
+                href={DATOS_PERSONALES.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="group w-11 h-11 flex items-center justify-center border border-borde rounded-full hover:border-acento hover:bg-acento transition-all duration-300"
+              >
+                <IconoGitHub
+                  tamano={18}
+                  className="text-texto-suave group-hover:text-fondo transition-colors duration-300"
+                />
+              </a>
+            </BotonMagnetico>
+            <BotonMagnetico intensidad={0.4}>
+              <a
+                href={DATOS_PERSONALES.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="group w-11 h-11 flex items-center justify-center border border-borde rounded-full hover:border-acento hover:bg-acento transition-all duration-300"
+              >
+                <IconoLinkedIn
+                  tamano={18}
+                  className="text-texto-suave group-hover:text-fondo transition-colors duration-300"
+                />
+              </a>
+            </BotonMagnetico>
           </motion.div>
         </motion.div>
       </div>

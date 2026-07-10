@@ -107,6 +107,26 @@ video {
   color: var(--fondo);
 }
 
+/* Viñeta global sutil — oscurece apenas los bordes de la pantalla
+   para dar profundidad y enfocar la mirada hacia el centro.
+   Fija, no interactiva, y por debajo del navbar (z-50). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  box-shadow: inset 0 0 180px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* Focus visible prolijo y accesible — anillo naranja consistente en
+   toda la navegación por teclado, sin romper el diseño */
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 /* Scrollbar minimalista prolijo */
 ::-webkit-scrollbar {
   width: 8px;
@@ -156,6 +176,69 @@ video {
     var(--borde) 50%,
     transparent 100%
   );
+}
+
+/* =========================================================
+   Ambiente y profundidad — glows y texturas de fondo
+   ========================================================= */
+
+/* Resplandor ambiental: orbe naranja muy difuminado que le da
+   profundidad y calidez al fondo sin cambiar la paleta.
+   Se posiciona con utilidades de Tailwind (top/left/w/h). */
+.resplandor-acento {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(110px);
+  background: radial-gradient(
+    circle,
+    rgb(var(--acento-rgb) / 0.16),
+    transparent 70%
+  );
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+/* Patrón de puntos sutil — textura tech para el fondo del hero.
+   La máscara radial lo desvanece hacia los bordes para que se
+   integre y no compita con el contenido. */
+.patron-puntos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    rgb(var(--acento-rgb) / 0.09) 1px,
+    transparent 1px
+  );
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 75% 60% at 30% 35%,
+    #000 30%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 75% 60% at 30% 35%,
+    #000 30%,
+    transparent 100%
+  );
+}
+
+/* Respiración lenta del resplandor — vida sutil en el fondo */
+@keyframes respiracion-glow {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.glow-respira {
+  animation: respiracion-glow 9s ease-in-out infinite;
 }
 
 /* Borde acento sutil — para el navbar scrolleado.
@@ -289,6 +372,85 @@ video {
   z-index: 200;
   animation: progreso-carga 0.8s ease-out forwards;
   box-shadow: 0 0 10px rgba(255, 107, 0, 0.6);
+}
+
+/* =========================================================
+   Marquee de stack tecnológico — tira en loop infinito
+   ========================================================= */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* -50% porque la pista tiene la lista duplicada: al recorrer la
+       mitad, la segunda copia queda exactamente donde arrancó la primera */
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-pista {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+/* Cada grupo contiene la lista completa. Renderizamos dos idénticos,
+   así el translateX(-50%) cae justo en la costura y el loop es perfecto. */
+.marquee-grupo {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* El ticker es contenido en movimiento por diseño: aunque el usuario
+   tenga "reducir movimiento" activado, la regla global de reduced-motion
+   (más abajo) congelaría la animación. Este override —de mayor
+   especificidad que el `*` global— la mantiene siempre desfilando. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-pista {
+    animation-duration: 32s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* Difumina los bordes izq/der para que las tecnologías entren y salgan
+   suavemente en vez de cortarse contra el borde de la pantalla */
+.marquee-mascara {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   Gradiente de acento aplicado a texto (nombre del hero)
+   =========================================================
+   Rellena las letras con un degradado cálido acento→hover y lo
+   recorta a la forma del texto con background-clip. Da profundidad
+   sutil a "Bordon" sin salirse de la paleta. */
+.texto-degradado-acento {
+  background-image: linear-gradient(
+    160deg,
+    var(--acento) 0%,
+    var(--acento-hover) 55%,
+    var(--acento) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* =========================================================

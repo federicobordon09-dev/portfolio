@@ -49,33 +49,52 @@ export default function Navegacion() {
     return () => window.removeEventListener("scroll", manejarScroll);
   }, []);
 
-  // IntersectionObserver para detectar qué sección está en el viewport
-  // y resaltar el link correspondiente en el navbar
+  // Detección de sección activa basada en scroll.
+  //
+  // Antes usábamos IntersectionObserver comparando intersectionRatio, pero
+  // eso falla cuando las secciones tienen alturas muy distintas: una sección
+  // más alta que el viewport nunca alcanza un ratio alto, así que una sección
+  // corta "ganaba" y marcaba mal el link (ej: estando en Proyectos marcaba
+  // Enfoque).
+  //
+  // Enfoque robusto: trazamos una línea imaginaria al 35% del alto del
+  // viewport y la sección activa es la ÚLTIMA cuyo `top` ya cruzó esa línea.
+  // Además, si estamos al fondo del todo, forzamos la última sección (así
+  // Contacto siempre queda marcado aunque sea corta).
   useEffect(() => {
-    const secciones = enlacesNavegacion
-      .map((enlace) => document.getElementById(enlace.id))
-      .filter((seccion): seccion is HTMLElement => seccion !== null);
+    const calcularSeccionActiva = () => {
+      const secciones = enlacesNavegacion
+        .map((enlace) => document.getElementById(enlace.id))
+        .filter((seccion): seccion is HTMLElement => seccion !== null);
 
-    if (secciones.length === 0) return;
+      if (secciones.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entradas) => {
-        const entradasVisibles = entradas.filter((e) => e.isIntersecting);
-        if (entradasVisibles.length > 0) {
-          const masVisible = entradasVisibles.reduce((prev, curr) =>
-            curr.intersectionRatio > prev.intersectionRatio ? curr : prev,
-          );
-          setSeccionActiva(masVisible.target.id);
+      // Si estamos casi al fondo de la página, la última sección gana
+      const fondoAlcanzado =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+      if (fondoAlcanzado) {
+        setSeccionActiva(secciones[secciones.length - 1].id);
+        return;
+      }
+
+      const linea = window.innerHeight * 0.35;
+      let activa = secciones[0].id;
+      for (const seccion of secciones) {
+        if (seccion.getBoundingClientRect().top <= linea) {
+          activa = seccion.id;
         }
-      },
-      {
-        threshold: [0.3, 0.5, 0.7],
-        rootMargin: "-20% 0px -40% 0px",
-      },
-    );
+      }
+      setSeccionActiva(activa);
+    };
 
-    secciones.forEach((seccion) => observer.observe(seccion));
-    return () => observer.disconnect();
+    calcularSeccionActiva();
+    window.addEventListener("scroll", calcularSeccionActiva, { passive: true });
+    window.addEventListener("resize", calcularSeccionActiva);
+    return () => {
+      window.removeEventListener("scroll", calcularSeccionActiva);
+      window.removeEventListener("resize", calcularSeccionActiva);
+    };
   }, []);
 
   // Bloqueamos el scroll del body cuando el menú mobile está abierto
@@ -230,8 +249,8 @@ export default function Navegacion() {
               y la dimensionamos al 62.5% del nav en mobile (40/64) y al
               60% en desktop (48/80), siempre dentro del rango 60-70%.
               `priority` porque está above the fold y no debe lazy-loadear. */}
-          <a
-            href="#inicio"
+          <button
+            type="button"
             onClick={(e) => manejarClickAncla(e, "inicio")}
             className="relative z-50 flex items-center h-full overflow-visible transition-opacity duration-300 hover:opacity-80"
             aria-label="Volver al inicio"
@@ -247,7 +266,7 @@ export default function Navegacion() {
               quality={90}
               className="h-10 sm:h-12 w-auto max-h-full object-contain select-none flex-shrink-0"
             />
-          </a>
+          </button>
 
           {/* Links desktop — alineados a la derecha (ocultos en mobile).
               La clase `nav-desktop` la pisa el @media de touch en
@@ -258,8 +277,8 @@ export default function Navegacion() {
               const esActivo = seccionActiva === enlace.id;
               return (
                 <li key={enlace.id}>
-                  <a
-                    href={`#${enlace.id}`}
+                  <button
+                    type="button"
                     onClick={(e) => manejarClickAncla(e, enlace.id)}
                     className={`group relative text-sm font-medium transition-colors duration-300 ${
                       esActivo
@@ -278,7 +297,7 @@ export default function Navegacion() {
                           : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     />
-                  </a>
+                  </button>
                 </li>
               );
             })}
