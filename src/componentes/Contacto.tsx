@@ -73,16 +73,6 @@ export default function Contacto() {
           transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
           className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8 pt-8 border-t border-borde"
         >
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-acento opacity-60 pulso-continuo" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-acento" />
-            </span>
-            <span className="text-sm text-texto-suave">
-              Disponible para proyectos freelance
-            </span>
-          </div>
-
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

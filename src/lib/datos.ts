@@ -1,12 +1,5 @@
 /**
  * Datos centralizados del portfolio.
- *
- * Si cambia el email, el GitHub, o el nombre, se actualiza una sola vez
- * acá en vez de andar buscando por todos los componentes.
- *
- * Las constantes de UI (colores, paleta) están en `app/globals.css`.
- * Lo que va acá son datos que podrían llegar a venir de un CMS o
- * de variables de entorno.
  */
 
 export const DATOS_PERSONALES = {
@@ -35,7 +28,7 @@ export const proyectos: Proyecto[] = [
     categoria: "Plataforma Simracing",
     anio: "2026",
     descripcion:
-      "Una plataforma web completa para gestionar y potenciar una comunidad de simracing — con datos de carreras, clasificaciones, automatización y diseño de experiencia de usuario.",
+      "Plataforma web que gestiona un campeonato argentino de simracing en Assetto Corsa: clasificaciones en vivo con buscador y paginación, tabla de equipos, resultados por split con tabs interactivos y formulario de inscripción con anti-spam.",
     tecnologias: ["Next.js", "React", "TypeScript", "Tailwind"],
     enlace: "https://copachapachapa.vercel.app/",
   },
@@ -45,7 +38,7 @@ export const proyectos: Proyecto[] = [
     categoria: "IA + Salud",
     anio: "2026",
     descripcion:
-      "App web que traduce informes médicos a lenguaje simple usando inteligencia artificial. Subí tu PDF y recibí explicaciones claras de cada hallazgo, término y resultado sin tecnicismos.",
+      "App web que traduce informes médicos en PDF a lenguaje claro usando IA. Subí tu estudio y recibí un análisis completo: resumen, hallazgos, términos, valores fuera de rango y preguntas sugeridas para llevar al médico.",
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS", "Gemini AI", "Vercel"],
     enlace: "https://medicomprende.vercel.app/",
   },
@@ -55,7 +48,7 @@ export const proyectos: Proyecto[] = [
     categoria: "Website Redesign",
     anio: "2026",
     descripcion:
-      "Re-diseño completo del sitio web de Bodega Andeluna con estética Luxury Editorial Oscura. Proyecto personal con fines educativos y de demostración — NO es la web oficial.",
+      "Rediseño completo del sitio web de Bodega Andeluna con estética Luxury Editorial Oscura: catálogo de 32 vinos en 6 líneas, experiencias gastronómicas, lodge con galería y sistema de booking, en 3 idiomas (ES/EN/PT). Proyecto conceptual — NO es la web oficial.",
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
   },
@@ -65,8 +58,18 @@ export const proyectos: Proyecto[] = [
     categoria: "Landing Page Restaurante",
     anio: "2026",
     descripcion:
-      "Landing page para Mirasoles, un restaurante familiar de La Consulta, Mendoza: carta digital que se lee perfecto desde el celular, reservas por WhatsApp y mejor presencia en Google. Proyecto conceptual con fines educativos y de demostración — NO es la web oficial.",
+      "Landing page para Mirasoles, restaurante familiar en La Consulta, Mendoza: carta digital con lightbox y zoom progresivo, carrusel de fotos con auto-advance, mapa interactivo y botón flotante de WhatsApp. Proyecto conceptual — NO es la web oficial.",
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Radix UI"],
     enlace: "https://mirasoles-web.vercel.app/",
+  },
+  {
+    id: 5,
+    nombre: "El Hornero Pizzería",
+    categoria: "Landing Page Restaurante",
+    anio: "2026",
+    descripcion:
+      "Landing page dark + glassmorphism para El Hornero Pizzería, pizza napolitana artesanal en La Consulta, Mendoza: carta interactiva con lightbox y zoom táctil, reseñas reales con ticker infinito, y WhatsApp integrado con mensaje predefinido. Proyecto conceptual — NO es la web oficial.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Motion", "Base UI", "Lucide"],
+    enlace: "https://elhorneropizzanapo.vercel.app/",
   },
 ];

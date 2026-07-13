@@ -1,7 +1,12 @@
 "use client";
 
-import { useEffect, useReducer, useRef } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useEffect, useReducer, useRef, useState, useCallback } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useInView,
+} from "framer-motion";
 import {
   TIMING,
   ESTADO_INICIAL,
@@ -62,6 +67,48 @@ function useTypewriterConEntrada() {
     cantidadVisible: estado.cantidadVisible,
     entradaTerminada: estado.entradaTerminada,
   };
+}
+
+function ContadorAnimado({
+  valor,
+  etiqueta,
+  delay = 0,
+}: {
+  valor: number;
+  etiqueta: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const estaEnVista = useInView(ref, { once: true });
+  const [cuenta, setCuenta] = useState(0);
+
+  useEffect(() => {
+    if (!estaEnVista) return;
+    const timeout = setTimeout(() => {
+      const duracion = 1000;
+      const inicio = performance.now();
+      function actualizar(ahora: number) {
+        const progreso = Math.min((ahora - inicio) / duracion, 1);
+        const suavizado = 1 - Math.pow(1 - progreso, 3);
+        setCuenta(Math.floor(valor * suavizado));
+        if (progreso < 1) requestAnimationFrame(actualizar);
+      }
+      requestAnimationFrame(actualizar);
+    }, delay);
+    return () => clearTimeout(timeout);
+  }, [estaEnVista, valor, delay]);
+
+  return (
+    <div ref={ref} className="flex flex-col items-center sm:items-start">
+      <span className="font-display font-bold text-3xl sm:text-4xl text-acento tabular-nums leading-none">
+        {cuenta}
+        {etiqueta === "Tecnologías" && "+"}
+      </span>
+      <span className="text-texto-suave text-[11px] sm:text-xs uppercase tracking-[0.15em] mt-1">
+        {etiqueta}
+      </span>
+    </div>
+  );
 }
 
 export default function Inicio() {
@@ -240,6 +287,18 @@ export default function Inicio() {
           digitalmente.
         </motion.p>
 
+        {/* Contadores de impacto */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+          className="mt-8 sm:mt-10 flex gap-8 sm:gap-12"
+        >
+          <ContadorAnimado valor={5} etiqueta="Proyectos" delay={0} />
+          <ContadorAnimado valor={6} etiqueta="Tecnologías" delay={150} />
+          <ContadorAnimado valor={2026} etiqueta="Activo" delay={300} />
+        </motion.div>
+
         {/* Metadata inferior — entra desde la izquierda con stagger 0.15s entre items */}
         <motion.div
           initial="oculto"
@@ -247,10 +306,10 @@ export default function Inicio() {
           variants={{
             oculto: {},
             visible: {
-              transition: { staggerChildren: 0.15, delayChildren: 1.1 },
+              transition: { staggerChildren: 0.15, delayChildren: 1.4 },
             },
           }}
-          className="mt-10 sm:mt-16 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-8 sm:gap-y-3 text-sm text-texto-suave"
+          className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-8 sm:gap-y-3 text-sm text-texto-suave"
         >
           <motion.div
             variants={{
@@ -275,10 +334,21 @@ export default function Inicio() {
                 transition: { duration: 0.5, ease: "easeOut" },
               },
             }}
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-acento" />
-            <span>Disponible para proyectos freelance</span>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+            </span>
+            <span className="text-sm">Disponible para freelance</span>
+            <button
+              onClick={() => {
+                document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="text-[11px] uppercase tracking-[0.15em] text-acento hover:text-acento/80 transition-colors ml-1 cursor-pointer bg-transparent border-0 p-0"
+            >
+              Contratame →
+            </button>
           </motion.div>
         </motion.div>
       </motion.div>

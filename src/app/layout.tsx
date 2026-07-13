@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Syne, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import BarraProgreso from "@/componentes/BarraProgreso";
+import EnvoltorioCarga from "@/componentes/EnvoltorioCarga";
 import ProgresoScroll from "@/componentes/ProgresoScroll";
 import ScrollAlInicio from "@/componentes/ScrollAlInicio";
 import ConfiguracionMovimiento from "@/componentes/ConfiguracionMovimiento";
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   metadataBase,
   title: "Federico Bordon",
   description:
-    "Construyo experiencias web que ayudan a las marcas a crecer digitalmente. Disponible para proyectos freelance.",
+    "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
   keywords: [
     "desarrollador web",
     "portafolio",
@@ -130,15 +130,16 @@ export default function RootLayout({
             __html: JSON.stringify(datosEstructurados()),
           }}
         />
-        {/* Barra de carga decorativa — se auto-remueve */}
-        <BarraProgreso />
-        {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
-        <ProgresoScroll />
-        {/* Cada recarga vuelve al Inicio en vez de restaurar el scroll */}
-        <ScrollAlInicio />
-        {/* MotionConfig hace que todas las animaciones de Framer Motion
-            respeten prefers-reduced-motion del sistema operativo */}
-        <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
+        {/* Preloader tipo boot sequence — se auto-remueve */}
+        <EnvoltorioCarga>
+          {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
+          <ProgresoScroll />
+          {/* Cada recarga vuelve al Inicio en vez de restaurar el scroll */}
+          <ScrollAlInicio />
+          {/* MotionConfig hace que todas las animaciones de Framer Motion
+              respeten prefers-reduced-motion del sistema operativo */}
+          <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
+        </EnvoltorioCarga>
         {/* Vercel Analytics — page views automáticos, sin cookies,
             no impacta performance. Se activa solo en producción. */}
         <Analytics />
