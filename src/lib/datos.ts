@@ -69,14 +69,4 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Radix UI"],
     enlace: "https://mirasoles-web.vercel.app/",
   },
-  {
-    id: 5,
-    nombre: "El Hornero Pizzería",
-    categoria: "Landing Page Restaurante",
-    anio: "2026",
-    descripcion:
-      "Landing page dark + glassmorphism para El Hornero Pizzería, pizza napolitana artesanal en La Consulta, Mendoza: carta interactiva con lightbox y zoom, reseñas con ticker infinito y WhatsApp integrado. Proyecto conceptual con fines educativos — NO es la web oficial.",
-    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Motion", "Base UI", "Lucide"],
-    enlace: "https://elhorneropizzanapo.vercel.app/",
-  },
 ];
