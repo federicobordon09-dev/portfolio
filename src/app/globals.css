@@ -127,7 +127,7 @@ body::after {
   border-radius: 3px;
 }
 
-/* Scrollbar minimalista prolijo */
+/* Scrollbar global — minimalista */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -144,6 +144,25 @@ body::after {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--texto-suave);
+}
+
+/* Scrollbar del CV Panel — casi invisible, solo se ve al hover */
+.scrollbar-cv::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-cv::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-cv::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.scrollbar-cv:hover::-webkit-scrollbar-thumb,
+.scrollbar-cv:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* =========================================================

@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconoFlechaArriba } from "./iconos/Iconos";
+import CvPanel from "./CvPanel";
 
 export default function PieDePagina() {
-  // El botón de scroll-to-top aparece recién después de scrollear 500px
   const [mostrarBotonArriba, setMostrarBotonArriba] = useState(false);
+  const [cvAbierto, setCvAbierto] = useState(false);
 
   useEffect(() => {
     const manejarScroll = () => {
@@ -17,9 +18,13 @@ export default function PieDePagina() {
     return () => window.removeEventListener("scroll", manejarScroll);
   }, []);
 
-  // Helper para hacer scroll suave al top
   const irAlTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const abrirCv = () => {
+    irAlTop();
+    setTimeout(() => setCvAbierto(true), 500);
   };
 
   return (
@@ -35,9 +40,12 @@ export default function PieDePagina() {
         <span>
           Diseñado <span className="text-acento">&amp;</span> Desarrollado por{" "}
           {/* Span con hover en naranja — el nombre se ilumina al pasar el mouse */}
-          <span className="text-texto transition-colors duration-300 hover:text-acento cursor-default">
+          <button
+            onClick={abrirCv}
+            className="text-texto transition-colors duration-300 hover:text-acento cursor-pointer underline underline-offset-2 decoration-acento/0 hover:decoration-acento/50"
+          >
             Federico Bordon
-          </span>
+          </button>
         </span>
       </div>
 
@@ -61,6 +69,8 @@ export default function PieDePagina() {
           </motion.button>
         )}
       </AnimatePresence>
+
+      <CvPanel abierto={cvAbierto} onCerrar={() => setCvAbierto(false)} />
     </motion.footer>
   );
 }
