@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import EnvoltorioCarga from "@/componentes/EnvoltorioCarga";
 import ProgresoScroll from "@/componentes/ProgresoScroll";
@@ -169,6 +170,7 @@ export default function RootLayout({
         {/* Vercel Analytics — page views automáticos, sin cookies,
             no impacta performance. Se activa solo en producción. */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
