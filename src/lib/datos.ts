@@ -72,4 +72,24 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Motion", "Base UI", "Lucide"],
     enlace: "https://elhorneropizzanapo.vercel.app/",
   },
+  {
+    id: 6,
+    nombre: "Cabrita Garage Cafe",
+    categoria: "Landing Page Café",
+    anio: "2026",
+    descripcion:
+      "Landing page para Cabrita Garage Cafe, casa de café de especialidad en el centro de Mendoza: carta digital con acordeón interactivo, bento grid de productos estrella, reseñas reales embedidas, dos sucursales con Google Maps, PedidosYa y WhatsApp integrados.",
+    tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Lucide"],
+    enlace: "https://cabritagaragecafe-web.vercel.app/",
+  },
+  {
+    id: 7,
+    nombre: "El Porvenir",
+    categoria: "Landing Page Restaurante",
+    anio: "2026",
+    descripcion:
+      "Landing page para El Porvenir, bodegón renovado en La Consulta, Mendoza: galería de platos con fotos reales, cocina de temporada con takeaway, reseñas embebidas de Sluurpy y TodoResto, y contacto directo por WhatsApp.",
+    tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion"],
+    enlace: "https://elporvenir-sigma.vercel.app/",
+  },
 ];
