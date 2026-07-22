@@ -24,47 +24,73 @@ const fuenteInter = Inter({
   display: "swap",
 });
 
-// metadataBase lo usa Next.js para resolver URLs absolutas del OG image
-// y favicon. Cuando tengas dominio propio (federicobordon.dev, etc.) lo cambiás acá
 const metadataBase = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || "https://federicobordon.dev",
+  process.env.NEXT_PUBLIC_SITE_URL || "https://federicobordon.com.ar",
 );
 
 export const metadata: Metadata = {
   metadataBase,
-  title: "Federico Bordon",
+  title: {
+    default: "Federico Bordon | Desarrollador Web en Mendoza",
+    template: "%s | Federico Bordon",
+  },
   description:
-    "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
+    "Portafolio de Federico Bordon, desarrollador web en Mendoza, Argentina. Especialista en Next.js, React y TypeScript. Construyo experiencias web modernas que ayudan a las marcas a crecer digitalmente.",
   keywords: [
     "desarrollador web",
     "portafolio",
     "diseño web",
     "react",
     "next.js",
+    "typescript",
     "mendoza",
+    "argentina",
+    "desarrollador frontend",
+    "programador web",
+    "federico bordón",
+    "creación de páginas web",
   ],
-  authors: [{ name: "Federico Bordon" }],
-  // Favicon e iconos
+  authors: [{ name: "Federico Bordon", url: "https://federicobordon.com.ar" }],
+  creator: "Federico Bordon",
+  publisher: "Federico Bordon",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [{ url: "/logo.png", type: "image/png" }],
     apple: "/logo.png",
   },
   openGraph: {
-    title: "Federico Bordon",
+    title: "Federico Bordon | Desarrollador Web",
     description:
-      "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
+      "Portafolio de Federico Bordon, desarrollador web en Mendoza. Especialista en Next.js, React y TypeScript.",
     type: "website",
     locale: "es_AR",
     siteName: "Federico Bordon",
+    url: metadataBase.toString(),
+    countryName: "Argentina",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Federico Bordon",
+    title: "Federico Bordon | Desarrollador Web",
     description:
-      "Construyo experiencias web que ayudan a las marcas a crecer digitalmente.",
+      "Portafolio de Federico Bordon, desarrollador web en Mendoza. Especialista en Next.js, React y TypeScript.",
+    creator: "@federicobordon",
   },
   alternates: {
     canonical: metadataBase.toString(),
+  },
+  category: "technology",
+  verification: {
+    google: "googlefd9640e9bce2a36b",
   },
 };
 

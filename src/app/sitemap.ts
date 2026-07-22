@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const URL_SITIO = process.env.NEXT_PUBLIC_SITE_URL || "https://federicobordon.dev";
+const URL_SITIO = process.env.NEXT_PUBLIC_SITE_URL || "https://federicobordon.com.ar";
 
 /**
  * Sitemap mínimo — el portfolio es una single page, así que
