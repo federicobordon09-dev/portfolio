@@ -33,25 +33,11 @@ const metadataBase = new URL(
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Federico Bordon | Desarrollador Web en Mendoza",
+    default: "Federico Bordon | Desarrollador Web",
     template: "%s | Federico Bordon",
   },
   description:
     "Portafolio de Federico Bordon, desarrollador web en Mendoza, Argentina. Especialista en Next.js, React y TypeScript. Construyo experiencias web modernas que ayudan a las marcas a crecer digitalmente.",
-  keywords: [
-    "desarrollador web",
-    "portafolio",
-    "diseño web",
-    "react",
-    "next.js",
-    "typescript",
-    "mendoza",
-    "argentina",
-    "desarrollador frontend",
-    "programador web",
-    "federico bordón",
-    "creación de páginas web",
-  ],
   authors: [{ name: "Federico Bordon", url: "https://federicobordon.com.ar" }],
   creator: "Federico Bordon",
   publisher: "Federico Bordon",
