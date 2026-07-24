@@ -26,11 +26,13 @@ const SECCIONES: Seccion[] = [
   {
     titulo: "Proyectos Destacados",
     contenido: [
-      "MediComprende — App que traduce informes médicos PDF a lenguaje claro usando IA",
-      "Bodega Andeluna — Rediseño web con catálogo de vinos, experiencias y sistema de booking en 3 idiomas",
-      "Copa Chapa Chapa — Plataforma de simracing con clasificaciones, splits e inscripciones",
-      "Mirasoles — Landing page con carta digital, carrusel de fotos y WhatsApp integrado",
-      "El Hornero Pizzería — Landing page dark + glassmorphism con reseñas y pedidos por WhatsApp",
+      "Copa Chapa Chapa — Plataforma de simracing con clasificaciones en vivo",
+      "MediComprende — App que traduce informes médicos con IA",
+      "Bodega Andeluna — Rediseño luxury con catálogo de vinos en 3 idiomas",
+      "Mirasoles — Landing page con carta digital y WhatsApp integrado",
+      "El Hornero Pizzería — Landing dark + glassmorphism con reseñas",
+      "Cabrita Garage Cafe — Café de especialidad con carta y dos sucursales",
+      "El Porvenir — Bodegón renovado con galería de platos y reseñas",
     ],
   },
   {

@@ -34,7 +34,7 @@ export default function EmailAnimado({
       type="button"
       onClick={onClick}
       aria-label={`Escribirme a ${texto}`}
-      className="group/email relative flex flex-wrap items-baseline max-w-full font-display font-bold text-[clamp(1.25rem,6vw,4rem)] sm:text-5xl lg:text-7xl leading-[1.1] text-texto hover:text-acento transition-colors duration-300 text-left cursor-pointer"
+      className="group/email relative flex flex-wrap items-baseline max-w-full font-display font-bold text-[clamp(1.1rem,4.5vw,3rem)] sm:text-5xl lg:text-6xl leading-[1.1] text-texto hover:text-acento transition-colors duration-300 text-left cursor-pointer"
       initial="reposo"
       whileHover="hover"
     >
@@ -78,7 +78,7 @@ export default function EmailAnimado({
             },
           },
         }}
-        className="inline-block ml-3 sm:ml-6 origin-center"
+        className="inline-block ml-2 sm:ml-4 origin-center"
       >
         ↗
       </motion.span>

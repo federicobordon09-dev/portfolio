@@ -71,14 +71,14 @@ export default function Contacto() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-8 pt-8 border-t border-borde"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-8 pt-8 border-t border-borde"
         >
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: false, amount: 0.15 }}
             transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
-            className="flex items-center gap-4"
+            className="flex flex-wrap items-center gap-3 sm:gap-4"
           >
             <span className="text-xs uppercase tracking-[0.2em] text-texto-suave font-mono mr-2">
               Encontrame en

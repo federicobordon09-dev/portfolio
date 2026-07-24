@@ -45,9 +45,6 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.2.3(@types/react@19.2.17)
-      '@vitest/ui':
-        specifier: ^4.1.8
-        version: 4.1.10(vitest@4.1.10)
       tailwindcss:
         specifier: ^4
         version: 4.3.2
@@ -1170,7 +1167,8 @@ snapshots:
 
   '@oxc-project/types@0.139.0': {}
 
-  '@polka/url@1.0.0-next.29': {}
+  '@polka/url@1.0.0-next.29':
+    optional: true
 
   '@rolldown/binding-android-arm64@1.1.5':
     optional: true
@@ -1383,6 +1381,7 @@ snapshots:
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
       vitest: 4.1.10(@types/node@20.19.43)(@vitest/ui@4.1.10)(vite@8.1.4(@types/node@20.19.43)(jiti@2.7.0))
+    optional: true
 
   '@vitest/utils@4.1.10':
     dependencies:
@@ -1423,9 +1422,11 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.5
 
-  fflate@0.8.3: {}
+  fflate@0.8.3:
+    optional: true
 
-  flatted@3.4.2: {}
+  flatted@3.4.2:
+    optional: true
 
   framer-motion@12.42.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
@@ -1502,7 +1503,8 @@ snapshots:
 
   motion-utils@12.39.0: {}
 
-  mrmime@2.0.1: {}
+  mrmime@2.0.1:
+    optional: true
 
   nanoid@3.3.16: {}
 
@@ -1624,6 +1626,7 @@ snapshots:
       '@polka/url': 1.0.0-next.29
       mrmime: 2.0.1
       totalist: 3.0.1
+    optional: true
 
   source-map-js@1.2.1: {}
 
@@ -1651,7 +1654,8 @@ snapshots:
 
   tinyrainbow@3.1.0: {}
 
-  totalist@3.0.1: {}
+  totalist@3.0.1:
+    optional: true
 
   tslib@2.8.1: {}
 

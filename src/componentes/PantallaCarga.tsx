@@ -4,12 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const LINEAS = [
-  "INITIALIZING PORTFOLIO SYSTEM v2.0...",
-  "LOADING CREATIVE MODULES...",
-  "ESTABLISHING SECURE CONNECTION...",
-  "READING PROJECT DATABASE...",
-  "COMPILING USER INTERFACE...",
-  "SYSTEM READY.",
+  "INICIALIZANDO SISTEMA DEL PORTFOLIO v2.0...",
+  "CARGANDO MÓDULOS CREATIVOS...",
+  "ESTABLECIENDO CONEXIÓN SEGURA...",
+  "LEYENDO BASE DE DATOS DE PROYECTOS...",
+  "COMPILANDO INTERFAZ DE USUARIO...",
+  "SISTEMA LISTO.",
 ];
 
 const VELOCIDAD_TYPEO = 22;
@@ -118,7 +118,7 @@ export default function PantallaCarga({ onTerminar }: { onTerminar: () => void }
         </div>
 
         <div className="mt-2 flex justify-between text-[10px] font-mono text-white/15 tracking-wider">
-          <span>BOOT_SEQUENCE v2.0</span>
+          <span>SECUENCIA_DE_ARRANQUE v2.0</span>
           <span>{Math.min(Math.round(progresoTotal * 100), 100)}%</span>
         </div>
       </div>

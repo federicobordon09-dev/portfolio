@@ -19,6 +19,8 @@ export interface Proyecto {
   descripcion: string;
   tecnologias: string[];
   enlace: string | null;
+  imagen: string;
+  imagenAlt: string;
 }
 
 export const proyectos: Proyecto[] = [
@@ -28,9 +30,11 @@ export const proyectos: Proyecto[] = [
     categoria: "Plataforma Simracing",
     anio: "2026",
     descripcion:
-      "Plataforma web que gestiona un campeonato argentino de simracing en Assetto Corsa: clasificaciones en vivo con buscador y paginación, tabla de equipos, resultados por split con tabs interactivos y formulario de inscripción con anti-spam.",
+      "Campeonato argentino de simracing con clasificaciones en vivo, tabla de equipos, resultados por split y formulario de inscripción.",
     tecnologias: ["Next.js", "React", "TypeScript", "Tailwind"],
     enlace: "https://copachapachapa.vercel.app/",
+    imagen: "/copachapachapa.webp",
+    imagenAlt: "Copa Chapa Chapa - Plataforma de simracing con clasificaciones en vivo",
   },
   {
     id: 2,
@@ -38,9 +42,11 @@ export const proyectos: Proyecto[] = [
     categoria: "IA + Salud",
     anio: "2026",
     descripcion:
-      "App web que traduce informes médicos en PDF a lenguaje claro usando IA. Subí tu estudio y recibí un análisis completo: resumen, hallazgos, términos, valores fuera de rango y preguntas sugeridas para llevar al médico.",
+      "App que traduce informes médicos en PDF a lenguaje claro usando IA. Análisis completo con resumen, hallazgos y preguntas para el médico.",
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS", "Gemini AI", "Vercel"],
     enlace: "https://medicomprende.vercel.app/",
+    imagen: "/medicomprende.webp",
+    imagenAlt: "MediComprende - App que traduce informes médicos con IA",
   },
   {
     id: 3,
@@ -48,9 +54,11 @@ export const proyectos: Proyecto[] = [
     categoria: "Website Redesign",
     anio: "2026",
     descripcion:
-      "Rediseño completo del sitio web de Bodega Andeluna con estética Luxury Editorial Oscura: catálogo de 32 vinos en 6 líneas, experiencias gastronómicas, lodge con galería y sistema de booking, en 3 idiomas (ES/EN/PT). Proyecto conceptual — NO es la web oficial.",
+      "Rediseño luxury con catálogo de 32 vinos, experiencias gastronómicas, lodge con booking y soporte en 3 idiomas.",
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
+    imagen: "/andeluna.webp",
+    imagenAlt: "Bodega Andeluna - Rediseño web luxury con catálogo de vinos y booking",
   },
   {
     id: 4,
@@ -58,9 +66,11 @@ export const proyectos: Proyecto[] = [
     categoria: "Landing Page Restaurante",
     anio: "2026",
     descripcion:
-      "Landing page para Mirasoles, restaurante familiar en La Consulta, Mendoza: carta digital con lightbox y zoom progresivo, carrusel de fotos con auto-advance, mapa interactivo y botón flotante de WhatsApp. Proyecto conceptual — NO es la web oficial.",
+      "Landing page para restaurante familiar: carta digital con lightbox, carrusel de fotos, mapa interactivo y WhatsApp integrado.",
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Radix UI"],
     enlace: "https://mirasoles-web.vercel.app/",
+    imagen: "/mirasoles.webp",
+    imagenAlt: "Mirasoles - Landing page de restaurante familiar con carta digital",
   },
   {
     id: 5,
@@ -68,9 +78,11 @@ export const proyectos: Proyecto[] = [
     categoria: "Landing Page Restaurante",
     anio: "2026",
     descripcion:
-      "Landing page dark + glassmorphism para El Hornero Pizzería, pizza napolitana artesanal en La Consulta, Mendoza: carta interactiva con lightbox y zoom táctil, reseñas reales con ticker infinito, y WhatsApp integrado con mensaje predefinido. Proyecto conceptual — NO es la web oficial.",
+      "Landing dark + glassmorphism con carta interactiva, reseñas reales con ticker infinito y WhatsApp con mensaje predefinido.",
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Motion", "Base UI", "Lucide"],
     enlace: "https://elhorneropizzanapo.vercel.app/",
+    imagen: "/elhorneropizzeria.webp",
+    imagenAlt: "El Hornero Pizzería - Landing page dark con glassmorphism y reseñas",
   },
   {
     id: 6,
@@ -78,9 +90,11 @@ export const proyectos: Proyecto[] = [
     categoria: "Landing Page Café",
     anio: "2026",
     descripcion:
-      "Landing page para Cabrita Garage Cafe, casa de café de especialidad en el centro de Mendoza: carta digital con acordeón interactivo, bento grid de productos estrella, reseñas reales embedidas, dos sucursales con Google Maps, PedidosYa y WhatsApp integrados.",
+      "Casa de café de especialidad: carta con acordeón interactivo, bento grid de productos, reseñas y dos sucursales con Google Maps.",
     tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Lucide"],
     enlace: "https://cabritagaragecafe-web.vercel.app/",
+    imagen: "/cabritacafegarage.webp",
+    imagenAlt: "Cabrita Garage Cafe - Landing page de café de especialidad con carta digital",
   },
   {
     id: 7,
@@ -88,8 +102,10 @@ export const proyectos: Proyecto[] = [
     categoria: "Landing Page Restaurante",
     anio: "2026",
     descripcion:
-      "Landing page para El Porvenir, bodegón renovado en La Consulta, Mendoza: galería de platos con fotos reales, cocina de temporada con takeaway, reseñas embebidas de Sluurpy y TodoResto, y contacto directo por WhatsApp.",
+      "Bodegón renovado con galería de platos, cocina de temporada, reseñas embebidas y contacto directo por WhatsApp.",
     tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion"],
     enlace: "https://elporvenir-sigma.vercel.app/",
+    imagen: "/elporvenir.webp",
+    imagenAlt: "El Porvenir - Landing page de bodegón con galería de platos y reseñas",
   },
 ];

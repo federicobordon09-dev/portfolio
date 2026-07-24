@@ -370,29 +370,6 @@ body::after {
   animation: pulso-dot 2s ease-in-out infinite;
 }
 
-/* Barra de progreso de carga — apenas se nota, es decorativa */
-@keyframes progreso-carga {
-  0% {
-    transform: scaleX(0);
-  }
-  100% {
-    transform: scaleX(1);
-  }
-}
-
-.barra-progreso {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--acento);
-  transform-origin: left;
-  z-index: 200;
-  animation: progreso-carga 0.8s ease-out forwards;
-  box-shadow: 0 0 10px rgba(255, 107, 0, 0.6);
-}
-
 /* =========================================================
    Marquee de stack tecnológico — tira en loop infinito
    ========================================================= */
