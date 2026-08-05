@@ -108,4 +108,28 @@ export const proyectos: Proyecto[] = [
     imagen: "/elporvenir.webp",
     imagenAlt: "El Porvenir - Landing page de bodegón con galería de platos y reseñas",
   },
+  {
+    id: 8,
+    nombre: "Hornero Restaurante",
+    categoria: "Landing Page Restaurante",
+    anio: "2026",
+    descripcion:
+      "Cocina auténtica al horno a leña en Los Chacayes: cava de 12.000 botellas, vistas a los Andes, menú para compartir y reservas con anticipación.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
+    enlace: "https://hornerorestaurante.vercel.app/",
+    imagen: "/hornero_restaurante.webp",
+    imagenAlt: "Hornero Restaurante - Landing page de cocina al horno a leña en el Valle de Uco",
+  },
+  {
+    id: 9,
+    nombre: "Opuntia Casa de Té",
+    categoria: "Landing Page Casa de Té",
+    anio: "2026",
+    descripcion:
+      "Casa de té y pastelería artesanal con vista a la Cordillera de los Andes, en el Manzano Histórico. Té en hebras, tortas caseras y reserva previa por WhatsApp.",
+    tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
+    enlace: "https://opuntia.vercel.app/",
+    imagen: "/opuntia.webp",
+    imagenAlt: "Opuntia Casa de Té - Landing page de merienda con vista a la montaña en Tunuyán",
+  },
 ];
