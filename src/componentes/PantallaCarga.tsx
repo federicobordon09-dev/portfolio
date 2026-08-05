@@ -12,9 +12,9 @@ const LINEAS = [
   "SISTEMA LISTO.",
 ];
 
-const VELOCIDAD_TYPEO = 22;
-const PAUSA_LINEA = 180;
-const TIEMPO_FINAL = 900;
+const VELOCIDAD_TYPEO = 10;
+const PAUSA_LINEA = 100;
+const TIEMPO_FINAL = 500;
 
 export default function PantallaCarga({ onTerminar }: { onTerminar: () => void }) {
   const [indiceLinea, setIndiceLinea] = useState(0);

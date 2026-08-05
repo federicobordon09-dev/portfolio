@@ -21,7 +21,11 @@ export default function EnvoltorioCarga({ children }: { children: React.ReactNod
       <AnimatePresence>
         {mostrar && <PantallaCarga onTerminar={terminar} />}
       </AnimatePresence>
-      <div style={{ display: mostrar ? "none" : undefined }}>{children}</div>
+      {/* El contenido YA se renderiza detrás del overlay. El loading
+          solo lo cubre visualmente (z-50), no lo bloquea. Así el LCP
+          se pinta apenas carga la página en vez de esperar los ~6s
+          del terminal. El overlay opaco lo tapa mientras tanto. */}
+      <div aria-hidden={mostrar}>{children}</div>
     </>
   );
 }
