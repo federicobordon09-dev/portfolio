@@ -48,7 +48,7 @@ export default function PantallaCarga({ onTerminar }: { onTerminar: () => void }
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 bg-[#050505] flex items-center justify-center"
+      className="fixed inset-0 z-[80] bg-[#050505] flex items-center justify-center"
       exit={{ opacity: 0, scale: 1.03 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
