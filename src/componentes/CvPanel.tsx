@@ -27,12 +27,13 @@ const SECCIONES: Seccion[] = [
     titulo: "Proyectos Destacados",
     contenido: [
       "Copa Chapa Chapa — Plataforma de simracing con clasificaciones en vivo",
-      "MediComprende — App que traduce informes médicos con IA",
       "Bodega Andeluna — Rediseño luxury con catálogo de vinos en 3 idiomas",
       "Mirasoles — Landing page con carta digital y WhatsApp integrado",
       "El Hornero Pizzería — Landing dark + glassmorphism con reseñas",
       "Cabrita Garage Cafe — Café de especialidad con carta y dos sucursales",
       "El Porvenir — Bodegón renovado con galería de platos y reseñas",
+      "Hornero Restaurante — Cocina al horno a leña en Los Chacayes",
+      "Opuntia Casa de Té — Casa de té con vista a la Cordillera",
     ],
   },
   {
@@ -114,14 +115,14 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
           />
 
           <motion.div
-            className="relative z-10 w-full max-w-xl max-h-[85vh] overflow-y-auto bg-[#0c0c0c] border border-borde/60 rounded-2xl shadow-2xl scrollbar-cv"
+            className="relative z-10 w-full max-w-xl max-h-[85vh] overflow-y-auto bg-superficie border border-borde/60 rounded-2xl shadow-2xl scrollbar-cv"
             initial={{ opacity: 0, y: -30, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -30, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Header sticky */}
-            <div className="sticky top-0 bg-[#0c0c0c] z-10 px-6 sm:px-8 pt-7 pb-4 border-b border-borde/40">
+            <div className="sticky top-0 bg-superficie z-10 px-6 sm:px-8 pt-7 pb-4 border-b border-borde/40">
               <h2 className="text-lg sm:text-xl font-bold text-texto font-syne uppercase tracking-[0.12em]">
                 Federico Bordon
               </h2>
@@ -189,11 +190,11 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
             </div>
 
             {/* Footer sticky */}
-            <div className="sticky bottom-0 bg-[#0c0c0c] px-6 sm:px-8 py-4 border-t border-borde/40 flex items-center justify-between text-xs font-mono text-texto-suave">
+            <div className="sticky bottom-0 bg-superficie px-6 sm:px-8 py-4 border-t border-borde/40 flex items-center justify-between text-xs font-mono text-texto-suave">
               <span>CV — 2026</span>
               <button
                 onClick={onCerrar}
-                className="text-acento hover:text-acento-hover transition-colors uppercase tracking-[0.12em] font-semibold"
+                className="text-acento hover:text-acento-hover transition-colors uppercase tracking-[0.12em] font-semibold py-2 px-3 min-h-[44px] flex items-center"
               >
                 Cerrar
               </button>

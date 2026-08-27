@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
+/* Habilitar dark mode por clase (.dark en <html>) en vez de prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* =========================================================
    Variables de color — paleta estricta del proyecto
-   Acá centralizamos todo para que sea fácil de mantener
+   Modo claro por defecto, modo oscuro vía clase .dark en <html>
    ========================================================= */
 :root {
+  --fondo: #ffffff;
+  --superficie: #f5f5f5;
+  --acento: #111111;
+  --acento-hover: #333333;
+  --texto-primario: #111111;
+  --texto-suave: #666666;
+  --borde: #e5e5e5;
+
+  /* Componentes RGB — para componer rgba() con opacidad */
+  --acento-rgb: 17 17 17;
+  --fondo-rgb: 255 255 255;
+}
+
+html.dark {
   --fondo: #0a0a0a;
   --superficie: #111111;
-  --acento: #ff6b00;
-  --acento-hover: #ff8c00;
+  --acento: #f5f5f5;
+  --acento-hover: #cccccc;
   --texto-primario: #f5f5f5;
   --texto-suave: #888888;
   --borde: #1f1f1f;
 
-  /* Componentes RGB de los acentos — para componer rgba()
-     con distintos niveles de opacidad sin repetir el literal */
-  --acento-rgb: 255 107 0;
+  --acento-rgb: 245 245 245;
+  --fondo-rgb: 10 10 10;
 }
 
-/* Exponemos las variables a Tailwind v4 vía @theme
-   así podemos usar bg-fondo, text-acento, etc. */
-@theme inline {
+/* Exponemos las variables a Tailwind v4 vía @theme (SIN inline)
+   para que las utilidades usen var() en runtime y se actualicen
+   al cambiar la clase .dark */
+@theme {
   --color-fondo: var(--fondo);
   --color-superficie: var(--superficie);
   --color-acento: var(--acento);
@@ -50,14 +67,12 @@ body {
 
 html {
   scroll-behavior: smooth;
-  /* Acá le damos un poco de aire arriba cuando ancla scrolls */
   scroll-padding-top: 80px;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  /* Tipografía base responsive con clamp — escala fluida en cualquier viewport */
   font-size: clamp(0.95rem, 2.2vw, 1.05rem);
 }
 
@@ -81,7 +96,6 @@ p {
   font-size: clamp(0.9rem, 2.5vw, 1.1rem);
 }
 
-/* Aseguramos que las imágenes y los contenedores nunca rompan el layout */
 img,
 svg,
 video {
@@ -89,7 +103,6 @@ video {
   height: auto;
 }
 
-/* Si el usuario prefiere menos movimiento, respetamos */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -101,16 +114,14 @@ video {
   }
 }
 
-/* Selección de texto con acento */
+/* Selección de texto */
 ::selection {
   background-color: var(--acento);
   color: var(--fondo);
 }
 
-/* Viñeta global sutil — oscurece apenas los bordes de la pantalla
-   para dar profundidad y enfocar la mirada hacia el centro.
-   Fija, no interactiva, y por debajo del navbar (z-50). */
-body::after {
+/* Viñeta global — solo en modo oscuro para dar profundidad */
+html.dark body::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -119,8 +130,7 @@ body::after {
   box-shadow: inset 0 0 180px 30px rgba(0, 0, 0, 0.55);
 }
 
-/* Focus visible prolijo y accesible — anillo naranja consistente en
-   toda la navegación por teclado, sin romper el diseño */
+/* Focus visible accesible */
 :focus-visible {
   outline: 2px solid var(--acento);
   outline-offset: 3px;
@@ -146,7 +156,7 @@ body::after {
   background: var(--texto-suave);
 }
 
-/* Scrollbar del CV Panel — casi invisible, solo se ve al hover */
+/* Scrollbar del CV Panel */
 .scrollbar-cv::-webkit-scrollbar {
   width: 4px;
 }
@@ -162,14 +172,13 @@ body::after {
 
 .scrollbar-cv:hover::-webkit-scrollbar-thumb,
 .scrollbar-cv:focus-within::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(var(--acento-rgb) / 0.15);
 }
 
 /* =========================================================
    Utilidades globales
    ========================================================= */
 
-/* Bounce suave para el indicador de scroll */
 @keyframes rebote-sutil {
   0%,
   100% {
@@ -186,7 +195,6 @@ body::after {
   animation: rebote-sutil 1.8s ease-in-out infinite;
 }
 
-/* Línea divisoria sutil que se usa entre secciones */
 .linea-divisoria {
   height: 1px;
   background: linear-gradient(
@@ -198,12 +206,10 @@ body::after {
 }
 
 /* =========================================================
-   Ambiente y profundidad — glows y texturas de fondo
+   Ambiente y profundidad
    ========================================================= */
 
-/* Resplandor ambiental: orbe naranja muy difuminado que le da
-   profundidad y calidez al fondo sin cambiar la paleta.
-   Se posiciona con utilidades de Tailwind (top/left/w/h). */
+/* Resplandor ambiental — orbe difuminado sutil */
 .resplandor-acento {
   position: absolute;
   border-radius: 9999px;
@@ -211,23 +217,29 @@ body::after {
   filter: blur(110px);
   background: radial-gradient(
     circle,
-    rgb(var(--acento-rgb) / 0.16),
+    rgb(var(--acento-rgb) / 0.08),
     transparent 70%
   );
   z-index: 0;
   will-change: transform, opacity;
 }
 
-/* Patrón de puntos sutil — textura tech para el fondo del hero.
-   La máscara radial lo desvanece hacia los bordes para que se
-   integre y no compita con el contenido. */
+html.dark .resplandor-acento {
+  background: radial-gradient(
+    circle,
+    rgb(var(--acento-rgb) / 0.12),
+    transparent 70%
+  );
+}
+
+/* Patrón de puntos — textura sutil */
 .patron-puntos {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background-image: radial-gradient(
-    rgb(var(--acento-rgb) / 0.09) 1px,
+    rgb(var(--acento-rgb) / 0.06) 1px,
     transparent 1px
   );
   background-size: 34px 34px;
@@ -243,7 +255,13 @@ body::after {
   );
 }
 
-/* Respiración lenta del resplandor — vida sutil en el fondo */
+html.dark .patron-puntos {
+  background-image: radial-gradient(
+    rgb(var(--acento-rgb) / 0.09) 1px,
+    transparent 1px
+  );
+}
+
 @keyframes respiracion-glow {
   0%,
   100% {
@@ -260,23 +278,21 @@ body::after {
   animation: respiracion-glow 9s ease-in-out infinite;
 }
 
-/* Borde acento sutil — para el navbar scrolleado.
-   Usa los componentes RGB del acento con 15% de opacidad */
+/* Borde acento sutil — navbar scrolleado */
 .borde-acento-suave {
   border-color: rgb(var(--acento-rgb) / 0.15);
 }
 
-/* Halo/glow del enlace activo en el navbar — text-shadow
-   con el acento al 60% de opacidad. Antes era inline style */
+/* Halo del enlace activo en navbar */
 .texto-halo-acento {
-  text-shadow: 0 0 12px rgb(var(--acento-rgb) / 0.6);
+  text-shadow: 0 0 12px rgb(var(--acento-rgb) / 0.4);
 }
 
 /* =========================================================
-   Animaciones y keyframes nuevos
+   Animaciones y keyframes
    ========================================================= */
 
-/* Bloque parpadeante del hero — el cuadrado naranja al lado del nombre */
+/* Cursor parpadeante del hero */
 @keyframes parpadeo-cursor {
   0%,
   45% {
@@ -301,19 +317,23 @@ body::after {
   animation: parpadeo-cursor 0.8s infinite;
 }
 
-/* Grain / noise overlay — efecto sutil de textura sobre el hero */
+/* Grain / noise overlay */
 .textura-grano {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.02;
   z-index: 1;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 200px 200px;
   mix-blend-mode: overlay;
 }
 
-/* Brillo que recorre la card de proyecto en hover — un shine prolijo */
+html.dark .textura-grano {
+  opacity: 0.03;
+}
+
+/* Shine en cards de proyecto */
 @keyframes shine-recorrido {
   0% {
     transform: translateX(-150%) skewX(-20deg);
@@ -340,7 +360,7 @@ body::after {
   background: linear-gradient(
     100deg,
     transparent 0%,
-    rgba(255, 107, 0, 0.08) 50%,
+    rgb(var(--acento-rgb) / 0.06) 50%,
     transparent 100%
   );
   transform: translateX(-150%) skewX(-20deg);
@@ -353,7 +373,7 @@ body::after {
   opacity: 1;
 }
 
-/* Pulse continuo para dots de "disponible" — más visible que el ping default */
+/* Pulse dots */
 @keyframes pulso-dot {
   0%,
   100% {
@@ -371,15 +391,13 @@ body::after {
 }
 
 /* =========================================================
-   Marquee de stack tecnológico — tira en loop infinito
+   Marquee de stack tecnológico
    ========================================================= */
 @keyframes marquee {
   0% {
     transform: translateX(0);
   }
   100% {
-    /* -50% porque la pista tiene la lista duplicada: al recorrer la
-       mitad, la segunda copia queda exactamente donde arrancó la primera */
     transform: translateX(-50%);
   }
 }
@@ -391,8 +409,6 @@ body::after {
   animation: marquee 32s linear infinite;
 }
 
-/* Cada grupo contiene la lista completa. Renderizamos dos idénticos,
-   así el translateX(-50%) cae justo en la costura y el loop es perfecto. */
 .marquee-grupo {
   display: flex;
   flex-wrap: nowrap;
@@ -400,19 +416,12 @@ body::after {
   flex-shrink: 0;
 }
 
-/* El ticker es contenido en movimiento por diseño: aunque el usuario
-   tenga "reducir movimiento" activado, la regla global de reduced-motion
-   (más abajo) congelaría la animación. Este override —de mayor
-   especificidad que el `*` global— la mantiene siempre desfilando. */
 @media (prefers-reduced-motion: reduce) {
   .marquee-pista {
-    animation-duration: 32s !important;
-    animation-iteration-count: infinite !important;
+    animation: none !important;
   }
 }
 
-/* Difumina los bordes izq/der para que las tecnologías entren y salgan
-   suavemente en vez de cortarse contra el borde de la pantalla */
 .marquee-mascara {
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -432,10 +441,7 @@ body::after {
 
 /* =========================================================
    Gradiente de acento aplicado a texto (nombre del hero)
-   =========================================================
-   Rellena las letras con un degradado cálido acento→hover y lo
-   recorta a la forma del texto con background-clip. Da profundidad
-   sutil a "Bordon" sin salirse de la paleta. */
+   ========================================================= */
 .texto-degradado-acento {
   background-image: linear-gradient(
     160deg,
@@ -450,19 +456,7 @@ body::after {
 }
 
 /* =========================================================
-   Detección de touch — el breakpoint por ancho no alcanza
-   =========================================================
-   `(pointer: coarse)` = el puntero primario es impreciso
-   (dedo en pantalla táctil). `(hover: none)` = no hay forma
-   de "hover" (mouse no se queda quieto arriba de un elemento).
-   Con la OR cubrimos: phones, tablets, iPads, foldables, etc.
-
-   Esto va DEBAJO de las reglas de Tailwind en el archivo, así
-   gana por orden de aparición cuando las dos media queries
-   (lg: min-width + tactil: pointer) se cumplen a la vez.
-
-   Las clases `.nav-movil` y `.nav-desktop` se aplican en
-   src/componentes/Navegacion.tsx.
+   Detección de touch
    ========================================================= */
 @media (pointer: coarse), (hover: none) {
   .nav-movil {

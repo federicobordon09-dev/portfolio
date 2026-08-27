@@ -5,15 +5,6 @@ export const alt = "Federico Bordon";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// OpenGraph image dinámica — se sirve desde /opengraph-image automáticamente.
-// Cuando alguien comparte el portfolio en LinkedIn, Twitter, WhatsApp, etc.
-// aparece este card con la paleta de marca.
-//
-// NOTA sobre next/image: ImageResponse (next/og) NO soporta el componente
-// Image de next/image. Si en algún momento se quiere agregar una foto o
-// screenshot, hay que leerla con fs.readFile y pasarla al array "images"
-// del ImageResponse como Buffer. Por ahora el card es 100% tipográfico.
-
 export default async function Image() {
   return new ImageResponse(
     (
@@ -39,7 +30,7 @@ export default async function Image() {
         >
           <div
             style={{
-              color: "#ff6b00",
+              color: "#f5f5f5",
               fontSize: "28px",
               fontWeight: 700,
               fontFamily: "monospace",
@@ -92,7 +83,7 @@ export default async function Image() {
               fontSize: "140px",
               fontWeight: 800,
               lineHeight: 0.95,
-              color: "#ff6b00",
+              color: "#cccccc",
               letterSpacing: "-0.03em",
             }}
           >
@@ -122,7 +113,7 @@ export default async function Image() {
                 width: "10px",
                 height: "10px",
                 borderRadius: "50%",
-                backgroundColor: "#ff6b00",
+                backgroundColor: "#f5f5f5",
               }}
             />
             <div

@@ -122,7 +122,7 @@ export default function Inicio() {
   const fondoSpotlight = useTransform(
     [mouseX, mouseY],
     ([x, y]) =>
-      `radial-gradient(500px circle at ${x}px ${y}px, rgb(255 107 0 / 0.07), transparent 65%)`,
+      `radial-gradient(500px circle at ${x}px ${y}px, rgb(var(--acento-rgb) / 0.07), transparent 65%)`,
   );
 
   const manejarMovimientoMouse = (evento: React.MouseEvent<HTMLElement>) => {
@@ -210,11 +210,11 @@ export default function Inicio() {
         animate={{ opacity: 1 }}
         className="relative max-w-7xl w-full mx-auto z-10"
       >
-        {/* Tag superior — fade up simple, entra antes que el nombre */}
+        {/* Tag superior — entra sync con la primera letra del typewriter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+          transition={{ duration: 0.5, delay: 0.0, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center gap-3 mb-8 sm:mb-12"
         >
           <span className="text-acento font-mono text-sm">00</span>
@@ -272,13 +272,13 @@ export default function Inicio() {
           </span>
         </h1>
 
-        {/* Frase de posicionamiento — fade + slide-up con delay 0.8s */}
+        {/* Frase de posicionamiento — entra justo después del nombre */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.6,
-            delay: 0.8,
+            duration: 0.5,
+            delay: 0.4,
             ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
           }}
           className="mt-10 sm:mt-14 max-w-2xl text-base sm:text-xl lg:text-2xl text-texto-suave leading-relaxed font-light"
@@ -291,33 +291,33 @@ export default function Inicio() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.0, ease: "easeOut" }}
+          transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-8 sm:mt-10 flex gap-8 sm:gap-12"
         >
-          <ContadorAnimado valor={5} etiqueta="Proyectos" delay={0} />
+          <ContadorAnimado valor={8} etiqueta="Proyectos" delay={0} />
           <ContadorAnimado valor={6} etiqueta="Tecnologías" delay={150} />
           <ContadorAnimado valor={2026} etiqueta="Activo" delay={300} />
         </motion.div>
 
-        {/* Metadata inferior — entra desde la izquierda con stagger 0.15s entre items */}
+        {/* Metadata inferior — entra después de los contadores con stagger 0.12s */}
         <motion.div
           initial="oculto"
           animate="visible"
           variants={{
             oculto: {},
             visible: {
-              transition: { staggerChildren: 0.15, delayChildren: 1.4 },
+              transition: { staggerChildren: 0.12, delayChildren: 1.0 },
             },
           }}
           className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-8 sm:gap-y-3 text-sm text-texto-suave"
         >
           <motion.div
             variants={{
-              oculto: { opacity: 0, x: -30 },
+              oculto: { opacity: 0, x: -20 },
               visible: {
                 opacity: 1,
                 x: 0,
-                transition: { duration: 0.5, ease: "easeOut" },
+                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
               },
             }}
             className="flex items-center gap-2"
@@ -327,11 +327,11 @@ export default function Inicio() {
           </motion.div>
           <motion.div
             variants={{
-              oculto: { opacity: 0, x: -30 },
+              oculto: { opacity: 0, x: -20 },
               visible: {
                 opacity: 1,
                 x: 0,
-                transition: { duration: 0.5, ease: "easeOut" },
+                transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
               },
             }}
             className="flex items-center gap-3"
@@ -345,9 +345,14 @@ export default function Inicio() {
               onClick={() => {
                 document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
-              className="text-[11px] uppercase tracking-[0.15em] text-acento hover:text-acento/80 transition-colors ml-1 cursor-pointer bg-transparent border-0 p-0"
+              className="text-[11px] uppercase tracking-[0.15em] text-acento hover:text-acento/80 transition-colors ml-1 cursor-pointer bg-transparent border-0 py-2 min-h-[44px] inline-flex items-center"
             >
-              Contratame →
+              <motion.span
+                whileHover={{ x: 4 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Contratame →
+              </motion.span>
             </button>
           </motion.div>
         </motion.div>
@@ -358,7 +363,8 @@ export default function Inicio() {
         onClick={manejarClickScroll}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.4 }}
+        transition={{ duration: 0.5, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={{ y: 4 }}
         className="hidden sm:flex absolute bottom-8 sm:bottom-12 right-6 sm:right-10 lg:right-16 flex-col items-center gap-3 text-texto-suave hover:text-acento transition-colors duration-300 group"
         aria-label="Bajar"
       >

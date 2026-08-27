@@ -223,16 +223,16 @@ export async function POST(request: NextRequest) {
     // 10) Armamos el HTML del correo con todo escapado
     const html = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #111111; color: #f5f5f5; border-radius: 12px;">
-        <h2 style="color: #ff6b00; margin: 0 0 24px; font-size: 22px;">Nuevo mensaje desde el portfolio</h2>
-        <div style="background: #0a0a0a; border-left: 3px solid #ff6b00; padding: 16px 20px; margin-bottom: 20px; border-radius: 4px;">
+        <h2 style="color: #f5f5f5; margin: 0 0 24px; font-size: 22px;">Nuevo mensaje desde el portfolio</h2>
+        <div style="background: #0a0a0a; border-left: 3px solid #f5f5f5; padding: 16px 20px; margin-bottom: 20px; border-radius: 4px;">
           <p style="margin: 0 0 8px; color: #888888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">De</p>
           <p style="margin: 0; font-size: 15px;">${escapeHtml(email)}</p>
         </div>
-        <div style="background: #0a0a0a; border-left: 3px solid #ff6b00; padding: 16px 20px; margin-bottom: 20px; border-radius: 4px;">
+        <div style="background: #0a0a0a; border-left: 3px solid #f5f5f5; padding: 16px 20px; margin-bottom: 20px; border-radius: 4px;">
           <p style="margin: 0 0 8px; color: #888888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Asunto</p>
           <p style="margin: 0; font-size: 15px;">${escapeHtml(asunto)}</p>
         </div>
-        <div style="background: #0a0a0a; border-left: 3px solid #ff6b00; padding: 16px 20px; border-radius: 4px;">
+        <div style="background: #0a0a0a; border-left: 3px solid #f5f5f5; padding: 16px 20px; border-radius: 4px;">
           <p style="margin: 0 0 8px; color: #888888; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;">Mensaje</p>
           <p style="margin: 0; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${escapeHtml(mensajeLimpio)}</p>
         </div>

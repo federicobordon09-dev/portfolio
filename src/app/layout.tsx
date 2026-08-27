@@ -4,7 +4,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import EnvoltorioCarga from "@/componentes/EnvoltorioCarga";
 import ProgresoScroll from "@/componentes/ProgresoScroll";
 import ScrollAlInicio from "@/componentes/ScrollAlInicio";
 import ConfiguracionMovimiento from "@/componentes/ConfiguracionMovimiento";
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
     template: "%s | Federico Bordon",
   },
   description:
-    "Portafolio de Federico Bordon, desarrollador web en Mendoza, Argentina. Especialista en Next.js, React y TypeScript. Construyo experiencias web modernas que ayudan a las marcas a crecer digitalmente.",
+    "Desarrollador web en Mendoza, Argentina. Especialista en Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones modernas para negocios.",
   authors: [{ name: "Federico Bordon", url: "https://federicobordon.com.ar" }],
   creator: "Federico Bordon",
   publisher: "Federico Bordon",
@@ -69,7 +68,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Federico Bordon | Desarrollador Web",
     description:
-      "Portafolio de Federico Bordon, desarrollador web en Mendoza. Especialista en Next.js, React y TypeScript.",
+      "Desarrollador web en Mendoza, Argentina. Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones.",
     type: "website",
     locale: "es_AR",
     siteName: "Federico Bordon",
@@ -80,7 +79,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Federico Bordon | Desarrollador Web",
     description:
-      "Portafolio de Federico Bordon, desarrollador web en Mendoza. Especialista en Next.js, React y TypeScript.",
+      "Desarrollador web en Mendoza, Argentina. Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones.",
     creator: "@federicobordon",
   },
   alternates: {
@@ -94,7 +93,6 @@ export const metadata: Metadata = {
 
 // En Next.js 14+ el themeColor va en un export separado "viewport"
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
   width: "device-width",
   initialScale: 1,
 };
@@ -128,7 +126,8 @@ function datosEstructurados() {
       "TypeScript",
       "Desarrollo Web",
       "Tailwind CSS",
-      "Diseño Web",
+      "Landing Pages",
+      "Frontend Development",
     ],
   };
 }
@@ -141,8 +140,31 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      suppressHydrationWarning
       className={`${fuenteSyne.variable} ${fuenteInter.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function() {
+  try {
+    var tema = localStorage.getItem('tema-portfolio');
+    if (tema === 'claro') {
+      document.documentElement.classList.remove('dark');
+    } else if (tema === 'oscuro') {
+      document.documentElement.classList.add('dark');
+    } else {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  } catch(e) {}
+})();
+`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-fondo text-texto">
         <Script id="google-tag-manager" strategy="beforeInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -162,16 +184,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             __html: JSON.stringify(datosEstructurados()),
           }}
         />
-        {/* Preloader tipo boot sequence — se auto-remueve */}
-        <EnvoltorioCarga>
-          {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
-          <ProgresoScroll />
-          {/* Cada recarga vuelve al Inicio en vez de restaurar el scroll */}
-          <ScrollAlInicio />
-          {/* MotionConfig hace que todas las animaciones de Framer Motion
-              respeten prefers-reduced-motion del sistema operativo */}
-          <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
-        </EnvoltorioCarga>
+        {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
+        <ProgresoScroll />
+        {/* Cada recarga vuelve al Inicio en vez de restaurar el scroll */}
+        <ScrollAlInicio />
+        {/* MotionConfig hace que todas las animaciones de Framer Motion
+            respeten prefers-reduced-motion del sistema operativo */}
+        <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
         {/* Vercel Analytics — page views automáticos, sin cookies,
             no impacta performance. Se activa solo en producción. */}
         <Analytics />

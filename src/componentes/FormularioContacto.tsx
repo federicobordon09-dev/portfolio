@@ -255,7 +255,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                 </div>
                 <button
                   onClick={onCerrar}
-                  className="w-10 h-10 -mr-2 flex items-center justify-center rounded-full text-texto-suave hover:text-acento hover:bg-acento/10 transition-colors"
+                  className="w-11 h-11 -mr-2 flex items-center justify-center rounded-full text-texto-suave hover:text-acento hover:bg-acento/10 transition-colors"
                   aria-label="Cerrar formulario"
                 >
                   <IconoCerrar tamano={22} />

@@ -16,7 +16,7 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.15 }}
       transition={{ duration: 0.5, delay: indice * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-superficie border border-borde rounded-lg overflow-hidden hover:border-acento/50 transition-all duration-300"
+      className="group relative bg-superficie border border-borde rounded-lg overflow-hidden hover:border-acento/50 hover:shadow-[0_8px_30px_-12px_rgba(var(--acento-rgb)/0.12)] hover:-translate-y-1 transition-all duration-300"
     >
       {/* Línea naranja superior en hover */}
       <span
@@ -83,7 +83,7 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
               onClick={() => window.open(proyecto.enlace!, "_blank", "noopener,noreferrer")}
               whileHover={{ rotate: 45, scale: 1.1 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-              className="w-7 h-7 rounded-full bg-acento flex items-center justify-center text-fondo flex-shrink-0 cursor-pointer"
+              className="w-11 h-11 rounded-full bg-acento flex items-center justify-center text-fondo flex-shrink-0 cursor-pointer"
               aria-label={`Ver proyecto ${proyecto.nombre}`}
             >
               <IconoFlechaDiagonal tamano={12} />
@@ -91,7 +91,7 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
           ) : (
             <span
               aria-label={`${proyecto.nombre} próximamente`}
-              className="w-7 h-7 rounded-full border border-borde flex items-center justify-center text-texto-suave/40 cursor-not-allowed flex-shrink-0"
+              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave/40 cursor-not-allowed flex-shrink-0"
             >
               <IconoReloj tamano={12} />
             </span>
@@ -169,39 +169,47 @@ export default function Trabajo() {
         {/* Paginación */}
         {totalPaginas > 1 && (
           <div className="flex items-center justify-center gap-3 mt-10 sm:mt-12">
-            <button
+            <motion.button
               onClick={() => setPagina((p) => Math.max(0, p - 1))}
               disabled={pagina === 0}
-              className="w-9 h-9 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
+              whileHover={pagina === 0 ? {} : { scale: 1.1 }}
+              whileTap={pagina === 0 ? {} : { scale: 0.9 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
               aria-label="Página anterior"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
-            </button>
+            </motion.button>
 
             {Array.from({ length: totalPaginas }, (_, i) => (
               <button
                 key={i}
                 onClick={() => setPagina(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === pagina ? "bg-acento w-6" : "bg-borde w-1.5 hover:bg-texto-suave"
-                }`}
+                className="flex items-center justify-center p-2 -m-2"
                 aria-label={`Página ${i + 1}`}
                 aria-current={i === pagina ? "page" : undefined}
-              />
+              >
+                <span className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === pagina ? "bg-acento w-6" : "bg-borde w-1.5 hover:bg-texto-suave"
+                }`} />
+              </button>
             ))}
 
-            <button
+            <motion.button
               onClick={() => setPagina((p) => Math.min(totalPaginas - 1, p + 1))}
               disabled={pagina === totalPaginas - 1}
-              className="w-9 h-9 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
+              whileHover={pagina === totalPaginas - 1 ? {} : { scale: 1.1 }}
+              whileTap={pagina === totalPaginas - 1 ? {} : { scale: 0.9 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
               aria-label="Página siguiente"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M9 18l6-6-6-6" />
               </svg>
-            </button>
+            </motion.button>
           </div>
         )}
       </div>

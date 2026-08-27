@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconoCerrar, IconoMenu } from "./iconos/Iconos";
+import ToggleTema from "./ToggleTema";
 import { EASE_OUT_EXPO } from "@/lib/animaciones";
 
 // Definimos los enlaces de navegación en un solo lugar
@@ -50,17 +51,6 @@ export default function Navegacion() {
   }, []);
 
   // Detección de sección activa basada en scroll.
-  //
-  // Antes usábamos IntersectionObserver comparando intersectionRatio, pero
-  // eso falla cuando las secciones tienen alturas muy distintas: una sección
-  // más alta que el viewport nunca alcanza un ratio alto, así que una sección
-  // corta "ganaba" y marcaba mal el link (ej: estando en Proyectos marcaba
-  // Enfoque).
-  //
-  // Enfoque robusto: trazamos una línea imaginaria al 35% del alto del
-  // viewport y la sección activa es la ÚLTIMA cuyo `top` ya cruzó esa línea.
-  // Además, si estamos al fondo del todo, forzamos la última sección (así
-  // Contacto siempre queda marcado aunque sea corta).
   useEffect(() => {
     const calcularSeccionActiva = () => {
       const secciones = enlacesNavegacion
@@ -223,6 +213,9 @@ export default function Navegacion() {
               );
             })}
           </ul>
+          <div className="mt-8">
+            <ToggleTema />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -303,24 +296,26 @@ export default function Navegacion() {
             })}
           </ul>
 
-          {/* Botón hamburguesa — `nav-movil` lo hace visible en
-              cualquier pantalla táctil, sin importar el ancho. */}
-          <button
-            ref={refBotonHamburguesa}
-            onClick={() => setMenuAbierto(!menuAbierto)}
-            className="lg:hidden nav-movil p-3 -mr-2 z-50 text-acento"
-            aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
-            aria-expanded={menuAbierto}
-            aria-controls="menu-mobile"
-          >
-            {menuAbierto ? (
-              // X para cerrar
-              <IconoCerrar tamano={24} />
-            ) : (
-              // Icono hamburguesa ☰
-              <IconoMenu tamano={24} />
-            )}
-          </button>
+          {/* Toggle de tema + hamburguesa */}
+          <div className="flex items-center gap-3">
+            <ToggleTema />
+            {/* Botón hamburguesa — `nav-movil` lo hace visible en
+                cualquier pantalla táctil, sin importar el ancho. */}
+            <button
+              ref={refBotonHamburguesa}
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              className="lg:hidden nav-movil p-3 -mr-2 z-50 text-acento"
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menuAbierto}
+              aria-controls="menu-mobile"
+            >
+              {menuAbierto ? (
+                <IconoCerrar tamano={24} />
+              ) : (
+                <IconoMenu tamano={24} />
+              )}
+            </button>
+          </div>
         </nav>
       </motion.header>
 

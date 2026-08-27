@@ -42,7 +42,7 @@ export default function PieDePagina() {
           {/* Span con hover en naranja — el nombre se ilumina al pasar el mouse */}
           <button
             onClick={abrirCv}
-            className="text-texto transition-colors duration-300 hover:text-acento cursor-pointer underline underline-offset-2 decoration-acento/0 hover:decoration-acento/50"
+            className="text-texto transition-colors duration-300 hover:text-acento cursor-pointer underline underline-offset-2 decoration-acento/0 hover:decoration-acento/50 py-2"
           >
             Federico Bordon
           </button>
