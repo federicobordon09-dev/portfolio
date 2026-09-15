@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { IconoFlechaDiagonal, IconoReloj } from "./iconos/Iconos";
 import Resplandor from "./Resplandor";
 import { proyectos, type Proyecto } from "@/lib/datos";
 
@@ -18,13 +17,11 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
       transition={{ duration: 0.5, delay: indice * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className="group relative bg-superficie border border-borde rounded-lg overflow-hidden hover:border-acento/50 hover:shadow-[0_8px_30px_-12px_rgba(var(--acento-rgb)/0.12)] hover:-translate-y-1 transition-all duration-300"
     >
-      {/* Línea naranja superior en hover */}
       <span
         aria-hidden="true"
         className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-acento to-transparent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-10"
       />
 
-      {/* Preview del proyecto — aspect ratio compacto */}
       <div className="relative w-full aspect-[16/7] overflow-hidden bg-fondo">
         <Image
           src={proyecto.imagen}
@@ -34,29 +31,40 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
           className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
           quality={75}
         />
-        {/* Overlay sutil */}
         <div className="absolute inset-0 bg-gradient-to-t from-superficie/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+        <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
+          {proyecto.tipo === "personal" && (
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-acento/90 text-fondo px-2.5 py-1 rounded-full">
+              Proyecto Personal
+            </span>
+          )}
+          {proyecto.tipo === "demostrativo" && (
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-texto/80 text-fondo px-2.5 py-1 rounded-full">
+              Demo
+            </span>
+          )}
+          {proyecto.estado === "en_desarrollo" && (
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-acento/70 text-fondo px-2.5 py-1 rounded-full">
+              En desarrollo
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* Contenido */}
       <div className="p-4 sm:p-5">
-        {/* Categoría + año */}
         <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.15em] text-texto-suave mb-2">
           <span>{proyecto.categoria}</span>
           <span className="font-mono">{proyecto.anio}</span>
         </div>
 
-        {/* Nombre */}
         <h3 className="font-display font-bold text-base sm:text-lg text-texto group-hover:text-acento transition-colors duration-300 mb-2">
           {proyecto.nombre}
         </h3>
 
-        {/* Descripción */}
         <p className="text-texto-suave text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
           {proyecto.descripcion}
         </p>
 
-        {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {proyecto.tecnologias.slice(0, 3).map((t) => (
             <span
@@ -73,27 +81,24 @@ function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number
           )}
         </div>
 
-        {/* Footer: label + flecha */}
         <div className="flex items-center justify-between pt-3 border-t border-borde/50">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-texto-suave/50">
-            {proyecto.enlace ? "Ver proyecto" : "Próximamente"}
-          </span>
           {proyecto.enlace ? (
-            <motion.button
-              onClick={() => window.open(proyecto.enlace!, "_blank", "noopener,noreferrer")}
-              whileHover={{ rotate: 45, scale: 1.1 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-              className="w-11 h-11 rounded-full bg-acento flex items-center justify-center text-fondo flex-shrink-0 cursor-pointer"
+            <a
+              href={proyecto.enlace}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-texto-suave hover:text-acento transition-colors duration-300"
               aria-label={`Ver proyecto ${proyecto.nombre}`}
             >
-              <IconoFlechaDiagonal tamano={12} />
-            </motion.button>
+              Ver proyecto
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="translate-x-0.5 -translate-y-0.5">
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </a>
           ) : (
-            <span
-              aria-label={`${proyecto.nombre} próximamente`}
-              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave/40 cursor-not-allowed flex-shrink-0"
-            >
-              <IconoReloj tamano={12} />
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-texto-suave/50">
+              {proyecto.estado === "en_desarrollo" ? "En desarrollo" : "Próximamente"}
             </span>
           )}
         </div>
@@ -114,6 +119,14 @@ export default function Trabajo() {
       className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32 overflow-hidden"
     >
       <Resplandor className="-right-40 top-40 w-[380px] h-[380px] sm:w-[560px] sm:h-[560px] opacity-60" />
+
+      {/* Número fantasma gigante — serie editorial 00·01·02·03·04 */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-8 left-0 sm:left-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-[#d4d4d4] dark:text-white/[0.06] select-none"
+      >
+        01
+      </span>
 
       <div className="relative max-w-6xl mx-auto">
         {/* Header */}
@@ -137,7 +150,7 @@ export default function Trabajo() {
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="text-texto-suave text-sm sm:text-base max-w-xl mb-8 sm:mb-10 leading-relaxed pl-[calc(1.5rem+1ch)]"
         >
-          Una selección de trabajos donde combino diseño, código y buenas decisiones técnicas.
+          Trabajos reales donde resolví problemas concretos para negocios. Cada proyecto tiene un objetivo claro y una solución pensada para lograrlo.
         </motion.p>
 
         <motion.div
@@ -212,6 +225,27 @@ export default function Trabajo() {
             </motion.button>
           </div>
         )}
+
+        {/* Link contextual discreto */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, amount: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          className="mt-10 sm:mt-12"
+        >
+          <a
+            href="#contacto"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="inline-flex items-center gap-2 text-texto-suave text-sm hover:text-acento transition-colors duration-300"
+          >
+            ¿Tenés un proyecto parecido en mente?
+            <span className="text-acento">Hablemos →</span>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

@@ -13,7 +13,8 @@ import { EASE_OUT_EXPO } from "@/lib/animaciones";
 const enlacesNavegacion = [
   { id: "inicio", etiqueta: "Inicio" },
   { id: "trabajo", etiqueta: "Proyectos" },
-  { id: "enfoque", etiqueta: "Enfoque" },
+  { id: "servicios", etiqueta: "Servicios" },
+  { id: "proceso", etiqueta: "Proceso" },
   { id: "contacto", etiqueta: "Contacto" },
 ];
 

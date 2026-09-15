@@ -32,11 +32,11 @@ const metadataBase = new URL(
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Federico Bordon | Desarrollador Web",
+    default: "Federico Bordon | Desarrollador Web para Negocios",
     template: "%s | Federico Bordon",
   },
   description:
-    "Desarrollador web en Mendoza, Argentina. Especialista en Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones modernas para negocios.",
+    "Desarrollador web en Mendoza, Argentina. Diseño y desarrollo sitios web profesionales para negocios que quieren verse bien y crecer online. Next.js, React, TypeScript.",
   authors: [{ name: "Federico Bordon", url: "https://federicobordon.com.ar" }],
   creator: "Federico Bordon",
   publisher: "Federico Bordon",
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Federico Bordon | Desarrollador Web",
+    title: "Federico Bordon | Desarrollador Web para Negocios",
     description:
-      "Desarrollador web en Mendoza, Argentina. Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones.",
+      "Desarrollador web en Mendoza, Argentina. Sitios web profesionales para negocios. Next.js, React, TypeScript.",
     type: "website",
     locale: "es_AR",
     siteName: "Federico Bordon",
@@ -77,9 +77,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Federico Bordon | Desarrollador Web",
+    title: "Federico Bordon | Desarrollador Web para Negocios",
     description:
-      "Desarrollador web en Mendoza, Argentina. Next.js, React y TypeScript. Landing pages, sitios web y aplicaciones.",
+      "Desarrollador web en Mendoza, Argentina. Sitios web profesionales para negocios. Next.js, React, TypeScript.",
     creator: "@federicobordon",
   },
   alternates: {
@@ -121,12 +121,13 @@ function datosEstructurados() {
     sameAs: [DATOS_PERSONALES.github, DATOS_PERSONALES.linkedin],
     image: "/logo.png",
     knowsAbout: [
+      "Desarrollo Web",
       "Next.js",
       "React",
       "TypeScript",
-      "Desarrollo Web",
-      "Tailwind CSS",
       "Landing Pages",
+      "Sitios Web Profesionales",
+      "Diseño Web",
       "Frontend Development",
     ],
   };

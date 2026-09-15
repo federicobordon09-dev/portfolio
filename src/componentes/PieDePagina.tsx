@@ -38,8 +38,7 @@ export default function PieDePagina() {
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 text-xs text-texto-suave font-mono uppercase tracking-[0.15em] text-center sm:text-left">
         <span>© 2026 — Todos los derechos reservados</span>
         <span>
-          Diseñado <span className="text-acento">&amp;</span> Desarrollado por{" "}
-          {/* Span con hover en naranja — el nombre se ilumina al pasar el mouse */}
+          Desarrollado por{" "}
           <button
             onClick={abrirCv}
             className="text-texto transition-colors duration-300 hover:text-acento cursor-pointer underline underline-offset-2 decoration-acento/0 hover:decoration-acento/50 py-2"

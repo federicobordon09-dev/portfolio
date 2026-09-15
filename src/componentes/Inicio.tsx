@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useReducer, useRef, useState, useCallback } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import {
   motion,
   useMotionValue,
   useTransform,
-  useInView,
 } from "framer-motion";
 import {
   TIMING,
@@ -13,42 +12,16 @@ import {
   reductorTypewriter,
   decidirAccion,
 } from "./typewriter";
+import { DATOS_PERSONALES } from "@/lib/datos";
 
-// Nombre completo y separación para poder colorear "Federico" blanco
-// y "Bordon" naranja con la animación de typewriter
 const NOMBRE_COMPLETO = "Federico Bordon";
-const INDICE_ESPACIO = NOMBRE_COMPLETO.indexOf(" "); // 8
+const INDICE_ESPACIO = NOMBRE_COMPLETO.indexOf(" ");
 const LETRAS = NOMBRE_COMPLETO.split("");
-const LETRAS_LINEA_1 = LETRAS.slice(0, INDICE_ESPACIO + 1); // "Federico "
-const LETRAS_LINEA_2 = LETRAS.slice(INDICE_ESPACIO + 1); // "Bordon"
+const LETRAS_LINEA_1 = LETRAS.slice(0, INDICE_ESPACIO + 1);
+const LETRAS_LINEA_2 = LETRAS.slice(INDICE_ESPACIO + 1);
 
-/**
- * Hook que controla la animación del nombre en dos fases:
- *
- * FASE 1 — Entrada (una sola vez al cargar la página):
- *   Las letras aparecen una a una con stagger TIMING.ENTRADA_POR_LETRA_MS,
- *   animando desde {y: 60%, opacity: 0, filter: blur(8px)} hasta
- *   {y: 0, opacity: 1, filter: blur(0)} — efecto letra por letra
- *   con blur que se limpia mientras suben.
- *
- * FASE 2 — Loop typewriter (para siempre):
- *   Pausa TIMING.PAUSA_ESCRITO_COMPLETO_MS con el nombre completo,
- *   después borra letra por letra cada TIMING.BORRAR_POR_LETRA_MS,
- *   pausa TIMING.PAUSA_VACIO_MS en vacío, escribe letra por letra
- *   cada TIMING.ESCRIBIR_POR_LETRA_MS, y repite.
- *
- * Implementación: UN ÚNICO setInterval (con deps vacías) que vive
- * lo que vive el componente. Para leer el estado actualizado dentro
- * del callback usamos un `useRef` que se sincroniza en cada render.
- * Si pusiéramos `[estado]` como dep, el interval se re-crearía en
- * cada dispatch y se podrían perder ticks durante re-renders de
- * resize/parent update.
- */
 function useTypewriterConEntrada() {
   const [estado, dispatch] = useReducer(reductorTypewriter, ESTADO_INICIAL);
-  // Ref que mantiene SIEMPRE la última versión del estado, sin
-  // disparar re-renders. El callback del setInterval la lee para
-  // tomar decisiones actualizadas.
   const estadoRef = useRef(estado);
   estadoRef.current = estado;
 
@@ -61,7 +34,7 @@ function useTypewriterConEntrada() {
     }, TIMING.ENTRADA_POR_LETRA_MS);
 
     return () => clearInterval(intervalo);
-  }, []); // ← deps vacías: el interval se crea UNA vez y listo
+  }, []);
 
   return {
     cantidadVisible: estado.cantidadVisible,
@@ -69,54 +42,9 @@ function useTypewriterConEntrada() {
   };
 }
 
-function ContadorAnimado({
-  valor,
-  etiqueta,
-  delay = 0,
-}: {
-  valor: number;
-  etiqueta: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const estaEnVista = useInView(ref, { once: true });
-  const [cuenta, setCuenta] = useState(0);
-
-  useEffect(() => {
-    if (!estaEnVista) return;
-    const timeout = setTimeout(() => {
-      const duracion = 1000;
-      const inicio = performance.now();
-      function actualizar(ahora: number) {
-        const progreso = Math.min((ahora - inicio) / duracion, 1);
-        const suavizado = 1 - Math.pow(1 - progreso, 3);
-        setCuenta(Math.floor(valor * suavizado));
-        if (progreso < 1) requestAnimationFrame(actualizar);
-      }
-      requestAnimationFrame(actualizar);
-    }, delay);
-    return () => clearTimeout(timeout);
-  }, [estaEnVista, valor, delay]);
-
-  return (
-    <div ref={ref} className="flex flex-col items-center sm:items-start">
-      <span className="font-display font-bold text-3xl sm:text-4xl text-acento tabular-nums leading-none">
-        {cuenta}
-        {etiqueta === "Tecnologías" && "+"}
-      </span>
-      <span className="text-texto-suave text-[11px] sm:text-xs uppercase tracking-[0.15em] mt-1">
-        {etiqueta}
-      </span>
-    </div>
-  );
-}
-
 export default function Inicio() {
   const { cantidadVisible, entradaTerminada } = useTypewriterConEntrada();
 
-  // Spotlight que sigue el cursor — un halo naranja sutil que ilumina
-  // el patrón de puntos del fondo. Arranca fuera de pantalla; en mobile
-  // (sin mouse) simplemente no se mueve y queda imperceptible.
   const mouseX = useMotionValue(-500);
   const mouseY = useMotionValue(-500);
   const fondoSpotlight = useTransform(
@@ -131,7 +59,6 @@ export default function Inicio() {
     mouseY.set(evento.clientY - rect.top);
   };
 
-  // Helper para scrollear a la siguiente sección (Trabajo)
   const manejarClickScroll = () => {
     const seccionTrabajo = document.getElementById("trabajo");
     if (seccionTrabajo) {
@@ -139,14 +66,10 @@ export default function Inicio() {
     }
   };
 
-  /**
-   * Render de UNA letra individual.
-   *
-   * - Durante la entrada: la letra arranca oculta y borrosa (initial)
-   *   y se anima a nítida y en su lugar con delay escalonado.
-   * - Durante el loop: la letra aparece/desaparece según `cantidadVisible`
-   *   con un fade suave (sin blur — ya se vio la entrada).
-   */
+  const manejarClickWhatsApp = () => {
+    window.open(DATOS_PERSONALES.whatsapp, "_blank", "noopener,noreferrer");
+  };
+
   function renderLetra(
     letra: string,
     indiceGlobal: number,
@@ -163,9 +86,7 @@ export default function Inicio() {
             ? estaVisible
               ? { y: "0%", opacity: 1, filter: "blur(0px)" }
               : { y: "0%", opacity: 0, filter: "blur(0px)" }
-            : // Durante la entrada, el animate es siempre "visible" —
-              // la magia del efecto está en el delay escalonado
-              { y: "0%", opacity: 1, filter: "blur(0px)" }
+            : { y: "0%", opacity: 1, filter: "blur(0px)" }
         }
         transition={{
           duration: entradaTerminada ? 0.2 : 0.5,
@@ -185,32 +106,35 @@ export default function Inicio() {
       onMouseMove={manejarMovimientoMouse}
       className="relative min-h-screen flex flex-col justify-center px-5 sm:px-10 lg:px-16 pt-24 pb-12 overflow-hidden"
     >
-      {/* Patrón de puntos sutil — textura tech difuminada hacia los bordes */}
       <div className="patron-puntos" aria-hidden="true" />
 
-      {/* Spotlight que sigue el cursor — ilumina el patrón de puntos */}
       <motion.div
         aria-hidden="true"
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ background: fondoSpotlight }}
       />
 
-      {/* Resplandor ambiental — orbe naranja difuminado arriba a la
-          izquierda que le da profundidad y calidez al fondo del hero */}
       <div
         className="resplandor-acento glow-respira -top-32 -left-24 w-[420px] h-[420px] sm:w-[650px] sm:h-[650px]"
         aria-hidden="true"
       />
 
-      {/* Overlay de grano sutil para darle textura al hero */}
       <div className="textura-grano" aria-hidden="true" />
+
+      {/* Número fantasma gigante — serie editorial 00·01·02·03·04 */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-8 right-0 sm:right-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-[#d4d4d4] dark:text-white/[0.06] select-none"
+      >
+        00
+      </span>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="relative max-w-7xl w-full mx-auto z-10"
       >
-        {/* Tag superior — entra sync con la primera letra del typewriter */}
+        {/* Tag superior */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -220,24 +144,17 @@ export default function Inicio() {
           <span className="text-acento font-mono text-sm">00</span>
           <span className="h-px w-12 bg-borde" />
           <span className="text-texto-suave text-xs sm:text-sm uppercase tracking-[0.2em] font-medium">
-            Desarrollador Web
+            Desarrollador Web — Mendoza, Argentina
           </span>
         </motion.div>
 
-        {/* Nombre principal con animación de entrada letra por letra
-            + typewriter loop que mantiene la línea naranja siguiendo al texto. */}
+        {/* Nombre principal con typewriter */}
         <h1 className="relative font-display font-extrabold leading-[0.95] tracking-tight text-[clamp(3rem,12vw,9.5rem)] min-h-[2.1em]">
           <span className="sr-only">Federico Bordon</span>
-          {/* Línea 1: "Federico" + espacio */}
           <span className="block text-texto whitespace-pre">
-            {/* Cursor al inicio cuando todavía no hay ninguna letra */}
             {entradaTerminada && cantidadVisible === 0 && (
               <span className="cursor-parpadeante" aria-hidden="true" />
             )}
-            {/* Letras de línea 1: durante la entrada rendereamos todas
-                para que la animación stagger funcione; durante el loop
-                solo las visibles, así el cursor que va después las
-                sigue letra por letra. */}
             {(entradaTerminada
               ? LETRAS_LINEA_1.slice(
                   0,
@@ -245,8 +162,6 @@ export default function Inicio() {
                 )
               : LETRAS_LINEA_1
             ).map((letra, i) => renderLetra(letra, i, false))}
-            {/* Cursor al final de línea 1 cuando hay letras visibles
-                y la última todavía está en esta línea */}
             {entradaTerminada &&
               cantidadVisible > 0 &&
               cantidadVisible <= LETRAS_LINEA_1.length && (
@@ -254,7 +169,6 @@ export default function Inicio() {
               )}
           </span>
 
-          {/* Línea 2: "Bordon" */}
           <span className="block whitespace-pre">
             {(entradaTerminada
               ? LETRAS_LINEA_2.slice(
@@ -265,14 +179,13 @@ export default function Inicio() {
             ).map((letra, i) =>
               renderLetra(letra, LETRAS_LINEA_1.length + i, true),
             )}
-            {/* Cursor en línea 2 cuando ya hay letras de "Bordon" */}
             {entradaTerminada && cantidadVisible > LETRAS_LINEA_1.length && (
               <span className="cursor-parpadeante" aria-hidden="true" />
             )}
           </span>
         </h1>
 
-        {/* Frase de posicionamiento — entra justo después del nombre */}
+        {/* Propuesta principal */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -281,25 +194,58 @@ export default function Inicio() {
             delay: 0.4,
             ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
           }}
-          className="mt-10 sm:mt-14 max-w-2xl text-base sm:text-xl lg:text-2xl text-texto-suave leading-relaxed font-light"
+          className="mt-8 sm:mt-12 max-w-2xl text-base sm:text-xl lg:text-2xl text-texto leading-relaxed font-light"
         >
-          Construyo experiencias web que ayudan a las marcas a crecer
-          digitalmente.
+          {DATOS_PERSONALES.tagline}
         </motion.p>
 
-        {/* Contadores de impacto */}
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: 0.55,
+            ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+          }}
+          className="mt-4 max-w-xl text-sm sm:text-base text-texto-suave leading-relaxed"
+        >
+          {DATOS_PERSONALES.subheadline}
+        </motion.p>
+
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 sm:mt-10 flex gap-8 sm:gap-12"
+          transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4"
         >
-          <ContadorAnimado valor={8} etiqueta="Proyectos" delay={0} />
-          <ContadorAnimado valor={6} etiqueta="Tecnologías" delay={150} />
-          <ContadorAnimado valor={2026} etiqueta="Activo" delay={300} />
+          <motion.button
+            onClick={manejarClickWhatsApp}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-acento text-fondo font-display font-semibold text-sm sm:text-base rounded-full hover:bg-acento-hover transition-colors cursor-pointer"
+          >
+            Quiero una web para mi negocio
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7" />
+              <polyline points="7 7 17 7 17 17" />
+            </svg>
+          </motion.button>
+
+          <motion.button
+            onClick={manejarClickScroll}
+            whileHover={{ x: 4 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 px-5 py-3.5 text-sm sm:text-base text-texto-suave hover:text-acento transition-colors cursor-pointer bg-transparent border-0"
+          >
+            Ver proyectos
+            <span className="text-acento">→</span>
+          </motion.button>
         </motion.div>
 
-        {/* Metadata inferior — entra después de los contadores con stagger 0.12s */}
+        {/* Metadata inferior */}
         <motion.div
           initial="oculto"
           animate="visible"
@@ -309,7 +255,7 @@ export default function Inicio() {
               transition: { staggerChildren: 0.12, delayChildren: 1.0 },
             },
           }}
-          className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-8 sm:gap-y-3 text-sm text-texto-suave"
+          className="mt-8 sm:mt-12 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-3 sm:gap-x-8 sm:gap-y-3 text-sm text-texto-suave"
         >
           <motion.div
             variants={{
@@ -323,7 +269,7 @@ export default function Inicio() {
             className="flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-acento" />
-            <span>Soy de Mendoza, Argentina</span>
+            <span>Mendoza · Argentina</span>
           </motion.div>
           <motion.div
             variants={{
@@ -340,25 +286,12 @@ export default function Inicio() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
             </span>
-            <span className="text-sm">Disponible para freelance</span>
-            <button
-              onClick={() => {
-                document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              className="text-[11px] uppercase tracking-[0.15em] text-acento hover:text-acento/80 transition-colors ml-1 cursor-pointer bg-transparent border-0 py-2 min-h-[44px] inline-flex items-center"
-            >
-              <motion.span
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              >
-                Contratame →
-              </motion.span>
-            </button>
+            <span>Disponible para nuevos proyectos</span>
           </motion.div>
         </motion.div>
       </motion.div>
 
-      {/* Indicador de scroll — oculto en mobile, aparece en desktop */}
+      {/* Indicador de scroll */}
       <motion.button
         onClick={manejarClickScroll}
         initial={{ opacity: 0, y: 20 }}

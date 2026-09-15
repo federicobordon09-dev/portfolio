@@ -112,6 +112,10 @@ video {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .marquee-pista {
+    animation: marquee 32s linear infinite !important;
+  }
 }
 
 /* Selección de texto */
@@ -414,12 +418,6 @@ html.dark .textura-grano {
   flex-wrap: nowrap;
   align-items: center;
   flex-shrink: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-pista {
-    animation: none !important;
-  }
 }
 
 .marquee-mascara {

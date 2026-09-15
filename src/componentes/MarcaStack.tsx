@@ -34,7 +34,7 @@ function GrupoStack({ oculto = false }: { oculto?: boolean }) {
     <div className="marquee-grupo" aria-hidden={oculto ? "true" : undefined}>
       {STACK.map((tec, i) => (
         <div key={i} className="flex items-center shrink-0">
-          <span className="font-mono text-sm sm:text-base uppercase tracking-[0.15em] text-texto whitespace-nowrap">
+          <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-texto/60 whitespace-nowrap">
             {tec}
           </span>
           {/* Separador tipo rombo — detalle de ticker deportivo */}
@@ -52,18 +52,16 @@ export default function MarcaStack() {
   return (
     <section
       aria-label="Stack tecnológico"
-      className="relative border-y border-borde overflow-hidden bg-superficie/40"
+      className="relative border-y border-borde overflow-hidden bg-superficie/30"
     >
       <div className="flex items-stretch">
-        {/* Badge fijo — como el rótulo de un marcador deportivo */}
-        <div className="relative z-10 shrink-0 flex items-center bg-acento px-4 sm:px-6 border-r border-fondo/20">
-          <span className="font-mono font-bold text-xs sm:text-sm uppercase tracking-[0.2em] text-fondo whitespace-nowrap">
+        <div className="relative z-10 shrink-0 flex items-center bg-acento/90 px-4 sm:px-5 border-r border-fondo/20">
+          <span className="font-mono font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] text-fondo whitespace-nowrap">
             Stack
           </span>
         </div>
 
-        {/* Ticker continuo — desfila sin frenar nunca */}
-        <div className="marquee-mascara flex-1 py-3.5 sm:py-4">
+        <div className="marquee-mascara flex-1 py-2.5 sm:py-3">
           <div className="marquee-pista">
             <GrupoStack />
             <GrupoStack oculto />

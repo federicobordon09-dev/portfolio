@@ -1,31 +1,9 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
+import { proceso } from "@/lib/datos";
 import Resplandor from "./Resplandor";
 
-// Principios profesionales de Federico Bordon — cortos, punzantes, sin biografía
-const principios = [
-  {
-    numero: "I.",
-    titulo: "Cada proyecto es una oportunidad de aprendizaje.",
-    descripcion:
-      "Estoy en una etapa de crecimiento y lo abrazo. Cada desarrollo me enseña algo nuevo — y el siguiente siempre es mejor que el anterior.",
-  },
-  {
-    numero: "II.",
-    titulo: "Entiendo el objetivo antes de escribir una línea de código.",
-    descripcion:
-      "Me importa lo que cada proyecto necesita lograr. Construyo soluciones que son útiles, rápidas y pensadas para escalar.",
-  },
-  {
-    numero: "III.",
-    titulo: "Herramientas modernas, impacto real.",
-    descripcion:
-      "Trabajo con Next.js, React e inteligencia artificial para entregar experiencias web rápidas, bien diseñadas y posicionadas para crecer.",
-  },
-];
-
-// Variantes del contenedor — hace stagger de 0.2s entre hijos
 const variantesContenedor: Variants = {
   oculto: {},
   visible: {
@@ -36,8 +14,7 @@ const variantesContenedor: Variants = {
   },
 };
 
-// Variante de cada principio — entra desde la izquierda
-const variantesPrincipio: Variants = {
+const variantesPaso: Variants = {
   oculto: { opacity: 0, x: -30 },
   visible: {
     opacity: 1,
@@ -49,7 +26,6 @@ const variantesPrincipio: Variants = {
   },
 };
 
-// Variante del dot — pulse una vez cuando entra
 const variantesDot: Variants = {
   oculto: { scale: 1, opacity: 0.6 },
   visible: {
@@ -62,7 +38,6 @@ const variantesDot: Variants = {
   },
 };
 
-// Variante de la línea vertical — crece desde arriba
 const variantesLinea: Variants = {
   oculto: { scaleY: 0 },
   visible: {
@@ -75,25 +50,23 @@ const variantesLinea: Variants = {
   },
 };
 
-export default function Enfoque() {
+export default function Proceso() {
   return (
     <section
-      id="enfoque"
+      id="proceso"
       className="relative px-5 sm:px-10 lg:px-16 py-20 sm:py-32 overflow-hidden"
     >
-      {/* Resplandor ambiental con micro-parallax — cohesión con el resto de las secciones */}
       <Resplandor className="-left-40 top-1/3 w-[360px] h-[360px] sm:w-[520px] sm:h-[520px] opacity-50" />
 
-      {/* Número fantasma gigante — refuerza el tono editorial */}
+      {/* Número fantasma gigante — serie editorial 00·01·02·03·04 */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-8 right-0 sm:right-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-texto/[0.02] select-none"
+        className="pointer-events-none absolute -top-8 left-0 sm:left-6 font-display font-extrabold text-[10rem] sm:text-[18rem] leading-none text-[#d4d4d4] dark:text-white/[0.06] select-none"
       >
-        02
+        03
       </span>
 
       <div className="relative max-w-7xl mx-auto">
-        {/* Header de sección — entra desde la izquierda */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -101,7 +74,7 @@ export default function Enfoque() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex items-baseline gap-6 mb-12 sm:mb-16"
         >
-          <span className="text-acento font-mono text-base sm:text-lg">02</span>
+          <span className="text-acento font-mono text-base sm:text-lg">03</span>
           <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-texto tracking-tight">
             Cómo Trabajo
           </h2>
@@ -115,12 +88,10 @@ export default function Enfoque() {
           className="linea-divisoria origin-left mb-16 sm:mb-20"
         />
 
-        {/* Grid asimétrico: los principios a la derecha en desktop,
-            dejando aire a la izquierda con el número de sección */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           <div className="lg:col-span-1 hidden lg:flex items-start pt-2">
             <span className="text-texto-suave text-xs font-mono uppercase tracking-[0.25em] [writing-mode:vertical-rl] rotate-180">
-              Principios
+              Proceso
             </span>
           </div>
 
@@ -131,19 +102,17 @@ export default function Enfoque() {
             viewport={{ once: false, amount: 0.15 }}
             variants={variantesContenedor}
           >
-            {principios.map((principio) => (
+            {proceso.map((paso) => (
               <motion.li
-                key={principio.numero}
-                variants={variantesPrincipio}
+                key={paso.numero}
+                variants={variantesPaso}
                 className="group grid grid-cols-[auto_1fr] gap-6 sm:gap-8"
               >
-                {/* Bullet naranja + línea vertical que crece */}
                 <div className="flex flex-col items-center pt-3">
                   <motion.span
                     variants={variantesDot}
                     className="w-2.5 h-2.5 rounded-full bg-acento"
                   />
-                  {/* Línea vertical con scaleY desde top */}
                   <motion.span
                     variants={variantesLinea}
                     style={{ transformOrigin: "top" }}
@@ -151,7 +120,6 @@ export default function Enfoque() {
                   />
                 </div>
 
-                {/* Contenido del principio */}
                 <div>
                   <motion.span
                     variants={{
@@ -164,13 +132,13 @@ export default function Enfoque() {
                     }}
                     className="block text-acento font-mono text-sm mb-3"
                   >
-                    {principio.numero}
+                    {paso.numero}
                   </motion.span>
                   <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-texto mb-3 sm:mb-4 tracking-tight">
-                    {principio.titulo}
+                    {paso.titulo}
                   </h3>
                   <p className="text-texto-suave text-base sm:text-lg leading-relaxed max-w-2xl">
-                    {principio.descripcion}
+                    {paso.descripcion}
                   </p>
                 </div>
               </motion.li>
