@@ -2,6 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import { servicios } from "@/lib/datos";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 import Resplandor from "./Resplandor";
 
 function IconoServicio({ icono }: { icono: string }) {
@@ -66,6 +67,7 @@ const variantesItem: Variants = {
 };
 
 export default function Servicios() {
+  const { diccionario: es } = useIdioma();
   return (
     <section
       id="servicios"
@@ -91,7 +93,7 @@ export default function Servicios() {
         >
           <span className="text-acento font-mono text-base sm:text-lg">02</span>
           <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-texto tracking-tight">
-            ¿Qué puedo hacer por tu negocio?
+            {es.servicios.titulo}
           </h2>
         </motion.div>
 
@@ -102,7 +104,7 @@ export default function Servicios() {
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="text-texto-suave text-sm sm:text-base max-w-xl mb-8 sm:mb-10 leading-relaxed pl-[calc(1.5rem+1ch)]"
         >
-          Cada proyecto es distinto. Estos son los tipos de trabajo que puedo encarar para ayudarte.
+          {es.servicios.intro}
         </motion.p>
 
         <motion.div
@@ -121,7 +123,10 @@ export default function Servicios() {
           viewport={{ once: false, amount: 0.15 }}
           variants={variantesContenedor}
         >
-          {servicios.map((servicio) => (
+          {servicios.map((servicio) => {
+            // Merge por id: estructura (datos.ts) + copy (diccionario)
+            const texto = es.servicios.items.find((t) => t.id === servicio.id)!;
+            return (
             <motion.article
               key={servicio.id}
               variants={variantesItem}
@@ -137,15 +142,16 @@ export default function Servicios() {
                   <IconoServicio icono={servicio.icono} />
                 </div>
                 <h3 className="font-display font-bold text-lg sm:text-xl text-texto group-hover:text-acento transition-colors duration-300 pt-2">
-                  {servicio.titulo}
+                  {texto.titulo}
                 </h3>
               </div>
 
               <p className="text-texto-suave text-sm sm:text-base leading-relaxed">
-                {servicio.descripcion}
+                {texto.descripcion}
               </p>
             </motion.article>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>

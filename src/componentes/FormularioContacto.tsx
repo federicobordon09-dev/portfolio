@@ -9,6 +9,8 @@ import {
   IconoSpinner,
 } from "./iconos/Iconos";
 import { EASE_BACK_OUT, EASE_GENIE, EASE_GENIE_SALIDA } from "@/lib/animaciones";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
+import type { Diccionario } from "@/lib/i18n/tipos";
 
 /**
  * Formulario de contacto inline que se abre con animación "Genie"
@@ -32,7 +34,44 @@ interface EstadoForm {
 
 type EstadoEnvio = "idle" | "enviando" | "exito" | "error";
 
+/** Respuesta de error del API de contacto (contrato por código). */
+interface RespuestaErrorContacto {
+  errorCode?: string;
+  error?: string;
+  minutos?: number;
+  max?: number;
+  min?: number;
+}
+
+/**
+ * Resuelve el mensaje visible a partir del código de error,
+ * con fallback al texto que devuelve el servidor.
+ */
+function mensajePorCodigo(data: RespuestaErrorContacto, es: Diccionario): string {
+  switch (data.errorCode) {
+    case "RATE_LIMITED":
+      return es.erroresApi.limite(data.minutos ?? 1);
+    case "CAMPOS_REQUERIDOS":
+      return es.erroresApi.requeridos;
+    case "EMAIL_LARGO":
+      return es.erroresApi.emailLargo;
+    case "ASUNTO_LARGO":
+      return es.erroresApi.asuntoLargo(data.max ?? 200);
+    case "MENSAJE_CORTO":
+      return es.erroresApi.mensajeCorto(data.min ?? 10);
+    case "MENSAJE_LARGO":
+      return es.erroresApi.mensajeLargo(data.max ?? 5000);
+    case "EMAIL_INVALIDO":
+      return es.erroresApi.emailInvalido;
+    case "ENVIO_FALLIDO":
+      return es.erroresApi.envioFallido;
+    default:
+      return data.error || es.erroresApi.generico;
+  }
+}
+
 export default function FormularioContacto({ abierto, onCerrar }: Props) {
+  const { diccionario: es } = useIdioma();
   const [form, setForm] = useState<EstadoForm>({
     email: "",
     asunto: "",
@@ -172,15 +211,15 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
       });
 
       if (!respuesta.ok) {
-        const data = await respuesta.json();
-        throw new Error(data.error || "Error al enviar el mensaje");
+        const data = (await respuesta.json()) as RespuestaErrorContacto;
+        throw new Error(mensajePorCodigo(data, es));
       }
 
       setEstado("exito");
     } catch (err) {
       setEstado("error");
       setErrorMsg(
-        err instanceof Error ? err.message : "Error desconocido",
+        err instanceof Error ? err.message : es.erroresApi.desconocido,
       );
     }
   };
@@ -244,19 +283,19 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
               <div className="flex items-start justify-between mb-8 sm:mb-10">
                 <div>
                   <span className="block text-xs uppercase tracking-[0.2em] text-acento font-mono mb-2">
-                    Nuevo mensaje
+                    {es.formulario.nuevoMensaje}
                   </span>
                   <h2
                     id="form-titulo"
                     className="font-display font-bold text-2xl sm:text-4xl text-texto tracking-tight"
                   >
-                    Escribime
+                    {es.formulario.titulo}
                   </h2>
                 </div>
                 <button
                   onClick={onCerrar}
                   className="w-11 h-11 -mr-2 flex items-center justify-center rounded-full text-texto-suave hover:text-acento hover:bg-acento/10 transition-colors"
-                  aria-label="Cerrar formulario"
+                  aria-label={es.formulario.cerrarFormulario}
                 >
                   <IconoCerrar tamano={22} />
                 </button>
@@ -287,16 +326,16 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                     <IconoCheck tamano={36} className="text-acento" />
                   </motion.div>
                   <h3 className="font-display font-bold text-2xl sm:text-3xl text-texto mb-3">
-                    ¡Mensaje enviado!
+                    {es.formulario.exitoTitulo}
                   </h3>
                   <p className="text-texto-suave mb-8 max-w-md mx-auto">
-                    Gracias por escribirme. Te respondo a la brevedad.
+                    {es.formulario.exitoDescripcion}
                   </p>
                   <button
                     onClick={onCerrar}
                     className="px-6 py-3 bg-acento text-fondo font-display font-semibold rounded-full hover:bg-acento-hover transition-colors"
                   >
-                    Cerrar
+                    {es.formulario.cerrar}
                   </button>
                 </motion.div>
               ) : (
@@ -330,7 +369,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                       htmlFor="contacto-email"
                       className="block text-xs uppercase tracking-[0.15em] text-texto-suave mb-2 font-mono"
                     >
-                      Tu correo
+                      {es.formulario.etiquetaCorreo}
                     </label>
                     <input
                       type="email"
@@ -345,7 +384,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                         setForm({ ...form, email: e.target.value })
                       }
                       className="w-full bg-fondo border border-borde rounded-lg px-4 py-3 text-texto placeholder-texto-suave/50 focus:outline-none focus:border-acento transition-colors"
-                      placeholder="tu@correo.com"
+                      placeholder={es.formulario.placeholderCorreo}
                     />
                   </div>
 
@@ -355,7 +394,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                       htmlFor="contacto-asunto"
                       className="block text-xs uppercase tracking-[0.15em] text-texto-suave mb-2 font-mono"
                     >
-                      Asunto
+                      {es.formulario.etiquetaAsunto}
                     </label>
                     <input
                       type="text"
@@ -369,7 +408,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                         setForm({ ...form, asunto: e.target.value })
                       }
                       className="w-full bg-fondo border border-borde rounded-lg px-4 py-3 text-texto placeholder-texto-suave/50 focus:outline-none focus:border-acento transition-colors"
-                      placeholder="¿De qué se trata?"
+                      placeholder={es.formulario.placeholderAsunto}
                     />
                   </div>
 
@@ -379,7 +418,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                       htmlFor="contacto-mensaje"
                       className="block text-xs uppercase tracking-[0.15em] text-texto-suave mb-2 font-mono"
                     >
-                      Mensaje
+                      {es.formulario.etiquetaMensaje}
                     </label>
                     <textarea
                       id="contacto-mensaje"
@@ -393,7 +432,7 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                         setForm({ ...form, mensaje: e.target.value })
                       }
                       className="w-full bg-fondo border border-borde rounded-lg px-4 py-3 text-texto placeholder-texto-suave/50 focus:outline-none focus:border-acento transition-colors resize-none"
-                      placeholder="Contame en qué te puedo ayudar..."
+                      placeholder={es.formulario.placeholderMensaje}
                     />
                   </div>
 
@@ -423,11 +462,11 @@ export default function FormularioContacto({ abierto, onCerrar }: Props) {
                     {estado === "enviando" ? (
                       <>
                         <IconoSpinner tamano={18} className="animate-spin" />
-                        Enviando...
+                        {es.formulario.enviando}
                       </>
                     ) : (
                       <>
-                        Enviar mensaje
+                        {es.formulario.enviar}
                         <IconoEnviar tamano={18} />
                       </>
                     )}

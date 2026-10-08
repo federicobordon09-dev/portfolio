@@ -2,6 +2,7 @@
 
 import { motion, Variants } from "framer-motion";
 import { proceso } from "@/lib/datos";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 import Resplandor from "./Resplandor";
 
 const variantesContenedor: Variants = {
@@ -51,6 +52,7 @@ const variantesLinea: Variants = {
 };
 
 export default function Proceso() {
+  const { diccionario: es } = useIdioma();
   return (
     <section
       id="proceso"
@@ -76,7 +78,7 @@ export default function Proceso() {
         >
           <span className="text-acento font-mono text-base sm:text-lg">03</span>
           <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-texto tracking-tight">
-            Cómo Trabajo
+            {es.proceso.titulo}
           </h2>
         </motion.div>
 
@@ -91,7 +93,7 @@ export default function Proceso() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           <div className="lg:col-span-1 hidden lg:flex items-start pt-2">
             <span className="text-texto-suave text-xs font-mono uppercase tracking-[0.25em] [writing-mode:vertical-rl] rotate-180">
-              Proceso
+              {es.proceso.etiqueta}
             </span>
           </div>
 
@@ -102,7 +104,10 @@ export default function Proceso() {
             viewport={{ once: false, amount: 0.15 }}
             variants={variantesContenedor}
           >
-            {proceso.map((paso) => (
+            {proceso.map((paso, indice) => {
+              // Merge por índice: estructura (datos.ts) + copy (diccionario)
+              const texto = es.proceso.items[indice];
+              return (
               <motion.li
                 key={paso.numero}
                 variants={variantesPaso}
@@ -135,14 +140,15 @@ export default function Proceso() {
                     {paso.numero}
                   </motion.span>
                   <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-texto mb-3 sm:mb-4 tracking-tight">
-                    {paso.titulo}
+                    {texto.titulo}
                   </h3>
                   <p className="text-texto-suave text-base sm:text-lg leading-relaxed max-w-2xl">
-                    {paso.descripcion}
+                    {texto.descripcion}
                   </p>
                 </div>
               </motion.li>
-            ))}
+              );
+            })}
           </motion.ul>
         </div>
       </div>

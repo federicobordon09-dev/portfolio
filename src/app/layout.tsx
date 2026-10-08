@@ -7,6 +7,9 @@ import "./globals.css";
 import ProgresoScroll from "@/componentes/ProgresoScroll";
 import ScrollAlInicio from "@/componentes/ScrollAlInicio";
 import ConfiguracionMovimiento from "@/componentes/ConfiguracionMovimiento";
+import { IdiomaProvider } from "@/lib/i18n/IdiomaContext";
+import { diccionarioServidor } from "@/lib/i18n/servidor";
+import type { Diccionario } from "@/lib/i18n/tipos";
 import { DATOS_PERSONALES } from "@/lib/datos";
 
 // Fuente display — la usamos para títulos y el nombre en el hero
@@ -29,14 +32,19 @@ const metadataBase = new URL(
   process.env.NEXT_PUBLIC_SITE_URL || "https://federicobordon.com.ar",
 );
 
-export const metadata: Metadata = {
-  metadataBase,
+export async function generateMetadata(): Promise<Metadata> {
+  const { idioma, diccionario } = await diccionarioServidor();
+  return construirMetadata(idioma, diccionario);
+}
+
+function construirMetadata(idioma: string, es: Diccionario): Metadata {
+  return {
+    metadataBase,
   title: {
-    default: "Federico Bordon | Desarrollador Web para Negocios",
+    default: es.metadata.titulo,
     template: "%s | Federico Bordon",
   },
-  description:
-    "Desarrollador web en Mendoza, Argentina. Diseño y desarrollo sitios web profesionales para negocios que quieren verse bien y crecer online. Next.js, React, TypeScript.",
+  description: es.metadata.descripcion,
   authors: [{ name: "Federico Bordon", url: "https://federicobordon.com.ar" }],
   creator: "Federico Bordon",
   publisher: "Federico Bordon",
@@ -66,20 +74,18 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Federico Bordon | Desarrollador Web para Negocios",
-    description:
-      "Desarrollador web en Mendoza, Argentina. Sitios web profesionales para negocios. Next.js, React, TypeScript.",
+    title: es.metadata.ogTitulo,
+    description: es.metadata.ogDescripcion,
     type: "website",
-    locale: "es_AR",
+    locale: idioma === "en" ? "en_US" : "es_AR",
     siteName: "Federico Bordon",
     url: metadataBase.toString(),
     countryName: "Argentina",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Federico Bordon | Desarrollador Web para Negocios",
-    description:
-      "Desarrollador web en Mendoza, Argentina. Sitios web profesionales para negocios. Next.js, React, TypeScript.",
+    title: es.metadata.twitterTitulo,
+    description: es.metadata.twitterDescripcion,
     creator: "@federicobordon",
   },
   alternates: {
@@ -90,6 +96,7 @@ export const metadata: Metadata = {
     google: "googlefd9640e9bce2a36b",
   },
 };
+} // construirMetadata
 
 // En Next.js 14+ el themeColor va en un export separado "viewport"
 export const viewport: Viewport = {
@@ -105,7 +112,7 @@ export const viewport: Viewport = {
  * https://schema.org/Person
  * https://developers.google.com/search/docs/appearance/structured-data
  */
-function datosEstructurados() {
+function datosEstructurados(es: Diccionario) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -120,27 +127,19 @@ function datosEstructurados() {
     },
     sameAs: [DATOS_PERSONALES.github, DATOS_PERSONALES.linkedin],
     image: "/logo.png",
-    knowsAbout: [
-      "Desarrollo Web",
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Landing Pages",
-      "Sitios Web Profesionales",
-      "Diseño Web",
-      "Frontend Development",
-    ],
+    knowsAbout: es.metadata.conocimientos,
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { idioma, diccionario } = await diccionarioServidor();
   return (
     <html
-      lang="es"
+      lang={idioma}
       suppressHydrationWarning
       className={`${fuenteSyne.variable} ${fuenteInter.variable} h-full antialiased`}
     >
@@ -182,7 +181,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(datosEstructurados()),
+            __html: JSON.stringify(datosEstructurados(diccionario)),
           }}
         />
         {/* Barra de progreso de scroll — refleja cuánto se recorrió la página */}
@@ -191,7 +190,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <ScrollAlInicio />
         {/* MotionConfig hace que todas las animaciones de Framer Motion
             respeten prefers-reduced-motion del sistema operativo */}
-        <ConfiguracionMovimiento>{children}</ConfiguracionMovimiento>
+        <IdiomaProvider><ConfiguracionMovimiento>{children}</ConfiguracionMovimiento></IdiomaProvider>
         {/* Vercel Analytics — page views automáticos, sin cookies,
             no impacta performance. Se activa solo en producción. */}
         <Analytics />

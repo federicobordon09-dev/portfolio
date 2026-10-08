@@ -4,114 +4,56 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Resplandor from "./Resplandor";
-import { proyectos, type Proyecto } from "@/lib/datos";
+import { proyectos } from "@/lib/datos";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
-const POR_PAGINA = 3;
+/**
+ * Selección pública de proyectos — orden exacto de presentación.
+ * Los datos completos permanecen en `proyectos` (datos.ts) para
+ * reutilización futura; aquí solo se filtra qué se renderiza.
+ */
+const SLUGS_VISIBLES = [
+  "nuvio",
+  "copa-chapa-chapa",
+  "bodega-andeluna",
+  "mirasoles",
+  "el-hornero-pizzeria",
+  "cabrita-garage-cafe",
+  "el-porvenir",
+  "hornero-restaurante",
+  "opuntia-casa-de-te",
+] as const;
 
-function CardProyecto({ proyecto, indice }: { proyecto: Proyecto; indice: number }) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.15 }}
-      transition={{ duration: 0.5, delay: indice * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-superficie border border-borde rounded-lg overflow-hidden hover:border-acento/50 hover:shadow-[0_8px_30px_-12px_rgba(var(--acento-rgb)/0.12)] hover:-translate-y-1 transition-all duration-300"
-    >
-      <span
-        aria-hidden="true"
-        className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-acento to-transparent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-10"
-      />
-
-      <div className="relative w-full aspect-[16/7] overflow-hidden bg-fondo">
-        <Image
-          src={proyecto.imagen}
-          alt={proyecto.imagenAlt}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-          quality={75}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-superficie/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-        <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
-          {proyecto.tipo === "personal" && (
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-acento/90 text-fondo px-2.5 py-1 rounded-full">
-              Proyecto Personal
-            </span>
-          )}
-          {proyecto.tipo === "demostrativo" && (
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-texto/80 text-fondo px-2.5 py-1 rounded-full">
-              Demo
-            </span>
-          )}
-          {proyecto.estado === "en_desarrollo" && (
-            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.15em] font-mono bg-acento/70 text-fondo px-2.5 py-1 rounded-full">
-              En desarrollo
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="p-4 sm:p-5">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.15em] text-texto-suave mb-2">
-          <span>{proyecto.categoria}</span>
-          <span className="font-mono">{proyecto.anio}</span>
-        </div>
-
-        <h3 className="font-display font-bold text-base sm:text-lg text-texto group-hover:text-acento transition-colors duration-300 mb-2">
-          {proyecto.nombre}
-        </h3>
-
-        <p className="text-texto-suave text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
-          {proyecto.descripcion}
-        </p>
-
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {proyecto.tecnologias.slice(0, 3).map((t) => (
-            <span
-              key={t}
-              className="text-[9px] sm:text-[10px] uppercase tracking-wider text-texto-suave/70 border border-borde rounded-full px-2 py-0.5 font-mono group-hover:border-acento/30 group-hover:text-acento/60 transition-colors"
-            >
-              {t}
-            </span>
-          ))}
-          {proyecto.tecnologias.length > 3 && (
-            <span className="text-[9px] sm:text-[10px] text-texto-suave/40 font-mono">
-              +{proyecto.tecnologias.length - 3}
-            </span>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between pt-3 border-t border-borde/50">
-          {proyecto.enlace ? (
-            <a
-              href={proyecto.enlace}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-texto-suave hover:text-acento transition-colors duration-300"
-              aria-label={`Ver proyecto ${proyecto.nombre}`}
-            >
-              Ver proyecto
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="translate-x-0.5 -translate-y-0.5">
-                <path d="M7 17L17 7" />
-                <path d="M7 7h10v10" />
-              </svg>
-            </a>
-          ) : (
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-texto-suave/50">
-              {proyecto.estado === "en_desarrollo" ? "En desarrollo" : "Próximamente"}
-            </span>
-          )}
-        </div>
-      </div>
-    </motion.article>
-  );
+function formatoIndice(i: number) {
+  return String(i + 1).padStart(2, "0");
 }
 
 export default function Trabajo() {
-  const [pagina, setPagina] = useState(0);
-  const totalPaginas = Math.ceil(proyectos.length / POR_PAGINA);
-  const inicio = pagina * POR_PAGINA;
-  const proyectosPagina = proyectos.slice(inicio, inicio + POR_PAGINA);
+  const { diccionario: es } = useIdioma();
+  const textosPorSlug = new Map(es.proyectos.items.map((t) => [t.slug, t]));
+  const proyectosVisibles = SLUGS_VISIBLES.map((slug) => {
+    const base = proyectos.find((p) => p.slug === slug)!;
+    // Merge por slug: datos estructurales (datos.ts) + copy (diccionario)
+    return { ...base, ...textosPorSlug.get(slug)! };
+  }).filter(Boolean);
+  const [indiceSeleccionado, setIndiceSeleccionado] = useState(0);
+  const seleccionado = proyectosVisibles[indiceSeleccionado];
+
+  const seleccionar = (i: number) => {
+    if (i >= 0 && i < proyectosVisibles.length) setIndiceSeleccionado(i);
+  };
+
+  const manejarTeclas = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const siguiente =
+        e.key === "ArrowDown" ? indiceSeleccionado + 1 : indiceSeleccionado - 1;
+      if (siguiente >= 0 && siguiente < proyectosVisibles.length) {
+        setIndiceSeleccionado(siguiente);
+        document.getElementById(`proyecto-idx-${siguiente}`)?.focus();
+      }
+    }
+  };
 
   return (
     <section
@@ -132,14 +74,14 @@ export default function Trabajo() {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.15 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex items-baseline gap-6 mb-3"
         >
           <span className="text-acento font-mono text-base sm:text-lg">01</span>
           <h2 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-texto tracking-tight">
-            Proyectos
+            {es.proyectos.titulo}
           </h2>
         </motion.div>
 
@@ -150,7 +92,7 @@ export default function Trabajo() {
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="text-texto-suave text-sm sm:text-base max-w-xl mb-8 sm:mb-10 leading-relaxed pl-[calc(1.5rem+1ch)]"
         >
-          Trabajos reales donde resolví problemas concretos para negocios. Cada proyecto tiene un objetivo claro y una solución pensada para lograrlo.
+          {es.proyectos.intro}
         </motion.p>
 
         <motion.div
@@ -161,70 +103,116 @@ export default function Trabajo() {
           className="linea-divisoria origin-left mb-8 sm:mb-10"
         />
 
-        {/* Grid de proyectos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={pagina}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="contents"
-            >
-              {proyectosPagina.map((proyecto, i) => (
-                <CardProyecto key={proyecto.id} proyecto={proyecto} indice={i} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        {/* Índice + escenario */}
+        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[1fr_1.1fr] lg:gap-12 lg:items-start">
+          {/* Escenario — preview del proyecto seleccionado.
+              En mobile va primero para ver el resultado del tap sin scrollear. */}
+          <div className="order-first lg:order-2 lg:sticky lg:top-28">
+            <div className="flex items-baseline justify-between mb-3 font-mono text-xs sm:text-sm text-texto-suave">
+              <span aria-hidden="true">
+                <span className="text-acento">{formatoIndice(indiceSeleccionado)}</span>
+                {" / "}
+                {formatoIndice(proyectosVisibles.length - 1)}
+              </span>
+              <span className="uppercase tracking-[0.2em] text-[10px] sm:text-xs">
+                {seleccionado.categoria}
+              </span>
+            </div>
 
-        {/* Paginación */}
-        {totalPaginas > 1 && (
-          <div className="flex items-center justify-center gap-3 mt-10 sm:mt-12">
-            <motion.button
-              onClick={() => setPagina((p) => Math.max(0, p - 1))}
-              disabled={pagina === 0}
-              whileHover={pagina === 0 ? {} : { scale: 1.1 }}
-              whileTap={pagina === 0 ? {} : { scale: 0.9 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
-              aria-label="Página anterior"
+            <div
+              aria-live="polite"
+              aria-label={es.proyectos.vistaPreviaDe(seleccionado.nombre)}
+              className="relative w-full aspect-[16/10] overflow-hidden rounded-lg border border-borde bg-fondo"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </motion.button>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={seleccionado.slug}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={seleccionado.imagen}
+                    alt={seleccionado.imagenAlt}
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-top"
+                    quality={75}
+                    priority={indiceSeleccionado === 0}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-            {Array.from({ length: totalPaginas }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setPagina(i)}
-                className="flex items-center justify-center p-2 -m-2"
-                aria-label={`Página ${i + 1}`}
-                aria-current={i === pagina ? "page" : undefined}
-              >
-                <span className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === pagina ? "bg-acento w-6" : "bg-borde w-1.5 hover:bg-texto-suave"
-                }`} />
-              </button>
-            ))}
-
-            <motion.button
-              onClick={() => setPagina((p) => Math.min(totalPaginas - 1, p + 1))}
-              disabled={pagina === totalPaginas - 1}
-              whileHover={pagina === totalPaginas - 1 ? {} : { scale: 1.1 }}
-              whileTap={pagina === totalPaginas - 1 ? {} : { scale: 0.9 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="w-11 h-11 rounded-full border border-borde flex items-center justify-center text-texto-suave hover:text-acento hover:border-acento disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
-              aria-label="Página siguiente"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </motion.button>
+            <div className="flex items-center justify-between pt-3 mt-1 text-[10px] sm:text-[11px] uppercase tracking-[0.2em]">
+              <span className="text-texto-suave font-mono">{seleccionado.anio}</span>
+              {seleccionado.enlace ? (
+                <a
+                  href={seleccionado.enlace}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-texto-suave hover:text-acento transition-colors duration-300"
+                  aria-label={es.proyectos.verProyectoDe(seleccionado.nombre)}
+                >
+                  {es.proyectos.verProyecto}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="translate-x-0.5 -translate-y-0.5">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </a>
+              ) : null}
+            </div>
           </div>
-        )}
+
+          {/* Índice — los 9 proyectos como elementos tipográficos */}
+          <ul
+            onKeyDown={manejarTeclas}
+            aria-label={es.proyectos.indiceAria}
+            className="order-2 lg:order-1 border-t border-borde/60"
+          >
+            {proyectosVisibles.map((proyecto, i) => {
+              const activo = i === indiceSeleccionado;
+              return (
+                <li key={proyecto.slug} className="border-b border-borde/60">
+                  <button
+                    id={`proyecto-idx-${i}`}
+                    type="button"
+                    onClick={() => seleccionar(i)}
+                    onMouseEnter={() => seleccionar(i)}
+                    onFocus={() => seleccionar(i)}
+                    aria-current={activo ? "true" : undefined}
+                    aria-label={`${proyecto.nombre}, ${proyecto.categoria}`}
+                    className={`group flex w-full items-baseline gap-4 py-3 sm:py-3.5 text-left cursor-pointer transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-acento focus-visible:outline-offset-[-2px] ${
+                      activo ? "text-acento" : "text-texto hover:text-acento"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`font-mono text-[11px] sm:text-xs shrink-0 transition-colors duration-200 ${
+                        activo ? "text-acento" : "text-texto-suave/60 group-hover:text-acento/70"
+                      }`}
+                    >
+                      {formatoIndice(i)}
+                    </span>
+                    <span className="font-display font-bold text-lg sm:text-xl lg:text-2xl tracking-tight leading-tight">
+                      {proyecto.nombre}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`ml-auto text-acento text-base leading-none transition-all duration-200 ${
+                        activo ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0"
+                      }`}
+                    >
+                      →
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
 
         {/* Link contextual discreto */}
         <motion.div
@@ -242,8 +230,8 @@ export default function Trabajo() {
             }}
             className="inline-flex items-center gap-2 text-texto-suave text-sm hover:text-acento transition-colors duration-300"
           >
-            ¿Tenés un proyecto parecido en mente?
-            <span className="text-acento">Hablemos →</span>
+            {es.proyectos.parecidoMente}
+            <span className="text-acento">{es.proyectos.escribimeCta}</span>
           </a>
         </motion.div>
       </div>

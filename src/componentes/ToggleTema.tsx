@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useTema, type PreferenciaTema } from "@/lib/tema";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 import { motion } from "framer-motion";
 
 const ICONOS: Record<PreferenciaTema, React.ReactNode> = {
@@ -65,21 +66,21 @@ const ICONOS: Record<PreferenciaTema, React.ReactNode> = {
   ),
 };
 
-const ETIQUETAS: Record<PreferenciaTema, string> = {
-  sistema: "Sistema",
-  claro: "Claro",
-  oscuro: "Oscuro",
-};
-
 export default function ToggleTema() {
+  const { diccionario: es } = useIdioma();
   const { preferencia, ciclo } = useTema();
+  const ETIQUETAS: Record<PreferenciaTema, string> = {
+    sistema: es.tema.sistema,
+    claro: es.tema.claro,
+    oscuro: es.tema.oscuro,
+  };
 
   return (
     <motion.button
       onClick={ciclo}
       className="relative flex items-center justify-center w-11 h-11 rounded-full border border-borde/60 bg-superficie/50 text-texto-suave hover:text-texto hover:border-borde transition-colors"
       whileTap={{ scale: 0.9 }}
-      aria-label={`Tema actual: ${ETIQUETAS[preferencia]}. Cambiar tema`}
+      aria-label={es.tema.actual(ETIQUETAS[preferencia])}
       title={ETIQUETAS[preferencia]}
     >
       <motion.div

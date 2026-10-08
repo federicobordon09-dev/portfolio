@@ -1,5 +1,7 @@
 "use client";
 
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
+
 /**
  * Infinite Sports Ticker con el stack tecnológico.
  *
@@ -49,9 +51,10 @@ function GrupoStack({ oculto = false }: { oculto?: boolean }) {
 }
 
 export default function MarcaStack() {
+  const { diccionario: es } = useIdioma();
   return (
     <section
-      aria-label="Stack tecnológico"
+      aria-label={es.stackAria}
       className="relative border-y border-borde overflow-hidden bg-superficie/30"
     >
       <div className="flex items-stretch">

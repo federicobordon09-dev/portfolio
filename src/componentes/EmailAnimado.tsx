@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { EASE_OUT_EXPO } from "@/lib/animaciones";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 /**
  * Componente que renderea el email letra por letra y aplica
@@ -19,6 +20,7 @@ export default function EmailAnimado({
   texto: string;
   onClick: () => void;
 }) {
+  const { diccionario: es } = useIdioma();
   const [offsetsPorLetra, setOffsetsPorLetra] = useState<number[]>(() =>
     texto.split("").map(() => 0),
   );
@@ -33,7 +35,7 @@ export default function EmailAnimado({
     <motion.button
       type="button"
       onClick={onClick}
-      aria-label={`Escribirme a ${texto}`}
+      aria-label={es.emailAria(texto)}
       className="group/email relative flex flex-wrap items-baseline max-w-full font-display font-bold text-[clamp(1.1rem,4.5vw,3rem)] sm:text-5xl lg:text-6xl leading-[1.1] text-texto hover:text-acento transition-colors duration-300 text-left cursor-pointer"
       initial="reposo"
       whileHover="hover"

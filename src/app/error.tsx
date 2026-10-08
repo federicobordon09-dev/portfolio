@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { DICCIONARIOS, resolverIdioma } from "@/lib/i18n/idioma";
 
 /**
  * Error boundary global — se renderiza automáticamente cuando
  * cualquier parte del árbol de React tira una excepción.
  * El user puede probar recargar la página o volver al inicio.
+ *
+ * Client boundary sin provider garantizado: resuelve el idioma
+ * leyendo `document.cookie` en render (sin contexto, sin efectos)
+ * y elige `DICCIONARIOS[idioma].paginaError`.
  */
 export default function Error({
   error,
@@ -14,34 +18,36 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log al server (en producción: Sentry, etc.)
-    console.error("Portfolio error boundary:", error);
-  }, [error]);
+  const cookie =
+    typeof document === "undefined" ? "" : document.cookie;
+  const coincidencia = /(?:^|;\s*)idioma-portfolio=([^;]*)/.exec(cookie);
+  const idioma = resolverIdioma(
+    coincidencia ? decodeURIComponent(coincidencia[1]) : undefined,
+  );
+  const textos = DICCIONARIOS[idioma].paginaError;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-fondo px-5">
       <div className="max-w-md text-center">
-        <span className="block text-acento font-mono text-sm mb-4">Error</span>
+        <span className="block text-acento font-mono text-sm mb-4">{textos.etiqueta}</span>
         <h1 className="font-display font-bold text-4xl sm:text-5xl text-texto mb-4 tracking-tight">
-          Algo se rompió
+          {textos.titulo}
         </h1>
         <p className="text-texto-suave mb-8 leading-relaxed">
-          No te preocupes, no fue tu culpa. Podés intentar de nuevo
-          o volver al inicio del portfolio.
+          {textos.descripcion}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={reset}
             className="px-6 py-3 bg-acento text-fondo font-display font-semibold rounded-full hover:bg-acento-hover transition-colors"
           >
-            Reintentar
+            {textos.reintentar}
           </button>
           <a
             href="/"
             className="px-6 py-3 border border-borde text-texto font-display font-semibold rounded-full hover:border-acento hover:text-acento transition-colors"
           >
-            Volver al inicio
+            {textos.volver}
           </a>
         </div>
         {error.digest && (

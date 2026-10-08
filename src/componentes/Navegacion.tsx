@@ -6,19 +6,21 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconoCerrar, IconoMenu } from "./iconos/Iconos";
 import ToggleTema from "./ToggleTema";
+import SelectorIdioma from "./SelectorIdioma";
 import { EASE_OUT_EXPO } from "@/lib/animaciones";
-
-// Definimos los enlaces de navegación en un solo lugar
-// así es fácil agregar o reordenar secciones más adelante
-const enlacesNavegacion = [
-  { id: "inicio", etiqueta: "Inicio" },
-  { id: "trabajo", etiqueta: "Proyectos" },
-  { id: "servicios", etiqueta: "Servicios" },
-  { id: "proceso", etiqueta: "Proceso" },
-  { id: "contacto", etiqueta: "Contacto" },
-];
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 export default function Navegacion() {
+  const { diccionario: es } = useIdioma();
+  // Enlaces de navegación en un solo lugar
+  // así es fácil agregar o reordenar secciones más adelante
+  const enlacesNavegacion = [
+    { id: "inicio", etiqueta: es.navegacion.inicio },
+    { id: "trabajo", etiqueta: es.navegacion.proyectos },
+    { id: "servicios", etiqueta: es.navegacion.servicios },
+    { id: "proceso", etiqueta: es.navegacion.proceso },
+    { id: "contacto", etiqueta: es.navegacion.contacto },
+  ];
   // Controlamos si la página ya se scrolleó para activar el blur de fondo
   const [estaScrolleada, setEstaScrolleada] = useState(false);
   // Estado del menú mobile
@@ -171,7 +173,7 @@ export default function Navegacion() {
           id="menu-mobile"
           role="dialog"
           aria-modal="true"
-          aria-label="Menú de navegación"
+          aria-label={es.navegacion.menuNavegacion}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -214,7 +216,8 @@ export default function Navegacion() {
               );
             })}
           </ul>
-          <div className="mt-8">
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <SelectorIdioma />
             <ToggleTema />
           </div>
         </motion.div>
@@ -247,7 +250,7 @@ export default function Navegacion() {
             type="button"
             onClick={(e) => manejarClickAncla(e, "inicio")}
             className="relative z-50 flex items-center h-full overflow-visible transition-opacity duration-300 hover:opacity-80"
-            aria-label="Volver al inicio"
+            aria-label={es.navegacion.volverInicio}
           >
             <Image
               src="/logo.png"
@@ -299,6 +302,7 @@ export default function Navegacion() {
 
           {/* Toggle de tema + hamburguesa */}
           <div className="flex items-center gap-3">
+            <SelectorIdioma />
             <ToggleTema />
             {/* Botón hamburguesa — `nav-movil` lo hace visible en
                 cualquier pantalla táctil, sin importar el ancho. */}
@@ -306,7 +310,7 @@ export default function Navegacion() {
               ref={refBotonHamburguesa}
               onClick={() => setMenuAbierto(!menuAbierto)}
               className="lg:hidden nav-movil p-3 -mr-2 z-50 text-acento"
-              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              aria-label={menuAbierto ? es.navegacion.cerrarMenu : es.navegacion.abrirMenu}
               aria-expanded={menuAbierto}
               aria-controls="menu-mobile"
             >

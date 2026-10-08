@@ -13,6 +13,7 @@ import {
   decidirAccion,
 } from "./typewriter";
 import { DATOS_PERSONALES } from "@/lib/datos";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 const NOMBRE_COMPLETO = "Federico Bordon";
 const INDICE_ESPACIO = NOMBRE_COMPLETO.indexOf(" ");
@@ -43,6 +44,7 @@ function useTypewriterConEntrada() {
 }
 
 export default function Inicio() {
+  const { diccionario: es } = useIdioma();
   const { cantidadVisible, entradaTerminada } = useTypewriterConEntrada();
 
   const mouseX = useMotionValue(-500);
@@ -66,8 +68,11 @@ export default function Inicio() {
     }
   };
 
-  const manejarClickWhatsApp = () => {
-    window.open(DATOS_PERSONALES.whatsapp, "_blank", "noopener,noreferrer");
+  const manejarClickContacto = () => {
+    const seccionContacto = document.getElementById("contacto");
+    if (seccionContacto) {
+      seccionContacto.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   function renderLetra(
@@ -144,7 +149,7 @@ export default function Inicio() {
           <span className="text-acento font-mono text-sm">00</span>
           <span className="h-px w-12 bg-borde" />
           <span className="text-texto-suave text-xs sm:text-sm uppercase tracking-[0.2em] font-medium">
-            Desarrollador Web — Mendoza, Argentina
+            {es.rol} — {DATOS_PERSONALES.ubicacion}
           </span>
         </motion.div>
 
@@ -196,7 +201,7 @@ export default function Inicio() {
           }}
           className="mt-8 sm:mt-12 max-w-2xl text-base sm:text-xl lg:text-2xl text-texto leading-relaxed font-light"
         >
-          {DATOS_PERSONALES.tagline}
+          {es.hero.etiqueta}
         </motion.p>
 
         {/* Subheadline */}
@@ -210,7 +215,7 @@ export default function Inicio() {
           }}
           className="mt-4 max-w-xl text-sm sm:text-base text-texto-suave leading-relaxed"
         >
-          {DATOS_PERSONALES.subheadline}
+          {es.hero.subheadline}
         </motion.p>
 
         {/* CTAs */}
@@ -221,13 +226,13 @@ export default function Inicio() {
           className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4"
         >
           <motion.button
-            onClick={manejarClickWhatsApp}
+            onClick={manejarClickContacto}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-acento text-fondo font-display font-semibold text-sm sm:text-base rounded-full hover:bg-acento-hover transition-colors cursor-pointer"
           >
-            Quiero una web para mi negocio
+            {es.hero.ctaProyecto}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
@@ -240,7 +245,7 @@ export default function Inicio() {
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2 px-5 py-3.5 text-sm sm:text-base text-texto-suave hover:text-acento transition-colors cursor-pointer bg-transparent border-0"
           >
-            Ver proyectos
+            {es.hero.verProyectos}
             <span className="text-acento">→</span>
           </motion.button>
         </motion.div>
@@ -269,7 +274,7 @@ export default function Inicio() {
             className="flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-acento" />
-            <span>Mendoza · Argentina</span>
+            <span>{es.hero.ubicacionCorta}</span>
           </motion.div>
           <motion.div
             variants={{
@@ -286,7 +291,7 @@ export default function Inicio() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
             </span>
-            <span>Disponible para nuevos proyectos</span>
+            <span>{es.hero.disponibilidad}</span>
           </motion.div>
         </motion.div>
       </motion.div>
@@ -299,10 +304,10 @@ export default function Inicio() {
         transition={{ duration: 0.5, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ y: 4 }}
         className="hidden sm:flex absolute bottom-8 sm:bottom-12 right-6 sm:right-10 lg:right-16 flex-col items-center gap-3 text-texto-suave hover:text-acento transition-colors duration-300 group"
-        aria-label="Bajar"
+        aria-label={es.hero.bajar}
       >
         <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-medium">
-          Bajar
+          {es.hero.bajar}
         </span>
         <span className="rebote-sutil w-px h-10 sm:h-14 bg-gradient-to-b from-acento to-transparent" aria-hidden="true" />
       </motion.button>

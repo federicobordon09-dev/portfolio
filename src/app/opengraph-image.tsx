@@ -1,11 +1,13 @@
 import { ImageResponse } from "next/og";
 import { DATOS_PERSONALES } from "@/lib/datos";
+import { diccionarioServidor } from "@/lib/i18n/servidor";
 
 export const alt = "Federico Bordon";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  const { diccionario } = await diccionarioServidor();
   return new ImageResponse(
     (
       <div
@@ -55,7 +57,7 @@ export default async function Image() {
               fontWeight: 500,
             }}
           >
-            {DATOS_PERSONALES.rol}
+            {diccionario.rol}
           </div>
         </div>
 
@@ -121,7 +123,7 @@ export default async function Image() {
                 display: "flex",
               }}
             >
-              Soy de {DATOS_PERSONALES.ubicacion}
+              {diccionario.metadata.ogUbicacion(DATOS_PERSONALES.ubicacion)}
             </div>
           </div>
           <div

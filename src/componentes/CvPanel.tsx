@@ -2,50 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
+import type { Diccionario } from "@/lib/i18n/tipos";
 
 type Seccion = {
   titulo: string;
   contenido: string | string[];
+  contexto?: string;
 };
 
-const SECCIONES: Seccion[] = [
-  {
-    titulo: "Perfil Profesional",
-    contenido:
-      "Estudiante de Desarrollo de Software y desarrollador web enfocado en crear aplicaciones modernas, rápidas y optimizadas para pequeñas y medianas empresas. Mi objetivo es desarrollar soluciones reales que ayuden a los negocios a mejorar su presencia digital mediante landing pages, sitios web corporativos y aplicaciones web.",
-  },
-  {
-    titulo: "Tecnologías",
-    contenido: [
-      "Frontend: HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS",
-      "Backend: Node.js, API Routes de Next.js",
-      "Bases de datos: Supabase, Neon PostgreSQL, MongoDB",
-      "Control de versiones: Git, GitHub",
-    ],
-  },
-  {
-    titulo: "Proyectos Destacados",
-    contenido: [
-      "Copa Chapa Chapa — Plataforma de simracing con clasificaciones en vivo",
-      "Bodega Andeluna — Rediseño luxury con catálogo de vinos en 3 idiomas",
-      "Mirasoles — Landing page con carta digital y WhatsApp integrado",
-      "El Hornero Pizzería — Landing dark + glassmorphism con reseñas",
-      "Cabrita Garage Cafe — Café de especialidad con carta y dos sucursales",
-      "El Porvenir — Bodegón renovado con galería de platos y reseñas",
-      "Hornero Restaurante — Cocina al horno a leña en Los Chacayes",
-      "Opuntia Casa de Té — Casa de té con vista a la Cordillera",
-    ],
-  },
-  {
-    titulo: "Forma de Trabajo",
-    contenido:
-      "Priorizo el código limpio, componentes reutilizables, buen rendimiento, responsive design, SEO, accesibilidad y escalabilidad. Utilizo IA como parte de mi flujo de trabajo para acelerar el desarrollo, depurar errores y automatizar tareas repetitivas.",
-  },
-  {
-    titulo: "Idiomas",
-    contenido: ["Español: Nativo", "Inglés: Lectura técnica y comprensión de documentación"],
-  },
-];
+function seccionesDesdeDiccionario(es: Diccionario): Seccion[] {
+  return [
+    { titulo: es.cv.perfil.titulo, contenido: es.cv.perfil.contenido },
+    {
+      titulo: es.cv.destacados.titulo,
+      contexto: es.cv.destacados.contexto,
+      contenido: es.cv.destacados.items,
+    },
+    { titulo: es.cv.tecnologias.titulo, contenido: es.cv.tecnologias.items },
+    { titulo: es.cv.forma.titulo, contenido: es.cv.forma.contenido },
+    { titulo: es.cv.idiomas.titulo, contenido: es.cv.idiomas.items },
+  ];
+}
 
 function IconoChevron({ abierto }: { abierto: boolean }) {
   return (
@@ -68,6 +46,8 @@ function IconoChevron({ abierto }: { abierto: boolean }) {
 }
 
 export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCerrar: () => void }) {
+  const { diccionario: es } = useIdioma();
+  const secciones: Seccion[] = seccionesDesdeDiccionario(es);
   const [seccionesAbiertas, setSeccionesAbiertas] = useState<Set<number>>(() => new Set([0]));
 
   useEffect(() => {
@@ -126,7 +106,7 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
               <h2 className="text-lg sm:text-xl font-bold text-texto font-syne uppercase tracking-[0.12em]">
                 Federico Bordon
               </h2>
-              <p className="text-sm text-texto-suave font-mono mt-1">Desarrollador Web</p>
+              <p className="text-sm text-texto-suave font-mono mt-1">{es.rol}</p>
               <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-xs font-mono text-texto-suave">
                 <span>Mendoza, Argentina</span>
                 <a
@@ -135,13 +115,13 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
                 >
                   federicobordon.dev@gmail.com
                 </a>
-                <span>Disponible para proyectos freelance</span>
+                <span>{es.cv.disponibilidad}</span>
               </div>
             </div>
 
             {/* Secciones colapsables */}
             <div className="px-6 sm:px-8 pb-6 pt-2">
-              {SECCIONES.map((seccion, i) => {
+              {secciones.map((seccion, i) => {
                 const estaAbierta = seccionesAbiertas.has(i);
                 return (
                   <div key={seccion.titulo} className="border-b border-borde/20 last:border-b-0">
@@ -164,6 +144,11 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
                           className="overflow-hidden"
                         >
                           <div className="pb-5">
+                            {seccion.contexto && (
+                              <p className="text-[13px] sm:text-sm text-texto-suave leading-relaxed mb-3">
+                                {seccion.contexto}
+                              </p>
+                            )}
                             {Array.isArray(seccion.contenido) ? (
                               <ul className="space-y-2">
                                 {seccion.contenido.map((item) => (
@@ -196,7 +181,7 @@ export default function CvPanel({ abierto, onCerrar }: { abierto: boolean; onCer
                 onClick={onCerrar}
                 className="text-acento hover:text-acento-hover transition-colors uppercase tracking-[0.12em] font-semibold py-2 px-3 min-h-[44px] flex items-center"
               >
-                Cerrar
+                {es.cv.pie}
               </button>
             </div>
           </motion.div>

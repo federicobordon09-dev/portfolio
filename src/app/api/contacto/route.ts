@@ -126,7 +126,9 @@ export async function POST(request: NextRequest) {
       const minutos = Math.ceil((limite.resetEnSegundos || 60) / 60);
       return NextResponse.json(
         {
+          errorCode: "RATE_LIMITED",
           error: `Demasiados intentos. Probá de nuevo en ${minutos} ${minutos === 1 ? "minuto" : "minutos"}.`,
+          minutos,
         },
         { status: 429 },
       );
@@ -151,7 +153,7 @@ export async function POST(request: NextRequest) {
     // 4) Validación de campos requeridos
     if (!email || !asunto || !mensaje) {
       return NextResponse.json(
-        { error: "Todos los campos son requeridos" },
+        { errorCode: "CAMPOS_REQUERIDOS", error: "Todos los campos son requeridos" },
         { status: 400 },
       );
     }
@@ -159,25 +161,25 @@ export async function POST(request: NextRequest) {
     // 5) Validación de longitudes
     if (email.length > EMAIL_MAX) {
       return NextResponse.json(
-        { error: "El correo es demasiado largo" },
+        { errorCode: "EMAIL_LARGO", error: "El correo es demasiado largo" },
         { status: 400 },
       );
     }
     if (asunto.length > ASUNTO_MAX) {
       return NextResponse.json(
-        { error: `El asunto no puede superar los ${ASUNTO_MAX} caracteres` },
+        { errorCode: "ASUNTO_LARGO", error: `El asunto no puede superar los ${ASUNTO_MAX} caracteres`, max: ASUNTO_MAX },
         { status: 400 },
       );
     }
     if (mensaje.length < MENSAJE_MIN) {
       return NextResponse.json(
-        { error: `El mensaje debe tener al menos ${MENSAJE_MIN} caracteres` },
+        { errorCode: "MENSAJE_CORTO", error: `El mensaje debe tener al menos ${MENSAJE_MIN} caracteres`, min: MENSAJE_MIN },
         { status: 400 },
       );
     }
     if (mensaje.length > MENSAJE_MAX) {
       return NextResponse.json(
-        { error: `El mensaje no puede superar los ${MENSAJE_MAX} caracteres` },
+        { errorCode: "MENSAJE_LARGO", error: `El mensaje no puede superar los ${MENSAJE_MAX} caracteres`, max: MENSAJE_MAX },
         { status: 400 },
       );
     }
@@ -185,7 +187,7 @@ export async function POST(request: NextRequest) {
     // 6) Validación de formato de email
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: "El formato del correo no es válido" },
+        { errorCode: "EMAIL_INVALIDO", error: "El formato del correo no es válido" },
         { status: 400 },
       );
     }
@@ -263,7 +265,7 @@ ${mensajeLimpio}`;
   } catch (error) {
     console.error("❌ Error al enviar el email:", error);
     return NextResponse.json(
-      { error: "Error al enviar el mensaje. Intentá de nuevo en un rato." },
+      { errorCode: "ENVIO_FALLIDO", error: "Error al enviar el mensaje. Intentá de nuevo en un rato." },
       { status: 500 },
     );
   }

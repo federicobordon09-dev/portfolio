@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconoFlechaArriba } from "./iconos/Iconos";
 import CvPanel from "./CvPanel";
+import { useIdioma } from "@/lib/i18n/IdiomaContext";
 
 export default function PieDePagina() {
+  const { diccionario: es } = useIdioma();
   const [mostrarBotonArriba, setMostrarBotonArriba] = useState(false);
   const [cvAbierto, setCvAbierto] = useState(false);
 
@@ -36,9 +38,9 @@ export default function PieDePagina() {
       className="relative px-5 sm:px-10 lg:px-16 py-8 border-t border-borde"
     >
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 text-xs text-texto-suave font-mono uppercase tracking-[0.15em] text-center sm:text-left">
-        <span>© 2026 — Todos los derechos reservados</span>
+        <span>© 2026 — {es.pie.derechos}</span>
         <span>
-          Desarrollado por{" "}
+          {es.pie.desarrolladoPor}{" "}
           <button
             onClick={abrirCv}
             className="text-texto transition-colors duration-300 hover:text-acento cursor-pointer underline underline-offset-2 decoration-acento/0 hover:decoration-acento/50 py-2"
@@ -57,7 +59,7 @@ export default function PieDePagina() {
             exit={{ opacity: 0, scale: 0.5, y: 20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
             onClick={irAlTop}
-            aria-label="Volver arriba"
+            aria-label={es.pie.volverArriba}
             className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-40 w-12 h-12 rounded-full bg-superficie border border-borde flex items-center justify-center text-texto-suave hover:border-acento hover:text-acento hover:bg-acento/10 transition-all duration-300 group"
           >
             {/* Flecha hacia arriba — sutil bounce en hover */}
