@@ -96,7 +96,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"],
     enlace: null,
     github: null,
-    imagen: "/nuvio.PNG",
+    imagen: "/preview_nuvio.webp",
     tipo: "personal",
     estado: "en_desarrollo",
   },
@@ -108,7 +108,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js", "React", "TypeScript", "Tailwind"],
     enlace: "https://copachapachapa.vercel.app/",
     github: null,
-    imagen: "/copachapachapa.webp",
+    imagen: "/preview_copachapachapa.webp",
     tipo: "personal",
   },
 
@@ -121,7 +121,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "CSS Modules", "next-intl", "Embla Carousel"],
     enlace: "https://bodega-andeluna.vercel.app/es",
     github: null,
-    imagen: "/andeluna.webp",
+    imagen: "/preview_andeluna.webp",
     tipo: "demostrativo",
   },
   {
@@ -132,7 +132,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Radix UI"],
     enlace: "https://mirasoles-web.vercel.app/",
     github: null,
-    imagen: "/mirasoles.webp",
+    imagen: "/preview_mirasoles.webp",
     tipo: "demostrativo",
   },
   {
@@ -143,7 +143,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4", "Motion", "Base UI", "Lucide"],
     enlace: "https://elhorneropizzanapo.vercel.app/",
     github: null,
-    imagen: "/elhorneropizzeria.webp",
+    imagen: "/preview_elhorneropizzeria.webp",
     tipo: "demostrativo",
   },
   {
@@ -154,7 +154,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://lataberna-six.vercel.app/",
     github: null,
-    imagen: "/la-taberna.PNG",
+    imagen: "/la-taberna.webp",
     tipo: "demostrativo",
   },
   {
@@ -165,7 +165,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://dantecocinalocal.vercel.app/",
     github: null,
-    imagen: "/dante-cocina-local.PNG",
+    imagen: "/dante-cocina-local.webp",
     tipo: "demostrativo",
   },
   {
@@ -176,7 +176,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://buchardorestaurante.vercel.app/",
     github: null,
-    imagen: "/buchardo.PNG",
+    imagen: "/buchardo.webp",
     tipo: "demostrativo",
   },
   {
@@ -187,7 +187,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://tablasbarbershop.vercel.app/",
     github: null,
-    imagen: "/entre-tablas.PNG",
+    imagen: "/entre-tablas.webp",
     tipo: "demostrativo",
   },
   {
@@ -198,7 +198,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Lucide"],
     enlace: "https://cabritagaragecafe-web.vercel.app/",
     github: null,
-    imagen: "/cabritacafegarage.webp",
+    imagen: "/preview_cabritagaragecafe.webp",
     tipo: "demostrativo",
   },
   {
@@ -209,7 +209,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "React", "TypeScript", "Tailwind CSS v4", "Framer Motion"],
     enlace: "https://elporvenir-web.vercel.app/",
     github: null,
-    imagen: "/elporvenir.webp",
+    imagen: "/preview_elporvenir.webp",
     tipo: "demostrativo",
   },
   {
@@ -220,7 +220,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://hornerorestaurante.vercel.app/",
     github: null,
-    imagen: "/hornero_restaurante.webp",
+    imagen: "/preview_hornerorestaurante.webp",
     tipo: "demostrativo",
   },
   {
@@ -231,7 +231,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://opuntia.vercel.app/",
     github: null,
-    imagen: "/opuntia.webp",
+    imagen: "/preview_opuntiacasadete.webp",
     tipo: "demostrativo",
   },
   {
@@ -242,7 +242,7 @@ export const proyectos: Proyecto[] = [
     tecnologias: ["Next.js 16", "TypeScript", "Tailwind CSS v4"],
     enlace: "https://lostilosrestaurante.vercel.app/",
     github: null,
-    imagen: "/los-tilos.PNG",
+    imagen: "/los-tilos.webp",
     tipo: "demostrativo",
   },
 ];
