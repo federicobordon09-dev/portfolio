@@ -35,18 +35,6 @@ export const es: Diccionario = {
     verProyectoDe: (nombre: string) => `Ver proyecto ${nombre}`,
     items: [
       {
-        slug: "nuvio",
-        categoria: "App Health-Tech",
-        descripcion:
-          "Producto health-tech desarrollado de punta a punta: análisis de PDFs médicos con IA, extracción de resultados, chat contextual y comparación de estudios.",
-        problema:
-          "Necesitaba una herramienta que tradujera estudios médicos en PDF a información clara y accionable para el paciente.",
-        solucion:
-          "Aplicación full-stack con análisis de PDFs, extracción de contenido con IA, resultados estructurados, chat contextual y comparación entre estudios.",
-        imagenAlt:
-          "Nuvio — Aplicación web para análisis de estudios médicos con IA",
-      },
-      {
         slug: "copa-chapa-chapa",
         categoria: "Plataforma Simracing",
         descripcion:
@@ -57,6 +45,30 @@ export const es: Diccionario = {
           "Aplicación con Next.js que presenta clasificaciones actualizadas, formulario de inscripción validado y gestión de equipos y pilotos.",
         imagenAlt:
           "Copa Chapa Chapa — Plataforma de simracing con clasificaciones en vivo",
+      },
+      {
+        slug: "opencode-hush",
+        categoria: "Plugin OpenCode",
+        descripcion:
+          "Panel de telemetría mínima para la TUI de OpenCode: presión de contexto, rama de Git y métricas de sesión que el host no dibuja en el mismo lugar.",
+        problema:
+          "OpenCode no muestra de forma visible la presión del contexto ni las métricas de la sesión mientras se trabaja en la terminal.",
+        solucion:
+          "Plugin en TypeScript y SolidJS que dibuja un panel lateral silencioso: muestra solo lo disponible, oculta lo que falta y no hace llamadas externas.",
+        imagenAlt:
+          "opencode Hush — Panel de telemetría para la TUI de OpenCode",
+      },
+      {
+        slug: "nuvio",
+        categoria: "App Health-Tech",
+        descripcion:
+          "Producto health-tech desarrollado de punta a punta: análisis de PDFs médicos con IA, extracción de resultados, chat contextual y comparación de estudios.",
+        problema:
+          "Necesitaba una herramienta que tradujera estudios médicos en PDF a información clara y accionable para el paciente.",
+        solucion:
+          "Aplicación full-stack con análisis de PDFs, extracción de contenido con IA, resultados estructurados, chat contextual y comparación entre estudios.",
+        imagenAlt:
+          "Nuvio — Aplicación web para análisis de estudios médicos con IA",
       },
       {
         slug: "bodega-andeluna",
@@ -71,114 +83,6 @@ export const es: Diccionario = {
           "Bodega Andeluna — Rediseño web luxury con catálogo de vinos y booking",
       },
       {
-        slug: "mirasoles",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Landing page para restaurante familiar: carta digital con lightbox, carrusel de fotos, mapa interactivo y WhatsApp integrado.",
-        problema:
-          "Mirasoles necesitaba una presencia digital que mostrara su carta, facilitara la ubicación del local y permitiera contacto directo por WhatsApp.",
-        solucion:
-          "Landing page completa con carta digital interactiva con lightbox, carrusel del local, mapa de ubicación y contacto directo por WhatsApp con mensaje predefinido.",
-        imagenAlt:
-          "Mirasoles — Landing page de restaurante familiar con carta digital",
-      },
-      {
-        slug: "el-hornero-pizzeria",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Landing dark + glassmorphism con carta interactiva, reseñas reales con ticker infinito y WhatsApp con mensaje predefinido.",
-        problema:
-          "El Hornero necesitaba una página con personalidad propia que destacara entre landing pages genéricas y mostrara reseñas reales de clientes.",
-        solucion:
-          "Landing con diseño dark y glassmorphism: carta interactiva, carrusel infinito de reseñas reales de clientes y contacto por WhatsApp.",
-        imagenAlt:
-          "El Hornero Pizzería — Landing page dark con glassmorphism y reseñas",
-      },
-      {
-        slug: "la-taberna",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Landing editorial premium para restaurante italiano con menú, información del local, ubicación, contacto y SEO estructurado.",
-        problema:
-          "La Taberna necesitaba una presencia digital que transmitiera la calidad de su gastronomía italiana y facilitara el contacto y la ubicación del restaurante.",
-        solucion:
-          "Landing editorial premium: menú interactivo, información del restaurante, mapa de ubicación, contacto y datos estructurados para buscadores (SEO).",
-        imagenAlt:
-          "La Taberna — Landing editorial premium para restaurante italiano en Lomas de Zamora",
-      },
-      {
-        slug: "dante-cocina-local",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Landing editorial para propuesta gastronómica vinculada a Bodega Dante Robino. Cocina regional y experiencias con vino.",
-        problema:
-          "Dante Cocina Local necesitaba comunicar su propuesta de cocina regional vinculada a la bodega, mostrando menú, experiencias y facilitando reservas.",
-        solucion:
-          "Landing editorial que integra menú, experiencias gastronómicas, historia de la bodega, sistema de reservas, ubicación y contacto por WhatsApp.",
-        imagenAlt:
-          "Dante Cocina Local — Landing editorial de cocina regional y vinos",
-      },
-      {
-        slug: "buchardo-restaurante",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Landing minimalista para restaurante en Núñez, CABA. Parrilla, pastas, vinos y cocktails con menú amplio y reservas.",
-        problema:
-          "Buchardo necesitaba una web que mostrara su propuesta gastronómica completa — parrilla, pastas, vinos y cocktails — y facilitara reservas y ubicación.",
-        solucion:
-          "Landing minimalista con menú amplio organizado por categorías (parrilla, pastas, vinos, cocktails), sistema de reservas, eventos y ubicación.",
-        imagenAlt:
-          "Buchardo Restaurante — Landing minimalista de parrilla, pastas y cocktails en Núñez",
-      },
-      {
-        slug: "entre-tablas-barbershop",
-        categoria: "Landing Page Barbería",
-        descripcion:
-          "Landing neo-brutalista para barbería con reservas, servicios, ubicación, horarios y CTA móvil integrado.",
-        problema:
-          "Entre Tablas necesitaba una web con personalidad que mostrara sus servicios de corte, color y barba, y facilitara reservas desde el celular.",
-        solucion:
-          "Landing neo-brutalista: servicios destacados, sistema de reservas, información del local, horarios y botón de contacto optimizado para móvil.",
-        imagenAlt:
-          "Entre Tablas Barbershop — Landing neo-brutalista para barbería en Mendoza",
-      },
-      {
-        slug: "cabrita-garage-cafe",
-        categoria: "Landing Page Café",
-        descripcion:
-          "Casa de café de especialidad: carta con acordeón interactivo, bento grid de productos, reseñas y dos sucursales con Google Maps.",
-        problema:
-          "Cabrita Garage Cafe necesitaba mostrar su carta de café de especialidad y facilitar la ubicación de sus dos sucursales.",
-        solucion:
-          "Landing con carta interactiva por categorías de café de especialidad, bento grid de productos, reseñas y dos mapas de Google Maps para cada sucursal.",
-        imagenAlt:
-          "Cabrita Garage Cafe — Landing page de café de especialidad con carta digital",
-      },
-      {
-        slug: "el-porvenir",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Bodegón renovado con galería de platos, cocina de temporada, reseñas embebidas y contacto directo por WhatsApp.",
-        problema:
-          "El Porvenir necesitaba comunicar su renovación, mostrar la cocina de temporada y facilitar reservas desde nuevos clientes.",
-        solucion:
-          "Landing que muestra la identidad renovada del bodegón: galería de platos, menú de temporada, reseñas embebidas y contacto directo por WhatsApp.",
-        imagenAlt:
-          "El Porvenir — Landing page de bodegón con galería de platos y reseñas",
-      },
-      {
-        slug: "hornero-restaurante",
-        categoria: "Landing Page Restaurante",
-        descripcion:
-          "Cocina auténtica al horno a leña en Los Chacayes: cava de 12.000 botellas, vistas a los Andes, menú para compartir y reservas con anticipación.",
-        problema:
-          "Hornero necesitaba transmitir la experiencia gastronómica única y facilitar reservas de visitantes de todo el país.",
-        solucion:
-          "Landing que captura la experiencia completa: cocina al horno a leña, cava de 12.000 botellas, vistas panorámicas a los Andes, menú y reservas.",
-        imagenAlt:
-          "Hornero Restaurante — Landing page de cocina al horno a leña en el Valle de Uco",
-      },
-      {
         slug: "opuntia-casa-de-te",
         categoria: "Landing Page Casa de Té",
         descripcion:
@@ -191,16 +95,16 @@ export const es: Diccionario = {
           "Opuntia Casa de Té — Landing page de merienda con vista a la montaña en Tunuyán",
       },
       {
-        slug: "los-tilos",
+        slug: "hornero-restaurante",
         categoria: "Landing Page Restaurante",
         descripcion:
-          "Landing editorial para restaurante en Valle de Uco con concepto de jardín, bodega y experiencia gastronómica integral.",
+          "Cocina auténtica al horno a leña en Los Chacayes: cava de 12.000 botellas, vistas a los Andes, menú para compartir y reservas con anticipación.",
         problema:
-          "Los Tilos necesitaba una presencia digital que comunicara la experiencia completa: gastronomía, jardín, vinos y reserva.",
+          "Hornero necesitaba transmitir la experiencia gastronómica única y facilitar reservas de visitantes de todo el país.",
         solucion:
-          "Landing editorial con menú, reserva integrada, ubicación, contacto y elementos de prueba social que transmiten la experiencia del jardín y la bodega.",
+          "Landing que captura la experiencia completa: cocina al horno a leña, cava de 12.000 botellas, vistas panorámicas a los Andes, menú y reservas.",
         imagenAlt:
-          "Los Tilos — Landing editorial de restaurante con jardín y bodega en Valle de Uco",
+          "Hornero Restaurante — Landing page de cocina al horno a leña en el Valle de Uco",
       },
     ],
   },
@@ -286,35 +190,49 @@ export const es: Diccionario = {
     cerrarFormulario: "Cerrar formulario",
   },
   cv: {
-    disponibilidad: "Disponible para proyectos freelance",
+    disponibilidad: "Busco mi primer puesto como desarrollador web junior.",
     pie: "Cerrar",
     perfil: {
-      titulo: "Perfil Profesional",
+      titulo: "Desarrollador Web / Full-Stack Junior",
       contenido:
-        "Soy desarrollador web autodidacta en Mendoza. Construyo sitios web con Next.js, React y TypeScript: landing pages, sitios para negocios y aplicaciones web. Desarrollo proyectos propios para profundizar en diseño, desarrollo e interfaces, y uso IA como parte de mi flujo de trabajo para acelerar el desarrollo, depurar errores y automatizar tareas repetitivas.",
+        "Soy desarrollador web autodidacta en Mendoza, Argentina. Construyo sitios web con Next.js, React, TypeScript y Tailwind CSS, y aplicaciones web con Node.js, REST APIs, PostgreSQL y Supabase. Estoy buscando mi primer puesto profesional como desarrollador web / full-stack junior; mis proyectos son propios y personales, construidos para aprender y profundizar en diseño, desarrollo e interfaces.",
     },
     destacados: {
       titulo: "Proyectos Destacados",
       contexto: "Construidos por iniciativa propia.",
       items: [
-        "Nuvio — Aplicación health-tech para análisis de PDFs médicos con IA, chat contextual y comparación de estudios (en desarrollo)",
-        "Copa Chapa Chapa — Plataforma de simracing con clasificaciones e inscripciones",
+        "Copa Chapa Chapa — Plataforma de campeonato de simracing con clasificaciones e inscripciones",
+        "OpenCode Hush — Plugin para OpenCode que muestra en la sidebar información de contexto, modelo, tokens, costo y sesión. Publicado en npm.",
+        "Nuvio — Aplicación health-tech para análisis de PDFs médicos con IA, chat contextual y comparación de estudios. En desarrollo.",
         "Bodega Andeluna — Rediseño web premium con catálogo de vinos en 3 idiomas",
-        "Mirasoles — Landing de restaurante con menú digital interactivo",
-        "El Hornero Pizzería — Landing dark con reseñas reales",
-        "Cabrita Garage Cafe — Landing de café de especialidad con dos sucursales",
-        "El Porvenir — Landing de bodegón con galería y reseñas",
-        "Hornero Restaurante — Landing de cocina al horno a leña en Valle de Uco",
         "Opuntia Casa de Té — Landing de casa de té en el Manzano Histórico",
+        "Hornero Restaurante — Landing de cocina al horno a leña en Valle de Uco",
+      ],
+    },
+    experiencia: {
+      titulo: "Experiencia",
+      items: [
+        "No tengo experiencia laboral en desarrollo de software como empleo profesional.",
+        "No realicé trabajos freelance pagados en desarrollo.",
+        "Mi experiencia práctica la construyo con proyectos propios: construcciones personales que practico para aprender y profundizar.",
+      ],
+    },
+    formacion: {
+      titulo: "Formación",
+      items: [
+        "Educación secundaria completa (Argentina).",
+        "Desarrollo de Software: cursada desde 2022, no finalizada.",
+        "Formación autodidacta continua en desarrollo de software.",
       ],
     },
     tecnologias: {
       titulo: "Tecnologías",
       items: [
-        "Frontend: HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS",
-        "Backend: Node.js, Next.js (Route Handlers / Server Actions)",
-        "Bases de datos: Supabase, PostgreSQL, Neon",
-        "Otros: Git, GitHub, Vercel",
+        "Frontend: Next.js, React, TypeScript, Tailwind CSS",
+        "Backend: Node.js, REST APIs",
+        "Bases de datos: PostgreSQL, Supabase",
+        "Herramientas: Git, GitHub",
+        "Desarrollo asistido con IA: OpenCode",
       ],
     },
     forma: {
@@ -324,10 +242,7 @@ export const es: Diccionario = {
     },
     idiomas: {
       titulo: "Idiomas",
-      items: [
-        "Español: Nativo",
-        "Inglés: Lectura técnica y comprensión de documentación",
-      ],
+      items: ["Español: Nativo", "Inglés: Básico"],
     },
   },
   pie: {

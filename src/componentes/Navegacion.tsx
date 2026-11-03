@@ -242,27 +242,29 @@ export default function Navegacion() {
             botón X sigue siendo tappable por encima del fondo negro. */}
         <nav className="max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo — contenedor flexible a altura completa del nav para
-              centrar la imagen verticalmente. La imagen es 1536x1024 (1.5:1)
-              y la dimensionamos al 62.5% del nav en mobile (40/64) y al
-              60% en desktop (48/80), siempre dentro del rango 60-70%.
-              `priority` porque está above the fold y no debe lazy-loadear. */}
+              centrar la imagen verticalmente. La imagen es cuadrada (1254x1254,
+              con canvas transparente) y la dimensionamos al 62.5% del nav en
+              mobile (40/64) y al 60% en desktop (48/80), siempre dentro del rango
+              60-70%. */}
           <button
             type="button"
             onClick={(e) => manejarClickAncla(e, "inicio")}
             className="relative z-50 flex items-center h-full overflow-visible transition-opacity duration-300 hover:opacity-80"
             aria-label={es.navegacion.volverInicio}
           >
-            <Image
-              src="/logo.png"
-              alt="Federico Bordon"
-              width={1536}
-              height={1024}
-              priority
-              draggable={false}
-              sizes="(min-width: 640px) 72px, 60px"
-              quality={90}
-              className="h-10 sm:h-12 w-auto max-h-full object-contain select-none flex-shrink-0"
-            />
+            <div className="h-10 sm:h-12 aspect-square max-h-full rounded-full overflow-hidden relative select-none flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Federico Bordón"
+                width={1254}
+                height={1254}
+                priority
+                draggable={false}
+                sizes="(min-width: 640px) 72px, 60px"
+                quality={90}
+                className="absolute inset-0 w-full h-full rounded-full object-cover"
+              />
+            </div>
           </button>
 
           {/* Links desktop — alineados a la derecha (ocultos en mobile).

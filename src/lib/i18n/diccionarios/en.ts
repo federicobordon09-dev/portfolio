@@ -35,18 +35,6 @@ export const en: Diccionario = {
     verProyectoDe: (nombre: string) => `View project ${nombre}`,
     items: [
       {
-        slug: "nuvio",
-        categoria: "Health-Tech App",
-        descripcion:
-          "End-to-end health-tech product: AI-powered analysis of medical PDFs, result extraction, contextual chat and study comparison.",
-        problema:
-          "It needed a tool that could turn medical PDF studies into clear, actionable information for the patient.",
-        solucion:
-          "Full-stack application with PDF analysis, AI content extraction, structured results, contextual chat and comparison between studies.",
-        imagenAlt:
-          "Nuvio — Web app for AI-powered analysis of medical studies",
-      },
-      {
         slug: "copa-chapa-chapa",
         categoria: "Simracing Platform",
         descripcion:
@@ -57,6 +45,30 @@ export const en: Diccionario = {
           "Next.js application with up-to-date standings, a validated registration form and team and driver management.",
         imagenAlt:
           "Copa Chapa Chapa — Simracing platform with live standings",
+      },
+      {
+        slug: "opencode-hush",
+        categoria: "OpenCode Plugin",
+        descripcion:
+          "Minimal telemetry panel for the OpenCode TUI: context pressure, Git branch and session metrics the host does not draw in the same place.",
+        problema:
+          "OpenCode does not visibly show context pressure or session metrics while you work in the terminal.",
+        solucion:
+          "TypeScript + SolidJS plugin drawing a quiet sidebar panel: it renders only what is available, hides the rest and makes no external calls.",
+        imagenAlt:
+          "opencode Hush — Telemetry sidebar panel for the OpenCode TUI",
+      },
+      {
+        slug: "nuvio",
+        categoria: "Health-Tech App",
+        descripcion:
+          "End-to-end health-tech product: AI-powered analysis of medical PDFs, result extraction, contextual chat and study comparison.",
+        problema:
+          "It needed a tool that could turn medical PDF studies into clear, actionable information for the patient.",
+        solucion:
+          "Full-stack application with PDF analysis, AI content extraction, structured results, contextual chat and comparison between studies.",
+        imagenAlt:
+          "Nuvio — Web app for AI-powered analysis of medical studies",
       },
       {
         slug: "bodega-andeluna",
@@ -71,114 +83,6 @@ export const en: Diccionario = {
           "Bodega Andeluna — Luxury website redesign with wine catalog and booking",
       },
       {
-        slug: "mirasoles",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Landing page for a family restaurant: digital menu with lightbox, photo carousel, interactive map and integrated WhatsApp.",
-        problema:
-          "Mirasoles needed a digital presence to showcase its menu, make the venue easy to find and enable direct contact via WhatsApp.",
-        solucion:
-          "Complete landing page with an interactive digital menu with lightbox, venue carousel, location map and direct WhatsApp contact with a preset message.",
-        imagenAlt:
-          "Mirasoles — Family restaurant landing page with digital menu",
-      },
-      {
-        slug: "el-hornero-pizzeria",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Dark + glassmorphism landing with an interactive menu, real reviews with an infinite ticker and WhatsApp with a preset message.",
-        problema:
-          "El Hornero needed a page with its own personality to stand out from generic landing pages and show real customer reviews.",
-        solucion:
-          "Dark glassmorphism landing: interactive menu, infinite carousel of real customer reviews and WhatsApp contact.",
-        imagenAlt:
-          "El Hornero Pizzería — Dark landing page with glassmorphism and reviews",
-      },
-      {
-        slug: "la-taberna",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Premium editorial landing for an Italian restaurant with menu, venue information, location, contact and structured SEO.",
-        problema:
-          "La Taberna needed a digital presence conveying the quality of its Italian cuisine and making contact and location easy.",
-        solucion:
-          "Premium editorial landing: interactive menu, restaurant information, location map, contact and structured search-engine data (SEO).",
-        imagenAlt:
-          "La Taberna — Premium editorial landing for an Italian restaurant in Lomas de Zamora",
-      },
-      {
-        slug: "dante-cocina-local",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Editorial landing for a dining proposal linked to Bodega Dante Robino. Regional cuisine and wine experiences.",
-        problema:
-          "Dante Cocina Local needed to communicate its regional cuisine proposal linked to the winery, showcasing menu, experiences and making reservations easy.",
-        solucion:
-          "Editorial landing combining menu, dining experiences, winery history, a reservation system, location and WhatsApp contact.",
-        imagenAlt:
-          "Dante Cocina Local — Editorial landing for regional cuisine and wines",
-      },
-      {
-        slug: "buchardo-restaurante",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Minimalist landing for a restaurant in Núñez, CABA. Grill, pasta, wine and cocktails with an extensive menu and reservations.",
-        problema:
-          "Buchardo needed a website showing its full dining proposal — grill, pasta, wine and cocktails — and making reservations and location easy.",
-        solucion:
-          "Minimalist landing with an extensive menu organized by category (grill, pasta, wine, cocktails), a reservation system, events and location.",
-        imagenAlt:
-          "Buchardo Restaurante — Minimalist landing for grill, pasta and cocktails in Núñez",
-      },
-      {
-        slug: "entre-tablas-barbershop",
-        categoria: "Barbershop Landing Page",
-        descripcion:
-          "Neo-brutalist landing for a barbershop with bookings, services, location, hours and an integrated mobile CTA.",
-        problema:
-          "Entre Tablas needed a website with personality to showcase its cutting, coloring and beard services and make booking easy from a phone.",
-        solucion:
-          "Neo-brutalist landing: featured services, booking system, venue information, hours and a mobile-optimized contact button.",
-        imagenAlt:
-          "Entre Tablas Barbershop — Neo-brutalist landing for a barbershop in Mendoza",
-      },
-      {
-        slug: "cabrita-garage-cafe",
-        categoria: "Café Landing Page",
-        descripcion:
-          "Specialty coffee house: menu with interactive accordion, product bento grid, reviews and two locations with Google Maps.",
-        problema:
-          "Cabrita Garage Cafe needed to showcase its specialty coffee menu and make its two locations easy to find.",
-        solucion:
-          "Landing with an interactive menu by specialty coffee category, product bento grid, reviews and two Google Maps embeds, one per location.",
-        imagenAlt:
-          "Cabrita Garage Cafe — Specialty coffee landing page with digital menu",
-      },
-      {
-        slug: "el-porvenir",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Renovated bodegón with a dish gallery, seasonal cuisine, embedded reviews and direct WhatsApp contact.",
-        problema:
-          "El Porvenir needed to communicate its renovation, showcase seasonal cooking and make booking easy for new customers.",
-        solucion:
-          "Landing showing the bodegón's renewed identity: dish gallery, seasonal menu, embedded reviews and direct WhatsApp contact.",
-        imagenAlt:
-          "El Porvenir — Bodegón landing page with dish gallery and reviews",
-      },
-      {
-        slug: "hornero-restaurante",
-        categoria: "Restaurant Landing Page",
-        descripcion:
-          "Authentic wood-fired cuisine in Los Chacayes: a 12,000-bottle cellar, Andes views, a sharing menu and advance reservations.",
-        problema:
-          "Hornero needed to convey its unique dining experience and make booking easy for visitors from all over the country.",
-        solucion:
-          "Landing capturing the full experience: wood-fired cooking, a 12,000-bottle cellar, panoramic Andes views, menu and reservations.",
-        imagenAlt:
-          "Hornero Restaurante — Wood-fired cuisine landing page in Valle de Uco",
-      },
-      {
         slug: "opuntia-casa-de-te",
         categoria: "Tea House Landing Page",
         descripcion:
@@ -191,16 +95,16 @@ export const en: Diccionario = {
           "Opuntia Casa de Té — Mountain-view tea house landing page in Tunuyán",
       },
       {
-        slug: "los-tilos",
+        slug: "hornero-restaurante",
         categoria: "Restaurant Landing Page",
         descripcion:
-          "Editorial landing for a Valle de Uco restaurant built around a garden, winery and a complete dining experience.",
+          "Authentic wood-fired cuisine in Los Chacayes: a 12,000-bottle cellar, Andes views, a sharing menu and advance reservations.",
         problema:
-          "Los Tilos needed a digital presence communicating the full experience: gastronomy, garden, wines and booking.",
+          "Hornero needed to convey its unique dining experience and make booking easy for visitors from all over the country.",
         solucion:
-          "Editorial landing with menu, integrated booking, location, contact and social-proof elements conveying the garden and winery experience.",
+          "Landing capturing the full experience: wood-fired cooking, a 12,000-bottle cellar, panoramic Andes views, menu and reservations.",
         imagenAlt:
-          "Los Tilos — Editorial restaurant landing with garden and winery in Valle de Uco",
+          "Hornero Restaurante — Wood-fired cuisine landing page in Valle de Uco",
       },
     ],
   },
@@ -286,35 +190,49 @@ export const en: Diccionario = {
     cerrarFormulario: "Close form",
   },
   cv: {
-    disponibilidad: "Available for freelance projects",
+    disponibilidad: "I am seeking my first junior web developer / software developer position.",
     pie: "Close",
     perfil: {
-      titulo: "Professional Profile",
+      titulo: "Web Developer / Full-Stack Junior",
       contenido:
-        "I'm a self-taught web developer in Mendoza. I build websites with Next.js, React and TypeScript: landing pages, business websites and web apps. I develop my own projects to go deeper into design, development and interfaces, and I use AI as part of my workflow to speed up development, debug errors and automate repetitive tasks.",
+        "I am a self-taught web developer based in Mendoza, Argentina. I build websites with Next.js, React, TypeScript and Tailwind CSS, and web applications with Node.js, REST APIs, PostgreSQL and Supabase. I am looking for my first professional position as a web developer / full-stack junior; my projects are personal ones, built to learn and deepen design, development and interfaces.",
     },
     destacados: {
       titulo: "Featured Projects",
       contexto: "Built on my own initiative.",
       items: [
-        "Nuvio — Health-tech app for AI-powered analysis of medical PDFs, contextual chat and study comparison (in development)",
         "Copa Chapa Chapa — Simracing platform with standings and registrations",
+        "OpenCode Hush — OpenCode plugin that displays context, model, token usage, cost and session info in the sidebar. Published on npm.",
+        "Nuvio — Health-tech app for AI-powered analysis of medical PDFs, contextual chat and study comparison. In development.",
         "Bodega Andeluna — Premium website redesign with a 3-language wine catalog",
-        "Mirasoles — Restaurant landing with an interactive digital menu",
-        "El Hornero Pizzería — Dark landing with real reviews",
-        "Cabrita Garage Cafe — Specialty coffee landing with two locations",
-        "El Porvenir — Bodegón landing with gallery and reviews",
-        "Hornero Restaurante — Wood-fired cuisine landing in Valle de Uco",
         "Opuntia Casa de Té — Tea house landing in Manzano Histórico",
+        "Hornero Restaurante — Wood-fired cuisine landing in Valle de Uco",
+      ],
+    },
+    experiencia: {
+      titulo: "Experience",
+      items: [
+        "No established professional software development employment.",
+        "No paid freelance development experience.",
+        "Practical development experience through personal projects.",
+      ],
+    },
+    formacion: {
+      titulo: "Education",
+      items: [
+        "Secondary education completed.",
+        "Software Development studies started in 2022, not completed.",
+        "Ongoing self-directed learning in software development.",
       ],
     },
     tecnologias: {
       titulo: "Technologies",
       items: [
-        "Frontend: HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS",
-        "Backend: Node.js, Next.js (Route Handlers / Server Actions)",
-        "Databases: Supabase, PostgreSQL, Neon",
-        "Others: Git, GitHub, Vercel",
+        "Frontend: Next.js, React, TypeScript, Tailwind CSS",
+        "Backend: Node.js, REST APIs",
+        "Databases: PostgreSQL, Supabase",
+        "Tools: Git, GitHub",
+        "AI-assisted development: OpenCode",
       ],
     },
     forma: {
@@ -324,10 +242,7 @@ export const en: Diccionario = {
     },
     idiomas: {
       titulo: "Languages",
-      items: [
-        "Spanish: Native",
-        "English: Technical reading and documentation comprehension",
-      ],
+      items: ["Spanish: Native", "English: Basic"],
     },
   },
   pie: {

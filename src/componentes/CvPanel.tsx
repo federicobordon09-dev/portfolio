@@ -19,6 +19,8 @@ function seccionesDesdeDiccionario(es: Diccionario): Seccion[] {
       contexto: es.cv.destacados.contexto,
       contenido: es.cv.destacados.items,
     },
+    { titulo: es.cv.experiencia.titulo, contenido: es.cv.experiencia.items },
+    { titulo: es.cv.formacion.titulo, contenido: es.cv.formacion.items },
     { titulo: es.cv.tecnologias.titulo, contenido: es.cv.tecnologias.items },
     { titulo: es.cv.forma.titulo, contenido: es.cv.forma.contenido },
     { titulo: es.cv.idiomas.titulo, contenido: es.cv.idiomas.items },

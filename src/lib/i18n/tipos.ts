@@ -83,6 +83,8 @@ export interface Diccionario {
     pie: string;
     perfil: { titulo: string; contenido: string };
     destacados: { titulo: string; contexto: string; items: string[] };
+    experiencia: { titulo: string; items: string[] };
+    formacion: { titulo: string; items: string[] };
     tecnologias: { titulo: string; items: string[] };
     forma: { titulo: string; contenido: string };
     idiomas: { titulo: string; items: string[] };
